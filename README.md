@@ -114,13 +114,58 @@ Python Board  ←→  Engine sync
 4. The best move is read back from `$C0/$C1`
 5. All evaluation uses the ROM's 14 PST tables from `$8886`
 
+## What is reproduced
+
+The AI's **move selection** is faithful by construction — `$8597` is the
+ROM's own code, executed instruction by instruction. Verified further:
+
+* `get_best_move()` is a **pure function of the board**: asking for a
+  position on a fresh engine, after other searches, or after searching the
+  same set in reverse order all give identical moves (12/12 positions).
+* Instrumenting every RAM read-before-write during a search gives 163
+  dependency addresses. All but ten are set by `_sync_board_to_rom()` /
+  `new_game()`; the ten (`$F3-$FF`) are scratch, and forcing them to
+  `$00/$FF/$55/$AA` never changes the move (5/5 positions).
+* Difficulty maps to depth through the ROM's table at `$D06E`
+  (`$B8` 0-15 → depth 2, 16-23 → 3, 24-31 → 4), i.e. 初级/中级/高级 —
+  exactly the `depth` argument this package takes.
+
 ## Verification
 
-| Metric | Result |
-|--------|--------|
-| Move legality | 100% (20/20) |
-| PST evaluation | 10/10 test positions, 100% match |
-| Auto-play completion | 100% (5/5 games) |
+Reproduce with `python -m tests.test_game --slow` and
+`python -m tests.verify_fidelity --depth 2 --plies 40`:
+
+| Check | Result |
+|-------|--------|
+| Move generation vs. an independent reference generator | 600/600 positions |
+| `make_move`/`undo_move` round-trip | 200/200 |
+| Legal moves never leave own king in check | pass |
+| Opening move = ROM's `h2->e2` (炮二平五) | pass |
+| PST evaluation vs. ROM `$8886` | 10/10 exact |
+| Engine vs. ROM self-play, depth 2 | 40/40 moves identical |
+| Engine vs. ROM self-play, depth 3 | 30/30 moves identical |
+
+The fidelity test is the strong one: the ROM plays itself from its own
+internal state, and at each ply the engine is asked the same question after
+syncing a Python `Board` into ROM RAM from scratch. Any lossy round-trip
+shows up as a mismatch.
+
+## Playing against a modern engine
+
+`match.py` plays the ROM AI against a modern engine and visualises the game
+in the terminal, then writes a self-contained HTML replay with a move slider.
+
+```bash
+python match.py                                    # ROM plays Red
+python match.py --rom-side black --rom-depth 3
+python match.py --modern-depth 6 --out game.html
+```
+
+The opponent is [Pikafish](https://github.com/official-pikafish/Pikafish)
+(UCI/NNUE) when a binary is found on `PATH` or in `engines/`, otherwise the
+bundled `modern_ai.ModernEngine` — a pure-Python alpha-beta searcher with a
+transposition table, quiescence search with SEE pruning, killer/history move
+ordering and MVV-LVA capture ordering. Use `--no-pikafish` to force it.
 
 ## Use Cases
 
@@ -167,10 +212,13 @@ pyqiwang/
 ├── _mos6502.py          # MOS6502 CPU emulator
 └── pst_tables.json      # 14 PST tables extracted from ROM $8886
 
+modern_ai.py             # Modern opponent: pure-Python search + Pikafish UCI
+match.py                 # ROM vs modern engine, terminal + HTML replay
+
 tests/
 ├── __init__.py
-├── test_game.py         # Auto-play test
-└── verify_fidelity.py   # ROM vs Python move comparison
+├── test_game.py         # Move gen / eval / engine correctness
+└── verify_fidelity.py   # ROM vs engine move-for-move comparison
 ```
 
 ## License

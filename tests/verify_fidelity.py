@@ -1,113 +1,101 @@
 #!/usr/bin/env python3
-"""verify_fidelity_v2.py — ROM $8597 ground truth verification.
+"""ROM fidelity verification.
 
-Strategy: Use ROM harness directly for AI moves (100% fidelity).
-Compare against Python AIEngine for reference only.
-All ROM moves must be legal in Python board representation.
+The ROM is its own ground truth: we let it play against itself using its
+*internal* state (``$E49E`` executes each move in ROM RAM), and at every ply
+we independently ask ``QiWangEngine`` — which syncs a Python ``Board`` into
+ROM RAM from scratch — for its move. The two must agree exactly, otherwise
+the Python-side board sync is lossy.
+
+Also checks that every ROM move is legal under the Python move generator.
+
+    python -m tests.verify_fidelity --depth 2 --plies 40
 """
+from __future__ import annotations
+
+import argparse
 import sys
-sys.path.insert(0, '.')
-from rom_harness import RomHarness
-from chinese_chess_ai import (
-    AIEngine, ROMSearchEngine, Board, RED, BLACK,
-    generate_legal_moves, is_in_check, evaluate
-)
 import time
 
-h = RomHarness()
+from pyqiwang import QiWangEngine, Board, RED, BLACK
+from pyqiwang._board import generate_legal_moves, pos_to_notation
+from pyqiwang._harness import RomHarness
 
-def sync_board(h, b):
-    """Sync Python board from ROM RAM."""
+
+def rom_to_board(h: RomHarness) -> Board:
+    """Build a Python Board from the ROM's own piece tables."""
+    b = Board()
     b.cells = [0] * len(b.cells)
-    for idx in range(16):
-        b.pieces[RED][idx] = -1
-        b.pieces[BLACK][idx] = -1
-    for idx in range(16):
-        rp = h.rd(0x94+idx)
-        bp = h.rd(0xA4+idx)
-        if rp < 0x84:
-            b.pieces[RED][idx] = rp
-            b.cells[rp] = 0x10 + idx
-        if bp < 0x84:
-            b.pieces[BLACK][idx] = bp
-            b.cells[bp] = 0x20 + idx
-    c7 = h.rd(0xC7)
-    b.side_to_move = RED if (c7 & 0x10) else BLACK
+    b.pieces[RED] = [-1] * 16
+    b.pieces[BLACK] = [-1] * 16
     b.move_history = []
+    for i in range(16):
+        rp, bp = h.rd(0x94 + i), h.rd(0xA4 + i)
+        if rp < 0x84:
+            b.pieces[RED][i] = rp
+            b.cells[rp] = 0x10 + i
+        if bp < 0x84:
+            b.pieces[BLACK][i] = bp
+            b.cells[bp] = 0x20 + i
+    b.side_to_move = RED if (h.rd(0xC7) & 0x10) else BLACK
+    return b
 
-def main():
-    import argparse
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--depth', type=int, default=2)
-    parser.add_argument('--trials', type=int, default=10)
-    parser.add_argument('--steps', type=int, default=6)
-    args = parser.parse_args()
 
-    rom_engine = ROMSearchEngine(depth=args.depth, harness=h)
-    py_engine = AIEngine(depth=args.depth)
+def main() -> int:
+    p = argparse.ArgumentParser()
+    p.add_argument('--depth', type=int, default=2)
+    p.add_argument('--plies', type=int, default=40)
+    p.add_argument('-v', '--verbose', action='store_true')
+    a = p.parse_args()
 
-    ok_legal = 0; tot_legal = 0
-    ok_py = 0; tot_py = 0
-    game_oks = 0
-    mismatches = []
+    h = RomHarness()
+    h.boot()
+    h.new_game(side_to_move=0x10, book=False)
+    engine = QiWangEngine(depth=a.depth)
 
+    agree = legal_ok = total = 0
+    problems: list[str] = []
     t0 = time.time()
 
-    for trial in range(args.trials):
-        h.boot()
-        h.new_game(side_to_move=0x10, book=False)
+    for ply in range(a.plies):
+        board = rom_to_board(h)
+        side = 'R' if board.side_to_move == RED else 'B'
 
-        game_ok = True
-        for step in range(args.steps):
-            # ROM move (ground truth)
-            rom_move = h.get_ai_move(args.depth)
-            if rom_move is None:
-                break
-            tot_legal += 1
+        truth = h.get_ai_move(a.depth)   # ROM, from its own state
+        if truth is None:
+            break
+        total += 1
 
-            # Sync Python board from ROM RAM
-            b = Board()
-            sync_board(h, b)
+        if truth in generate_legal_moves(board, board.side_to_move):
+            legal_ok += 1
+        else:
+            problems.append(f"ply {ply} {side}: ROM move {truth} is illegal")
 
-            # Check legality
-            legal = generate_legal_moves(b, b.side_to_move)
-            if rom_move in legal:
-                ok_legal += 1
-            else:
-                game_ok = False
-                if len(mismatches) < 10:
-                    mismatches.append(
-                        f"  trial{trial} step{step}: ROM move {rom_move} NOT legal!")
-                # Don't break - continue to collect more data
+        mine = engine.get_best_move(board)   # engine, from a synced board
+        if mine == truth:
+            agree += 1
+        else:
+            problems.append(f"ply {ply} {side}: ROM={truth} engine={mine}")
 
-            # Compare with Python AIEngine (reference)
-            py_move = py_engine.search_best_move(b)
-            tot_py += 1
-            if rom_move == py_move:
-                ok_py += 1
-            elif len(mismatches) < 10:
-                mismatches.append(
-                    f"  trial{trial} step{step}: ROM={rom_move} PY={py_move}")
+        if a.verbose:
+            mark = 'ok' if mine == truth else 'MISMATCH'
+            print(f"  ply {ply:3d} {side}  "
+                  f"{pos_to_notation(truth[0])}->{pos_to_notation(truth[1])}  {mark}")
 
-            # Execute ROM move
-            if not h.exec_move(*rom_move):
-                game_ok = False
-                break
+        if not h.exec_move(*truth):
+            problems.append(f"ply {ply}: ROM exec_move rejected {truth}")
+            break
 
-        if game_ok:
-            game_oks += 1
+    print(f"\ndepth={a.depth}  plies={total}  ({time.time() - t0:.0f}s)")
+    print(f"  engine matches ROM : {agree}/{total}")
+    print(f"  ROM moves legal    : {legal_ok}/{total}")
+    for line in problems[:20]:
+        print(f"  ! {line}")
 
-    t1 = time.time()
+    ok = total > 0 and agree == total and legal_ok == total
+    print("PASS" if ok else "FAIL")
+    return 0 if ok else 1
 
-    print(f"=== Fidelity Report (depth={args.depth}, {args.trials} trials, {args.steps} steps) ===")
-    print(f"Time: {t1-t0:.1f}s")
-    print(f"Legality:     {ok_legal}/{tot_legal} ({100*ok_legal//max(tot_legal,1)}%)")
-    print(f"Python match: {ok_py}/{tot_py} ({100*ok_py//max(tot_py,1)}%)")
-    print(f"Complete games: {game_oks}/{args.trials}")
-    if mismatches:
-        print("\nMismatches (first 10):")
-        for m in mismatches[:10]:
-            print(m)
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())

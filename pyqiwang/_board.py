@@ -45,12 +45,16 @@ PIECE_TYPES = [
 RED_INIT = [48, 96, 0, 86, 14, 84, 12, 60, 36, 72, 24, 99, 75, 51, 27, 3]
 BLACK_INIT = [57, 105, 9, 91, 19, 93, 21, 69, 45, 81, 33, 102, 78, 54, 30, 6]
 
-# Move deltas from ROM $CFDA
+# Move deltas from ROM $CFDA.
+# pos = file*12 + rank, so ±1 steps the rank and ±12 steps the file.
 ADVISOR_DELTAS   = [-13, 11, -11, 13]
 ELEPHANT_DELTAS  = [-26, 22, -22, 26]
 ELEPHANT_LEGS    = [-13, 11, -11, 13]
+# Knight: (df,dr) = (∓1,∓2) then (±2,±1). The "leg" (blocking square) is the
+# orthogonal neighbour along the axis the knight travels 2 squares on — so a
+# ±2-rank move is blocked at ±1 rank, and a ±2-file move at ±12.
 KNIGHT_DELTAS    = [-14, 10, -10, 14, -25, -23, 23, 25]
-KNIGHT_LEGS      = [-1, 1, -1, 1, -12, -12, 12, 12]
+KNIGHT_LEGS      = [ -1, -1,   1,  1, -12, -12, 12, 12]
 
 # Palace regions
 RED_PALACE   = {f * 12 + r for f in range(3, 6) for r in range(0, 3)}
@@ -253,21 +257,17 @@ def generate_piece_moves(board: Board, side: int, pos: int,
                 to += direction
 
     elif ptype == PAWN:
-        # Red pawns: forward = +1 (rank increases toward Black).
-        # Black pawns: forward = -1 (rank decreases toward Red).
+        # pos = file*12 + rank, so forward (toward the enemy) steps the rank
+        # by ±1 and a sideways shuffle steps the *file* by ±BOARD_STRIDE.
         forward = 1 if side == RED else -1
-        for delta in [forward]:
-            to = pos + delta
-            if not board.is_valid_pos(to):
-                continue
-            if board.get_side(to) == side:
-                continue
+        to = pos + forward
+        if board.is_valid_pos(to) and board.get_side(to) != side:
             moves.append((pos, to))
-        # After crossing river: also allow sideways
+        # After crossing the river the pawn may also move sideways
         _, rank = board.pos_to_coord(pos)
         crossed = (rank >= 5) if side == RED else (rank <= 4)
         if crossed:
-            for delta in [-1, 1]:
+            for delta in (-BOARD_STRIDE, BOARD_STRIDE):
                 to = pos + delta
                 if not board.is_valid_pos(to):
                     continue
@@ -275,43 +275,6 @@ def generate_piece_moves(board: Board, side: int, pos: int,
                     continue
                 moves.append((pos, to))
 
-    return moves
-
-
-def _rook_slide(board: Board, side: int, pos: int, delta: int):
-    """Slide along a direction (Rook)."""
-    moves = []
-    to = pos + delta
-    while board.is_valid_pos(to):
-        target = board.get_side(to)
-        if target is None:
-            moves.append((pos, to))
-        elif target == side:
-            break
-        else:
-            moves.append((pos, to))
-            break
-        to += delta
-    return moves
-
-
-def _cannon_slide(board: Board, side: int, pos: int, delta: int):
-    """Slide along a direction (Cannon). Must jump exactly 1 piece to capture."""
-    moves = []
-    to = pos + delta
-    jumped = False
-    while board.is_valid_pos(to):
-        if not jumped:
-            if board.cells[to] == 0:
-                moves.append((pos, to))
-            else:
-                jumped = True
-        else:
-            if board.cells[to] != 0:
-                if board.get_side(to) != side:
-                    moves.append((pos, to))
-                break
-        to += delta
     return moves
 
 

@@ -11,8 +11,15 @@ rom_harness.py — 《棋王》ROM 仿真 harness
 import os
 from pyqiwang._mos6502 import MOS6502, CPUError
 
-ROM_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                        '棋王(繁)[小天才](CN)[TAB](0.75Mb).nes')
+ROM_NAME = '棋王(繁)[小天才](CN)[TAB](0.75Mb).nes'
+_HERE = os.path.dirname(os.path.abspath(__file__))
+# ROM may sit next to the package or at the repo root (README places it at root).
+ROM_PATH = next(
+    (p for p in (os.path.join(_HERE, ROM_NAME),
+                 os.path.join(_HERE, os.pardir, ROM_NAME))
+     if os.path.exists(p)),
+    os.path.join(_HERE, os.pardir, ROM_NAME),
+)
 
 # 哨兵返回地址：call_subroutine 压栈 SENTINEL-1，RTS 回到 SENTINEL 时停止
 SENTINEL = 0x0001

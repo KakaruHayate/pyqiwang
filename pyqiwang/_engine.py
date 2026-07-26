@@ -95,21 +95,33 @@ class QiWangEngine:
         self.harness.new_game(side_to_move=0x10, book=False)
 
     def _sync_board_to_rom(self, board: Board) -> None:
-        """Write Python board state to ROM RAM ($00-$83, $94-$B3, $C7)."""
+        """Write Python board state to ROM RAM ($00-$83 cells, $94-$B3 piece tables, $C7 side).
+
+        The ROM's cell array is a 12-stride grid covering $00-$83, where
+        off-board squares (rank 10/11 of every file, plus files 9/10) hold
+        the sentinel $FF. The move generator relies on that border to stop
+        sliding pieces, so it must be rebuilt — not zeroed — on every sync.
+
+        $0084-$0093 is *not* a piece table: the ROM indexes $0084,Y with the
+        cell code Y ($10-$1F red, $20-$2F black), so the real tables live at
+        $0094 (red) and $00A4 (black). Writing to $0084-$0093 is harmless at
+        best and $0084+0x10+idx aliases the red table.
+        """
         h = self.harness
-        # Clear board cells $00-$83 first (avoid stale pieces)
+        # Rebuild cells $00-$83: playable squares empty, off-board = $FF
         for a in range(0x84):
-            h.wr(a, 0x00)
+            f, r = divmod(a, BOARD_STRIDE)
+            h.wr(a, 0x00 if (f <= 8 and r <= 9) else 0xFF)
         for idx in range(16):
             rp = board.pieces[RED][idx]
             bp = board.pieces[BLACK][idx]
             if rp >= 0:
-                h.wr(0x94 + idx, rp)
-                h.wr(rp, 0x10 + idx)
+                h.wr(0x94 + idx, rp)   # $0094-$00A3: Red piece table
+                h.wr(rp, 0x10 + idx)   # cell value
             else:
                 h.wr(0x94 + idx, 0xFF)
             if bp >= 0:
-                h.wr(0xA4 + idx, bp)
+                h.wr(0xA4 + idx, bp)   # $00A4-$00B3: Black piece table
                 h.wr(bp, 0x20 + idx)
             else:
                 h.wr(0xA4 + idx, 0xFF)
@@ -177,10 +189,8 @@ class QiWangEngine:
         if board is None:
             board = self._board
 
-        # Sync board to ROM, then run search
+        # Sync board to ROM (this also sets $C7), then run search
         self._sync_board_to_rom(board)
-        side_flag = 0x10 if board.side_to_move == RED else 0x00
-        self.harness.wr(0xC7, side_flag)
 
         move = self.harness.get_ai_move(self._depth)
 
@@ -236,11 +246,13 @@ class QiWangEngine:
                 - board_synced: whether board was synced to ROM
         """
         t0 = time.time()
+        if board is None:
+            board = self._board
         move = self.get_best_move(board)
         elapsed = time.time() - t0
-        side = board.side_to_move if board else self._board.side_to_move
-        score = self.evaluate(board) if move else 0
-        legal = generate_legal_moves(board, side) if board else []
+        side = board.side_to_move
+        score = self.evaluate(board)
+        legal = generate_legal_moves(board, side)
 
         return {
             'move': move,
@@ -313,8 +325,6 @@ class QiWangEngine:
 
             board.make_move(*move)
             self._sync_board_to_rom(board)
-            side_flag = 0x10 if board.side_to_move == RED else 0x00
-            self.harness.wr(0xC7, side_flag)
             self._move_count += 1
 
             legal2 = generate_legal_moves(board, board.side_to_move)
