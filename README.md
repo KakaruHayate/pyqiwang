@@ -203,11 +203,38 @@ ordering and MVV-LVA capture ordering. Use `--no-pikafish` to force it.
 
 ### Results
 
-Games played against `ModernEngine` at depth 4 / 3 s per move. Every game
-below was replayed through the rules engine afterwards: no illegal moves,
-and each mate verified as a real one (side to move, zero legal moves, in
-check). Included replays: `replay.html`, `replay_d4_red.html`,
-`replay_d4_black.html`.
+Every game below was replayed through the rules engine afterwards: no
+illegal moves, and each mate verified as a real one (side to move, zero
+legal moves, in check).
+
+**vs. Pikafish 2026-01-02 (NNUE)** — the ROM at 高级 (depth 4), Pikafish at
+3 s/move, 8 threads, 2 GB hash. Replays: `replay_pf_red.html`,
+`replay_pf_black.html`, `replay_pf_handicap.html`.
+
+| ROM side | Pikafish setting | Result |
+|---|---|---|
+| Black | 3 s, 8 threads | Mated in 59 plies |
+| Red | 3 s, 8 threads | Mated in 70 plies |
+| Red | **10 ms, 1 thread** | Mated in 88 plies |
+
+Pikafish wins even crippled to 10 ms on one thread — because that still
+reaches **depth 8.4 on average**, twice the ROM's 高级 depth of 4, with an
+NNUE evaluation on top. There is no setting at which this is a contest.
+
+The scoreline is the least interesting part. Measuring *move agreement* on
+positions from real play says more:
+
+| ROM difficulty | Matches Pikafish's top move | Mean centipawn loss when it differs |
+|---|---|---|
+| 初级 (depth 2) | 4/12 | 40 cp |
+| 高级 (depth 4) | 1/8 | 37 cp |
+
+So the 1990s search is not blundering material — it agrees with a modern
+NNUE engine a third of the time and gives up well under half a pawn when it
+doesn't. It loses slowly, on positional judgement, over dozens of moves.
+
+**vs. the bundled `ModernEngine`** (depth 4 / 3 s), a much weaker opponent.
+Replays: `replay.html`, `replay_d4_red.html`, `replay_d4_black.html`.
 
 | ROM difficulty | ROM side | Result |
 |---|---|---|
@@ -228,12 +255,24 @@ Controls, so these numbers mean something:
   per condition and the book contributed only its first move before the
   opponent left the line, so treat it as suggestive, not measured.
 * 高级 costs about **70 s per move** in this emulator (初级 ≈ 3 s,
-  中级 ≈ 8 s), which is why the sample is small.
+  中级 ≈ 8 s), which is why the samples are small.
 
-The split result at 高级 — winning as Black, losing as Red — is one game
-each, so it does not establish a colour preference. What it does show is
-that the ROM's top difficulty is competitive with this opponent, unlike
-初级.
+The split result against `ModernEngine` at 高级 — winning as Black, losing
+as Red — is one game each, so it does not establish a colour preference.
+
+### Using Pikafish
+
+Download a build and the NNUE network from the
+[Pikafish releases](https://github.com/official-pikafish/Pikafish/releases),
+put the binary and `pikafish.nnue` in `engines/` (gitignored), and pick the
+executable matching your CPU:
+
+```bash
+python match.py --rom-depth 4 --pf-movetime 3000 --pf-threads 8 --pf-hash 2048
+```
+
+`match.py` uses Pikafish automatically when it finds one; `--no-pikafish`
+forces the built-in engine.
 
 ## Use Cases
 
