@@ -259,3 +259,8 @@ eval_minimal.py
 eval_test.py
 eval_verify.py
 __pycache__/
+
+# Downloaded UCI engines (Pikafish binary + NNUE weights)
+engines/
+*.nnue
+*.7z

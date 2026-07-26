@@ -271,13 +271,16 @@ def play_match(rom_depth: int = 2, modern_depth: int = 5,
                modern_time: float = 5.0, rom_side: int = RED,
                max_moves: int = 200, out: str = 'replay.html',
                use_pikafish: bool = True, quiet: bool = False,
-               rom_book: bool = True) -> dict:
+               rom_book: bool = True, pf_movetime: Optional[int] = None,
+               pf_threads: int = 1, pf_hash: int = 16) -> dict:
     rom = QiWangEngine(depth=rom_depth, book=rom_book)
 
     modern = None
     if use_pikafish and find_pikafish():
         try:
-            modern = PikafishEngine(depth=max(modern_depth, 10))
+            modern = PikafishEngine(depth=max(modern_depth, 10),
+                                    movetime=pf_movetime,
+                                    threads=pf_threads, hash_mb=pf_hash)
         except Exception as exc:
             print(f"Pikafish unavailable ({exc}); using the built-in engine.")
     if modern is None:
@@ -393,6 +396,12 @@ def main() -> None:
                    help='always use the built-in engine')
     p.add_argument('--no-book', action='store_true',
                    help="disable the ROM's opening book")
+    p.add_argument('--pf-movetime', type=int, default=None,
+                   help='Pikafish milliseconds per move (overrides depth)')
+    p.add_argument('--pf-threads', type=int, default=1,
+                   help='Pikafish search threads')
+    p.add_argument('--pf-hash', type=int, default=16,
+                   help='Pikafish hash table size in MB')
     p.add_argument('--quiet', action='store_true',
                    help='do not draw the board each move')
     a = p.parse_args()
@@ -412,7 +421,8 @@ def main() -> None:
                rom_side=RED if a.rom_side == 'red' else BLACK,
                max_moves=a.moves, out=a.out,
                use_pikafish=not a.no_pikafish, quiet=a.quiet,
-               rom_book=not a.no_book)
+               rom_book=not a.no_book, pf_movetime=a.pf_movetime,
+               pf_threads=a.pf_threads, pf_hash=a.pf_hash)
 
 
 if __name__ == '__main__':

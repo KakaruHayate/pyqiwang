@@ -470,13 +470,15 @@ class PikafishEngine:
     """Drive an external Pikafish binary over the UCI protocol."""
 
     def __init__(self, path: Optional[str] = None, depth: int = 12,
-                 movetime: Optional[int] = None):
+                 movetime: Optional[int] = None, threads: int = 1,
+                 hash_mb: int = 16):
         self.path = path or find_pikafish()
         if not self.path:
             raise FileNotFoundError("Pikafish binary not found")
         self.depth = depth
         self.movetime = movetime
-        self.name = f"Pikafish (UCI, depth {depth})"
+        limit = f"{movetime} ms" if movetime else f"depth {depth}"
+        self.name = f"Pikafish ({limit}, {threads}T)"
         self.last_score = 0
         self.last_depth = 0
         self.proc = subprocess.Popen(
@@ -486,6 +488,10 @@ class PikafishEngine:
         )
         self._send('uci')
         self._wait('uciok')
+        # NNUE needs the network next to the binary; Threads/Hash are the two
+        # options that actually move the needle on strength.
+        self._send(f'setoption name Threads value {threads}')
+        self._send(f'setoption name Hash value {hash_mb}')
         self._send('isready')
         self._wait('readyok')
 
