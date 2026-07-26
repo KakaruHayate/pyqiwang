@@ -209,6 +209,69 @@ def test_engine_opening() -> bool:
     return ok
 
 
+def test_opening_book() -> bool:
+    """The ROM's opening book must play a legal line and hand off to search.
+
+    The book at $CD26 is a *sequential* walk through a stored line: it
+    advances its own pointer and executes the move itself via $E49E, so it
+    only applies while the game follows that line from the start.
+    """
+    from pyqiwang import QiWangEngine
+    engine = QiWangEngine(depth=2, book=True)
+    board = Board()
+    book_plies = 0
+
+    for _ in range(60):
+        from_book = engine._book_applies(board)
+        move = engine.get_best_move(board)
+        if move is None:
+            break
+        if move not in generate_legal_moves(board, board.side_to_move):
+            print(f"  ! book/search move {move} is illegal")
+            return False
+        book_plies += from_book
+        board.make_move(*move)
+        if not from_book:
+            break   # book is done; we only needed to see the handoff
+
+    # The stored line is 33 plies long and starts 炮八平五 (c0->e2).
+    ok = book_plies >= 30
+    print(f"opening book: {book_plies} book plies then search "
+          f"{'ok' if ok else 'TOO SHORT'}")
+    return ok
+
+
+def test_book_leaves_no_residue() -> bool:
+    """After the book runs, search must still match a pristine engine.
+
+    book_move() mutates ROM RAM directly, so this guards against state that
+    _sync_board_to_rom() fails to restore.
+    """
+    from pyqiwang import QiWangEngine
+    engine = QiWangEngine(depth=2, book=True)
+    board = Board()
+    while engine._book_applies(board):
+        move = engine.get_best_move(board)
+        if move is None:
+            break
+        board.make_move(*move)
+
+    pristine = QiWangEngine(depth=2, book=False)
+    ok = 0
+    for _ in range(4):
+        a = engine.get_best_move(board)
+        b = pristine.get_best_move(board)
+        if a != b:
+            print(f"  ! post-book={a} pristine={b}")
+            break
+        ok += 1
+        if a is None:
+            break
+        board.make_move(*a)
+    print(f"post-book search matches pristine: {ok}/4")
+    return ok == 4
+
+
 def main() -> int:
     p = argparse.ArgumentParser()
     p.add_argument('--slow', action='store_true',
@@ -221,7 +284,8 @@ def main() -> int:
         test_legal_moves_escape_check(),
     ]
     if a.slow:
-        results += [test_engine_opening(), test_evaluation_matches_rom()]
+        results += [test_engine_opening(), test_evaluation_matches_rom(),
+                    test_opening_book(), test_book_leaves_no_residue()]
     else:
         print("(skipping ROM tests; pass --slow to include them)")
 

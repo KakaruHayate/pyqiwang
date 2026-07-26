@@ -31,9 +31,11 @@ def _main():
     parser.add_argument('--side', type=str, default='red',
                         choices=['red', 'black'],
                         help='Play as red (default) or black')
+    parser.add_argument('--book', action='store_true',
+                        help="Use the ROM's opening book for the AI")
     args = parser.parse_args()
 
-    engine = QiWangEngine(depth=args.depth)
+    engine = QiWangEngine(depth=args.depth, book=args.book)
 
     if args.demo:
         _demo(engine)

@@ -62,7 +62,7 @@ python -m pyqiwang --demo
 
 | Method | Description |
 |--------|-------------|
-| `QiWangEngine(rom_path=None, depth=2)` | Initialize engine. ROM auto-detected if not specified. |
+| `QiWangEngine(rom_path=None, depth=2, book=False)` | Initialize engine. ROM auto-detected if not specified. `book=True` enables the ROM's opening book. |
 | `get_best_move(board=None) → (int, int) \| None` | Best move for current side. |
 | `make_move(board=None, frm, to) → bool` | Execute move in ROM state. |
 | `evaluate(board=None) → int` | Position evaluation (positive = good for side to move). |
@@ -103,10 +103,13 @@ Python Board  ←→  Engine sync
                           ↓
                   _mos6502.py (6502 CPU emulator)
                           ↓
-              ROM $8597 search algorithm (native)
+        ROM $CD26 opening book  →  ROM $8597 search (native)
                           ↓
               $C0/$C1: best move returned
 ```
+
+This mirrors the ROM's own move path at `$D1DA`/`$D1E7`: consult the book
+first, fall through to the search when it doesn't apply.
 
 1. The Python `Board` state is written to ROM zero-page RAM
 2. The 6502 emulator executes the ROM's `$8597` subroutine
@@ -130,6 +133,34 @@ ROM's own code, executed instruction by instruction. Verified further:
   (`$B8` 0-15 → depth 2, 16-23 → 3, 24-31 → 4), i.e. 初级/中级/高级 —
   exactly the `depth` argument this package takes.
 
+### Opening book
+
+The ROM consults a book at `$CD26` *before* the search, from the caller at
+`$D1DA`. This is reproduced — pass `book=True`:
+
+```python
+engine = QiWangEngine(depth=2, book=True)
+```
+
+Two things were needed to make it work:
+
+1. `$CD26` is gated by `$E4FA`, which computes `$FFE2 ^ $FFD1 ^ $0437` and
+   only enables the book when the result is 0 — a second anti-tamper
+   checksum alongside the known `$0436` one. `new_game()` now sets `$0437`
+   accordingly.
+2. `$CD26` does **not** behave like `$8597`. It executes the move itself via
+   `$E49E` and returns with carry *clear*; carry *set* (`$CD84`/`$CDB8`)
+   means the line is exhausted, and it clears `$B6` bit 7 on the way out.
+   `$C0/$C1` do not hold the move on this path, so `book_move()` recovers it
+   by diffing the board across the call.
+
+The stored line is **33 plies** and opens 炮八平五 / 砲8平5 / 马二进三 —
+recognisable 中炮 theory. Because the book is a *sequential* walk through
+that line rather than a position lookup, it only applies while the game has
+followed it from the start; `_book_applies()` checks this and the engine
+falls through to search otherwise. Verified: all 33 moves legal, and search
+after the book still matches a pristine engine exactly.
+
 ## Verification
 
 Reproduce with `python -m tests.test_game --slow` and
@@ -144,28 +175,13 @@ Reproduce with `python -m tests.test_game --slow` and
 | PST evaluation vs. ROM `$8886` | 10/10 exact |
 | Engine vs. ROM self-play, depth 2 | 40/40 moves identical |
 | Engine vs. ROM self-play, depth 3 | 30/30 moves identical |
+| Opening book line legal + hands off to search | 33 plies, pass |
+| Search after book == pristine engine | 4/4 |
 
 The fidelity test is the strong one: the ROM plays itself from its own
 internal state, and at each ply the engine is asked the same question after
 syncing a Python `Board` into ROM RAM from scratch. Any lossy round-trip
 shows up as a mismatch.
-
-## Playing against a modern engine
-
-`match.py` plays the ROM AI against a modern engine and visualises the game
-in the terminal, then writes a self-contained HTML replay with a move slider.
-
-```bash
-python match.py                                    # ROM plays Red
-python match.py --rom-side black --rom-depth 3
-python match.py --modern-depth 6 --out game.html
-```
-
-The opponent is [Pikafish](https://github.com/official-pikafish/Pikafish)
-(UCI/NNUE) when a binary is found on `PATH` or in `engines/`, otherwise the
-bundled `modern_ai.ModernEngine` — a pure-Python alpha-beta searcher with a
-transposition table, quiescence search with SEE pruning, killer/history move
-ordering and MVV-LVA capture ordering. Use `--no-pikafish` to force it.
 
 ## Use Cases
 
@@ -211,9 +227,6 @@ pyqiwang/
 ├── _harness.py          # ROM loader + subroutine caller
 ├── _mos6502.py          # MOS6502 CPU emulator
 └── pst_tables.json      # 14 PST tables extracted from ROM $8886
-
-modern_ai.py             # Modern opponent: pure-Python search + Pikafish UCI
-match.py                 # ROM vs modern engine, terminal + HTML replay
 
 tests/
 ├── __init__.py

@@ -59,7 +59,8 @@ class QiWangEngine:
         >>> engine.make_move(board, *move)
     """
 
-    def __init__(self, rom_path: Optional[str] = None, depth: int = 2):
+    def __init__(self, rom_path: Optional[str] = None, depth: int = 2,
+                 book: bool = False):
         if rom_path is None:
             rom_path = os.path.join(
                 os.path.dirname(os.path.abspath(__file__)),
@@ -75,6 +76,7 @@ class QiWangEngine:
 
         self._depth = max(1, min(depth, 12))
         self._rom_path = rom_path
+        self._use_book = book
         self._board = Board()  # Python-side canonical board
         self._init_rom()
         self._move_count = 0
@@ -86,13 +88,30 @@ class QiWangEngine:
         self.harness = RomHarness(self._rom_path)
         self.harness.boot()
         self.harness.init_board()
-        self.harness.new_game(side_to_move=0x10, book=False)
+        self.harness.new_game(side_to_move=0x10, book=self._use_book)
+        # Board mirroring the ROM's own state, used to decide whether the
+        # opening book still applies (the book is a sequential walk through
+        # a stored line — it has no notion of an arbitrary position).
+        self._book_board = Board() if self._use_book else None
 
     def _reset_board(self) -> None:
         """Reset both Python and ROM boards to initial position."""
         self._board = Board()
         self._move_count = 0
-        self.harness.new_game(side_to_move=0x10, book=False)
+        self.harness.new_game(side_to_move=0x10, book=self._use_book)
+        self._book_board = Board() if self._use_book else None
+
+    def _book_applies(self, board: Board) -> bool:
+        """True if ``board`` is exactly where the ROM's book line stands.
+
+        The book advances its own pointer and plays into the ROM's board, so
+        it is only meaningful while the game has followed that line move for
+        move from the initial position.
+        """
+        return (self._book_board is not None
+                and self.harness.book_enabled()
+                and board.pieces == self._book_board.pieces
+                and board.side_to_move == self._book_board.side_to_move)
 
     def _sync_board_to_rom(self, board: Board) -> None:
         """Write Python board state to ROM RAM ($00-$83 cells, $94-$B3 piece tables, $C7 side).
@@ -188,6 +207,20 @@ class QiWangEngine:
         """
         if board is None:
             board = self._board
+
+        # Opening book first, exactly as the ROM does at $D1DA (book) then
+        # $D1E7 (search). The book only applies while the game is still on
+        # the stored line; once it diverges or runs out we search as usual.
+        if self._book_applies(board):
+            move = self.harness.book_move()
+            if move is not None:
+                self._book_board.make_move(*move)
+                legal = generate_legal_moves(board, board.side_to_move)
+                if move not in legal:
+                    raise QiWangEngineError(
+                        f"ROM book returned illegal move {move}.")
+                return move
+            # Book exhausted: the ROM board is still in sync, fall through.
 
         # Sync board to ROM (this also sets $C7), then run search
         self._sync_board_to_rom(board)

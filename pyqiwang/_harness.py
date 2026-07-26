@@ -91,7 +91,10 @@ class Mapper133Bus:
             # Mapper 133/TXC: 仅 $4102 的数据写入决定 bank
             # (实测 $FF2C 切换序列: $4101=0, $4102=bankval, $4103=0,
             #  $4100=0, $4103=$FF —— 其余均为锁存/选通操作)
-            # $FF4D 表: 27 26 25 24 | 03 02 01 00 → bit2 = PRG 32KB bank
+            # $FF4D 表: 27 26 25 24 | 03 02 01 00
+            #   bit2   = PRG 32KB bank (1=程序代码, 0=棋谱数据)
+            #   bit0-1 = CHR bank (本模型不需要, 无 PPU)
+            # 故 $FF0C 取 X=4/5 → $03/$02 同选 PRG bank 0 是正确行为。
             self.reg4100 = val
             self.prg_bank = (val >> 2) & 1
         # 其余（PPU/APU/ROM 区）忽略写入
@@ -180,7 +183,8 @@ class RomHarness:
         """初始化一局对局的 AI 相关状态（跳过所有画面/声音流程）。
 
         side_to_move: $10=红方, $20=黑方（写入 $C7 的 side 位）
-        book: True 则启用棋谱（$B6=$80, 指针=$8000），False 禁用
+        book: True 则启用开局棋谱（见 book_move()）。棋谱指针 $B5/$B6
+              置 $8000，bit7 = 激活标志。
         """
         self.init_board()
         self.wr(0xC7, side_to_move)
@@ -188,6 +192,7 @@ class RomHarness:
         self.wr(0xB5, 0x00)
         self.wr(0xB6, 0x80 if book else 0x00)  # 棋谱指针高字节, bit7=激活
         self.wr(0xB9, 0x00)
+        self.wr(0xB4, 0x00)                    # $FF0C 用 bit4 选 CHR bank
         self.bus.write(0x0388, 0)              # 回合数
         # 清空搜索工作区 $0400-$07FF
         for a in range(0x0400, 0x0800):
@@ -197,6 +202,46 @@ class RomHarness:
         #  字节。校验失败 → 不搜索直接返回候选[0]，疑似防盗版自灭机制)
         self.wr(0x0436, self.rd(0xD015) ^ self.rd(0xD017))
         self.wr(0x0454, 0x00)
+        # 第二道校验，门控棋谱查询: $D1D5 调 $E4FA，其算
+        # $FFE2 ^ $FFD1 ^ $0437 (= $0B ^ $0437)，为 0 时才调 $CD26。
+        self.wr(0x0437, self.rd(0xFFE2) ^ self.rd(0xFFD1))
+        self.wr(0x0455, 0x00)
+
+    def book_enabled(self):
+        """棋谱是否仍处于激活状态（$B6 bit7）。走完谱后 ROM 会自行清零。"""
+        return bool(self.rd(0xB6) & 0x80)
+
+    def book_move(self):
+        """走一步开局棋谱。返回 (from_pos, to_pos)，谱已走完则返回 None。
+
+        ROM 的真实流程（$D1DA）是先查谱再搜索。$CD26 与 $8597 不同——
+        它**自己调用 $E49E 把走法走掉**，然后 CLC 返回；谱用尽时改走
+        $CD84/$CDB8 清掉 $B6 bit7 并 SEC 返回。故此处比对调用前后的
+        棋盘来还原实际走了哪一步。
+
+        注意 $C0/$C1 在棋谱路径下不保存走法（$CD70 的 $CE9E 会覆写），
+        因此不能像 get_ai_move() 那样直接读它们。
+        """
+        if not self.book_enabled():
+            return None
+        before = self.read_board()
+        self.call_subroutine(0xCD26, nmi_every=5000)
+        from pyqiwang._mos6502 import FLAG_C
+        if self.cpu.get_flag(FLAG_C):   # SEC = 谱已走完，未走子
+            return None
+        after = self.read_board()
+        frm = to = None
+        for p in range(0x84):
+            b, a = before[p], after[p]
+            if b == 0xFF or a == 0xFF or b == a:
+                continue
+            if a == 0:
+                frm = p          # 该格空了 → 起点
+            else:
+                to = p           # 该格出现/换了棋子 → 终点
+        if frm is None or to is None:
+            return None
+        return frm, to
 
     def get_ai_move(self, depth):
         """调用 $8597 搜索，返回 (from_pos, to_pos)；无走法时返回 None。"""
