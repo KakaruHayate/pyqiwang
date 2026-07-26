@@ -183,6 +183,24 @@ internal state, and at each ply the engine is asked the same question after
 syncing a Python `Board` into ROM RAM from scratch. Any lossy round-trip
 shows up as a mismatch.
 
+## Playing against a modern engine
+
+`match.py` plays the ROM AI against a modern engine and visualises the game
+in the terminal, then writes a self-contained HTML replay with a move slider.
+
+```bash
+python match.py                                    # ROM plays Red
+python match.py --rom-side black --rom-depth 3
+python match.py --modern-depth 6 --out game.html
+python match.py --no-book                          # disable the ROM's book
+```
+
+The opponent is [Pikafish](https://github.com/official-pikafish/Pikafish)
+(UCI/NNUE) when a binary is found on `PATH` or in `engines/`, otherwise the
+bundled `modern_ai.ModernEngine` — a pure-Python alpha-beta searcher with a
+transposition table, quiescence search with SEE pruning, killer/history move
+ordering and MVV-LVA capture ordering. Use `--no-pikafish` to force it.
+
 ## Use Cases
 
 ### Training opponent / baseline
@@ -227,6 +245,9 @@ pyqiwang/
 ├── _harness.py          # ROM loader + subroutine caller
 ├── _mos6502.py          # MOS6502 CPU emulator
 └── pst_tables.json      # 14 PST tables extracted from ROM $8886
+
+modern_ai.py             # Modern opponent: pure-Python search + Pikafish UCI
+match.py                 # ROM vs modern engine, terminal + HTML replay
 
 tests/
 ├── __init__.py

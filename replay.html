@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="utf-8">
+<title>棋王 ROM AI vs ModernEngine (pure-Python alpha-beta)</title>
+<style>
+ body{margin:0;background:#1d1f21;color:#e8e6e3;
+      font-family:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+ .wrap{max-width:980px;margin:0 auto;padding:24px}
+ h1{font-size:20px;font-weight:600;margin:0 0 4px}
+ .sub{color:#9aa0a6;font-size:13px;margin-bottom:20px}
+ .main{display:flex;gap:24px;flex-wrap:wrap}
+ canvas{background:#f0d9a7;border-radius:6px}
+ .side{flex:1;min-width:280px}
+ .ctl{display:flex;gap:8px;align-items:center;margin:14px 0}
+ button{background:#3a3d41;color:#e8e6e3;border:0;border-radius:5px;
+        padding:7px 13px;cursor:pointer;font-size:14px}
+ button:hover{background:#4a4e53}
+ input[type=range]{flex:1}
+ .status{font-size:14px;margin:8px 0 14px;min-height:22px}
+ .badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:12px}
+ .rom{background:#7b2d2d;color:#ffd9d9}.mod{background:#24506b;color:#cfe8ff}
+ table{width:100%;border-collapse:collapse;font-size:13px}
+ th,td{text-align:left;padding:4px 8px;border-bottom:1px solid #33363a}
+ th{color:#9aa0a6;font-weight:500}
+ tr.on{background:#2f3337}tr{cursor:pointer}
+ .r{color:#ff8080}.b{color:#8fc4ff}
+ .scroll{max-height:420px;overflow:auto}
+</style></head><body><div class="wrap">
+<h1>棋王 ROM AI &nbsp;vs&nbsp; ModernEngine (pure-Python alpha-beta)</h1>
+<div class="sub">棋王 ROM (depth 2) 执红 · ModernEngine (pure-Python alpha-beta) 执黑 · 共 85 手</div>
+<div class="main">
+ <div>
+  <canvas id="cv" width="450" height="500"></canvas>
+  <div class="ctl">
+   <button onclick="go(0)">⏮</button><button onclick="step(-1)">◀</button>
+   <button id="pp" onclick="play()">▶ 播放</button>
+   <button onclick="step(1)">▶</button><button onclick="go(MOVES.length)">⏭</button>
+  </div>
+  <input type="range" id="sl" min="0" max="85" value="0"
+         oninput="go(+this.value)" style="width:100%">
+ </div>
+ <div class="side">
+  <div class="status" id="st"></div>
+  <div class="scroll"><table><thead><tr><th>#</th><th>方</th><th>引擎</th>
+  <th>走法</th><th>评分</th><th>用时</th></tr></thead>
+  <tbody id="tb"></tbody></table></div>
+ </div>
+</div></div>
+<script>
+const MOVES=[{"frm": 24, "to": 50, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2) 谱", "text": "相 c0-e2", "score": 0, "t": 4.1}, {"frm": 93, "to": 79, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "馬 h9-g7", "score": -2, "t": 2.9}, {"frm": 84, "to": 74, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "马 h0-g2", "score": -9, "t": 2.0}, {"frm": 105, "to": 104, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "車 i9-i8", "score": -2, "t": 2.0}, {"frm": 12, "to": 26, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "马 b0-c2", "score": -8, "t": 1.5}, {"frm": 21, "to": 31, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "馬 b9-c7", "score": -2, "t": 2.0}, {"frm": 96, "to": 97, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "车 i0-i1", "score": -8, "t": 1.3}, {"frm": 19, "to": 7, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "砲 b7-a7", "score": 0, "t": 2.7}, {"frm": 0, "to": 12, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "车 a0-b0", "score": 1, "t": 1.9}, {"frm": 9, "to": 21, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "車 a9-b9", "score": 2, "t": 2.1}, {"frm": 97, "to": 61, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "车 i1-f1", "score": 1, "t": 2.6}, {"frm": 21, "to": 15, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "車 b9-b3", "score": 100, "t": 3.0}, {"frm": 27, "to": 28, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "兵 c3-c4", "score": 1, "t": 2.9}, {"frm": 15, "to": 27, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "車 b3-c3", "score": 98, "t": 3.0}, {"frm": 50, "to": 24, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "相 e2-c0", "score": 2, "t": 4.1}, {"frm": 27, "to": 28, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "車 c3xc4 (兵)", "score": 102, "t": 3.0}, {"frm": 61, "to": 66, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "车 f1-f6", "score": -3, "t": 3.2}, {"frm": 78, "to": 77, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "卒 g6-g5", "score": 102, "t": 3.0}, {"frm": 66, "to": 78, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "车 f6-g6", "score": -2, "t": 6.0}, {"frm": 91, "to": 103, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "砲 h7-i7", "score": 104, "t": 3.0}, {"frm": 78, "to": 77, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "车 g6xg5 (卒)", "score": -3, "t": 5.3}, {"frm": 28, "to": 29, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "車 c4-c5", "score": 100, "t": 3.0}, {"frm": 77, "to": 29, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "车 g5xc5 (車)", "score": 0, "t": 2.2}, {"frm": 30, "to": 29, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "卒 c6xc5 (车)", "score": 102, "t": 1.2}, {"frm": 72, "to": 50, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "相 g0-e2", "score": 0, "t": 1.8}, {"frm": 104, "to": 92, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "車 i8-h8", "score": 114, "t": 2.8}, {"frm": 86, "to": 98, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "炮 h2-i2", "score": -1, "t": 1.7}, {"frm": 92, "to": 86, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "車 h8-h2", "score": 124, "t": 3.0}, {"frm": 50, "to": 72, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "相 e2-g0", "score": -3, "t": 1.8}, {"frm": 7, "to": 3, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "砲 a7xa3 (兵)", "score": 130, "t": 3.0}, {"frm": 24, "to": 2, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "相 c0-a2", "score": -7, "t": 3.3}, {"frm": 3, "to": 75, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "砲 a3xg3 (兵)", "score": 238, "t": 3.0}, {"frm": 74, "to": 49, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "马 g2-e1", "score": -12, "t": 2.7}, {"frm": 86, "to": 87, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "車 h2-h3", "score": 314, "t": 1.9}, {"frm": 49, "to": 63, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "马 e1-f3", "score": -41, "t": 1.6}, {"frm": 75, "to": 51, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "砲 g3xe3 (兵)", "score": 388, "t": 3.0}, {"frm": 63, "to": 77, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "马 f3-g5", "score": -20, "t": 2.5}, {"frm": 87, "to": 99, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "車 h3xi3 (兵)", "score": 346, "t": 1.8}, {"frm": 26, "to": 51, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "马 c2xe3 (砲)", "score": -13, "t": 2.1}, {"frm": 99, "to": 51, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "車 i3xe3 (马)", "score": 398, "t": 2.2}, {"frm": 98, "to": 50, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "炮 i2-e2", "score": -12, "t": 0.5}, {"frm": 81, "to": 55, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "象 g9-e7", "score": 398, "t": 1.4}, {"frm": 77, "to": 91, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "马 g5-h7", "score": -3, "t": 1.7}, {"frm": 51, "to": 15, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "車 e3-b3", "score": 398, "t": 1.4}, {"frm": 50, "to": 98, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "炮 e2-i2", "score": -3, "t": 2.1}, {"frm": 103, "to": 98, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "砲 i7xi2 (炮)", "score": 422, "t": 0.6}, {"frm": 72, "to": 98, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "相 g0xi2 (砲)", "score": -121, "t": 1.3}, {"frm": 29, "to": 28, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "卒 c5-c4", "score": 436, "t": 0.8}, {"frm": 12, "to": 13, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "车 b0-b1", "score": -32, "t": 0.7}, {"frm": 28, "to": 27, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "卒 c4-c3", "score": 458, "t": 1.1}, {"frm": 60, "to": 49, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "仕 f0-e1", "score": -34, "t": 0.7}, {"frm": 27, "to": 26, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "卒 c3-c2", "score": 898, "t": 0.8}, {"frm": 98, "to": 72, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "相 i2-g0", "score": -41, "t": 0.6}, {"frm": 54, "to": 53, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "卒 e6-e5", "score": 904, "t": 1.0}, {"frm": 72, "to": 50, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "相 g0-e2", "score": -41, "t": 0.6}, {"frm": 53, "to": 52, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "卒 e5-e4", "score": 934, "t": 0.9}, {"frm": 48, "to": 60, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "帅 e0-f0", "score": -58, "t": 0.7}, {"frm": 52, "to": 51, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "卒 e4-e3", "score": 968, "t": 1.6}, {"frm": 60, "to": 48, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "帅 f0-e0", "score": -62, "t": 0.7}, {"frm": 26, "to": 14, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "卒 c2xb2 (炮)", "score": 994, "t": 1.1}, {"frm": 13, "to": 25, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "车 b1-c1", "score": -157, "t": 0.7}, {"frm": 31, "to": 41, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "馬 c7-d5", "score": 996, "t": 1.2}, {"frm": 25, "to": 37, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "车 c1-d1", "score": -165, "t": 0.8}, {"frm": 41, "to": 66, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "馬 d5-f6", "score": 1174, "t": 0.9}, {"frm": 91, "to": 77, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "马 h7-g5", "score": -157, "t": 0.7}, {"frm": 51, "to": 50, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "卒 e3xe2 (相)", "score": 1150, "t": 1.1}, {"frm": 77, "to": 67, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "马 g5-f7", "score": -207, "t": 1.5}, {"frm": 57, "to": 56, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "将 e9-e8", "score": 1150, "t": 0.1}, {"frm": 37, "to": 45, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "车 d1xd9 (士)", "score": -200, "t": 0.6}, {"frm": 56, "to": 68, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "将 e8-f8", "score": 1168, "t": 1.0}, {"frm": 45, "to": 42, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "车 d9-d6", "score": -162, "t": 1.2}, {"frm": 15, "to": 63, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "車 b3-f3", "score": 1276, "t": 0.9}, {"frm": 42, "to": 18, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "车 d6-b6", "score": -162, "t": 1.4}, {"frm": 14, "to": 2, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "卒 b2xa2 (相)", "score": 1322, "t": 0.5}, {"frm": 18, "to": 6, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "车 b6xa6 (卒)", "score": -196, "t": 1.0}, {"frm": 50, "to": 49, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "卒 e2xe1 (仕)", "score": 1326, "t": 0.8}, {"frm": 36, "to": 49, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "仕 d0xe1 (卒)", "score": -242, "t": 0.1}, {"frm": 2, "to": 14, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "卒 a2-b2", "score": 1326, "t": 0.6}, {"frm": 6, "to": 18, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "车 a6-b6", "score": -195, "t": 0.5}, {"frm": 14, "to": 2, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "卒 b2-a2", "score": 1326, "t": 0.5}, {"frm": 18, "to": 6, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "车 b6-a6", "score": -189, "t": 0.5}, {"frm": 2, "to": 14, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "卒 a2-b2", "score": 1326, "t": 0.0}, {"frm": 6, "to": 18, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "车 a6-b6", "score": -195, "t": 0.5}, {"frm": 14, "to": 2, "side": "B", "eng": "modern", "engname": "ModernEngine (pure-Python alpha-beta)", "text": "卒 b2-a2", "score": 1326, "t": 0.0}, {"frm": 18, "to": 6, "side": "R", "eng": "rom", "engname": "棋王 ROM (depth 2)", "text": "车 b6-a6", "score": -189, "t": 0.6}], START={"48": [1, 0], "96": [4, 0], "0": [4, 0], "86": [6, 0], "14": [6, 0], "84": [5, 0], "12": [5, 0], "60": [2, 0], "36": [2, 0], "72": [3, 0], "24": [3, 0], "99": [7, 0], "75": [7, 0], "51": [7, 0], "27": [7, 0], "3": [7, 0], "57": [1, 1], "105": [4, 1], "9": [4, 1], "91": [6, 1], "19": [6, 1], "93": [5, 1], "21": [5, 1], "69": [2, 1], "45": [2, 1], "81": [3, 1], "33": [3, 1], "102": [7, 1], "78": [7, 1], "54": [7, 1], "30": [7, 1], "6": [7, 1]}, RESULT="和棋（三次重复局面，第 85 手）";
+const CN={1:'\u5e05',2:'\u4ed5',3:'\u76f8',4:'\u8f66',5:'\u9a6c',6:'\u70ae',7:'\u5175'};
+const CNB={1:'\u5c06',2:'\u58eb',3:'\u8c61',4:'\u8eca',5:'\u99ac',6:'\u7832',7:'\u5352'};
+const M=30, CELL=48, cv=document.getElementById('cv'), cx=cv.getContext('2d');
+let idx=0, timer=null;
+
+function boardAt(n){
+  let b=JSON.parse(JSON.stringify(START));
+  for(let i=0;i<n;i++){const m=MOVES[i]; b[m.to]=b[m.frm]; delete b[m.frm];}
+  return b;
+}
+function xy(pos){return [M+Math.floor(pos/12)*CELL, M+(9-(pos%12))*CELL];}
+
+function draw(){
+  const b=boardAt(idx);
+  cx.fillStyle='#f0d9a7';cx.fillRect(0,0,cv.width,cv.height);
+  cx.strokeStyle='#7a5c33';cx.lineWidth=1;
+  for(let r=0;r<10;r++){cx.beginPath();cx.moveTo(M,M+r*CELL);
+    cx.lineTo(M+8*CELL,M+r*CELL);cx.stroke();}
+  for(let f=0;f<9;f++){
+    if(f===0||f===8){cx.beginPath();cx.moveTo(M+f*CELL,M);
+      cx.lineTo(M+f*CELL,M+9*CELL);cx.stroke();}
+    else{cx.beginPath();cx.moveTo(M+f*CELL,M);cx.lineTo(M+f*CELL,M+4*CELL);cx.stroke();
+      cx.beginPath();cx.moveTo(M+f*CELL,M+5*CELL);cx.lineTo(M+f*CELL,M+9*CELL);cx.stroke();}}
+  cx.beginPath();cx.moveTo(M+3*CELL,M);cx.lineTo(M+5*CELL,M+2*CELL);
+  cx.moveTo(M+5*CELL,M);cx.lineTo(M+3*CELL,M+2*CELL);
+  cx.moveTo(M+3*CELL,M+7*CELL);cx.lineTo(M+5*CELL,M+9*CELL);
+  cx.moveTo(M+5*CELL,M+7*CELL);cx.lineTo(M+3*CELL,M+9*CELL);cx.stroke();
+  cx.fillStyle='#8a6a3d';cx.font='16px serif';cx.textAlign='center';
+  cx.fillText('\u695a\u6cb3          \u6f22\u754c', M+4*CELL, M+4.6*CELL);
+
+  if(idx>0){const m=MOVES[idx-1];
+    for(const p of [m.frm,m.to]){const [x,y]=xy(p);
+      cx.fillStyle='rgba(255,200,0,.45)';cx.beginPath();
+      cx.arc(x,y,CELL*0.44,0,7);cx.fill();}}
+
+  for(const k in b){const [t,s]=b[k], [x,y]=xy(+k);
+    cx.beginPath();cx.arc(x,y,CELL*0.40,0,7);
+    cx.fillStyle=s===0?'#fff4e0':'#3b3b3b';cx.fill();
+    cx.lineWidth=2;cx.strokeStyle=s===0?'#c0392b':'#1a1a1a';cx.stroke();
+    cx.fillStyle=s===0?'#c0392b':'#7fb3ff';
+    cx.font='bold 24px "PingFang SC","Microsoft YaHei",serif';
+    cx.textBaseline='middle';cx.fillText(s===0?CN[t]:CNB[t],x,y+1);}
+
+  document.getElementById('sl').value=idx;
+  const st=document.getElementById('st');
+  if(idx===0) st.textContent='\u521d\u59cb\u5c40\u9762';
+  else{const m=MOVES[idx-1];
+    st.innerHTML=`<span class="badge ${m.eng==='rom'?'rom':'mod'}">${m.engname}</span> `+
+      `<b>${m.text}</b> &nbsp;<span style="color:#9aa0a6">${m.score} · ${m.t}s</span>`;}
+  if(idx===MOVES.length&&RESULT) st.innerHTML+=`<br><b>${RESULT}</b>`;
+  document.querySelectorAll('#tb tr').forEach((r,i)=>
+    r.className=(i===idx-1)?'on':'');
+  const cur=document.querySelector('#tb tr.on'); if(cur) cur.scrollIntoView({block:'nearest'});
+}
+function go(n){idx=Math.max(0,Math.min(MOVES.length,n));draw();}
+function step(d){go(idx+d);}
+function play(){
+  const btn=document.getElementById('pp');
+  if(timer){clearInterval(timer);timer=null;btn.textContent='\u25b6 \u64ad\u653e';return;}
+  btn.textContent='\u23f8 \u6682\u505c';
+  timer=setInterval(()=>{if(idx>=MOVES.length){clearInterval(timer);timer=null;
+    btn.textContent='\u25b6 \u64ad\u653e';}else step(1);},750);
+}
+const tb=document.getElementById('tb');
+MOVES.forEach((m,i)=>{const tr=document.createElement('tr');
+  tr.onclick=()=>go(i+1);
+  tr.innerHTML=`<td>${i+1}</td><td class="${m.side==='R'?'r':'b'}">`+
+    `${m.side==='R'?'\u7ea2':'\u9ed1'}</td><td>${m.engname}</td>`+
+    `<td>${m.text}</td><td>${m.score}</td><td>${m.t}</td>`;
+  tb.appendChild(tr);});
+document.onkeydown=e=>{if(e.key==='ArrowLeft')step(-1);
+  if(e.key==='ArrowRight')step(1);};
+draw();
+</script></body></html>
