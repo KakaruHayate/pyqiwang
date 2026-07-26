@@ -322,11 +322,57 @@ pyqiwang/
 modern_ai.py             # Modern opponent: pure-Python search + Pikafish UCI
 match.py                 # ROM vs modern engine, terminal + HTML replay
 
+replay.html              # Example games (open in a browser, drag the slider)
+replay_d4_red.html
+replay_d4_black.html
+replay_pf_red.html       # vs Pikafish
+replay_pf_black.html
+replay_pf_handicap.html
+
 tests/
 ├── __init__.py
 ├── test_game.py         # Move gen / eval / engine correctness
 └── verify_fidelity.py   # ROM vs engine move-for-move comparison
 ```
+
+## Conclusions
+
+**The reproduction is faithful, and this was tested rather than assumed.**
+Running the ROM's own `$8597` inside a 6502 emulator makes move selection
+correct by construction, but only if the ROM's state is fully restored on
+every call — which is where the real bugs were. Instrumenting every RAM
+read-before-write during a search identified the exact 163-address
+dependency set and confirmed nothing outside it matters. The engine now
+reproduces the ROM move for move over self-play games, at depth 2 and 3.
+
+**Five bugs were found by testing, not by reading.** The most damaging one
+zeroed the `$FF` off-board sentinels, so the ROM's sliding move generation
+ran off the board. Every one of them survived a codebase that claimed "100%
+fidelity" with a verification table — because both test files failed at
+import and nobody had run them. Write the reference implementation
+independently: the move-generation bugs were only visible against a
+generator rewritten from the rules in different coordinates.
+
+**The AI is weaker than its era's reputation, but not crude.** Against
+Pikafish it plays the top move roughly a third of the time and gives up
+about 40 centipawns when it doesn't. It loses by slow positional drift over
+dozens of moves, not by hanging pieces — reasonable for 14 piece-square
+tables and a depth-4 search on a 6502. Its own difficulty ladder is real:
+depth 3 beats depth 2 head to head.
+
+**Caveats worth keeping.** The strength numbers are one game per condition —
+高级 costs ~70 s per move under emulation, which caps the sample. The
+opening-book result (a loss becoming a draw) is suggestive only: the book
+supplied a single move before the opponent left the line. Nothing here is a
+statistically meaningful rating; it is a characterisation.
+
+**What was wrong along the way.** An earlier pass concluded the opening
+book was unimplementable, blaming the Mapper 133 bank model. That was
+backwards — `$CD26` returns carry *clear* when it has played a move, and
+misreading that convention produced a false observation that then got an
+invented mechanism to explain it. The book works, and plays 33 plies of
+中炮 theory. When an observation and a mechanism disagree, re-check the
+observation first.
 
 ## License
 
