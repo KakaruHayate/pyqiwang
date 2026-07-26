@@ -201,6 +201,40 @@ bundled `modern_ai.ModernEngine` — a pure-Python alpha-beta searcher with a
 transposition table, quiescence search with SEE pruning, killer/history move
 ordering and MVV-LVA capture ordering. Use `--no-pikafish` to force it.
 
+### Results
+
+Games played against `ModernEngine` at depth 4 / 3 s per move. Every game
+below was replayed through the rules engine afterwards: no illegal moves,
+and each mate verified as a real one (side to move, zero legal moves, in
+check). Included replays: `replay.html`, `replay_d4_red.html`,
+`replay_d4_black.html`.
+
+| ROM difficulty | ROM side | Result |
+|---|---|---|
+| 高级 (depth 4) | Black | **ROM wins** — mate in 72 plies |
+| 高级 (depth 4) | Red | Loses — mated in 128 plies |
+| 初级 (depth 2), book on | Red | Draw by repetition, 84 plies |
+| 初级 (depth 2), book off | Red | Loses — mated in 104 plies |
+
+Controls, so these numbers mean something:
+
+* `ModernEngine` depth 4 against **itself** draws by repetition (92 plies),
+  so the losses above reflect a real strength gap rather than a first-move
+  advantage.
+* The ROM's own difficulty ladder works: ROM depth 3 beats ROM depth 2 as
+  Black (56 plies) and draws as Red, i.e. depth genuinely buys strength.
+* At 初级 the opening book flipped a loss into a draw against the same
+  opponent — off: mated in 104; on: drawn in 84. Note this is a single game
+  per condition and the book contributed only its first move before the
+  opponent left the line, so treat it as suggestive, not measured.
+* 高级 costs about **70 s per move** in this emulator (初级 ≈ 3 s,
+  中级 ≈ 8 s), which is why the sample is small.
+
+The split result at 高级 — winning as Black, losing as Red — is one game
+each, so it does not establish a colour preference. What it does show is
+that the ROM's top difficulty is competitive with this opponent, unlike
+初级.
+
 ## Use Cases
 
 ### Training opponent / baseline
