@@ -249,6 +249,7 @@ solve_*.py
 test_encoding.py
 test_harness_ai.py
 trace_*.py
+!tools/trace_root.py
 verify_fidelity.py
 __pycache__/
 compare_step.py

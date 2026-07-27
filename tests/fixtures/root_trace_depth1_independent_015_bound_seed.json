@@ -1,0 +1,3845 @@
+{
+  "case": "random-015",
+  "expected": [
+    52,
+    49
+  ],
+  "trace": {
+    "result": [
+      52,
+      49
+    ],
+    "result_notation": "e4e1",
+    "candidate_count": 35,
+    "max_internal_level": 6,
+    "attempts": [
+      {
+        "move": [
+          57,
+          56
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32778,
+        "best_before_raw": 61440,
+        "side": 1,
+        "best_after_raw": 32778,
+        "best_move_after": [
+          57,
+          56
+        ],
+        "max_internal_level": 6,
+        "level_counts": {
+          "1": 1,
+          "2": 4,
+          "3": 8,
+          "4": 4,
+          "5": 2,
+          "6": 16
+        }
+      },
+      {
+        "move": [
+          105,
+          104
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32767,
+        "best_before_raw": 32778,
+        "side": 1,
+        "best_after_raw": 32767,
+        "best_move_after": [
+          105,
+          104
+        ],
+        "max_internal_level": 6,
+        "level_counts": {
+          "1": 1,
+          "2": 4,
+          "3": 6,
+          "4": 2,
+          "5": 1,
+          "6": 8
+        }
+      },
+      {
+        "move": [
+          105,
+          103
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32768,
+        "best_before_raw": 32767,
+        "side": 1,
+        "best_after_raw": 32767,
+        "best_move_after": [
+          105,
+          104
+        ],
+        "max_internal_level": 1,
+        "level_counts": {
+          "1": 1
+        }
+      },
+      {
+        "move": [
+          105,
+          93
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32879,
+        "best_before_raw": 32767,
+        "side": 1,
+        "best_after_raw": 32767,
+        "best_move_after": [
+          105,
+          104
+        ],
+        "max_internal_level": 3,
+        "level_counts": {
+          "1": 1,
+          "2": 1,
+          "3": 6
+        }
+      },
+      {
+        "move": [
+          9,
+          8
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32767,
+        "best_before_raw": 32767,
+        "side": 1,
+        "best_after_raw": 32767,
+        "best_move_after": [
+          105,
+          104
+        ],
+        "max_internal_level": 1,
+        "level_counts": {
+          "1": 1
+        }
+      },
+      {
+        "move": [
+          9,
+          7
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32762,
+        "best_before_raw": 32767,
+        "side": 1,
+        "best_after_raw": 32762,
+        "best_move_after": [
+          9,
+          7
+        ],
+        "max_internal_level": 4,
+        "level_counts": {
+          "1": 1,
+          "2": 4,
+          "3": 6,
+          "4": 1
+        }
+      },
+      {
+        "move": [
+          52,
+          49
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32742,
+        "best_before_raw": 32762,
+        "side": 1,
+        "best_after_raw": 32742,
+        "best_move_after": [
+          52,
+          49
+        ],
+        "max_internal_level": 3,
+        "level_counts": {
+          "1": 1,
+          "2": 6,
+          "3": 6
+        },
+        "events": [
+          {
+            "event": "black_try",
+            "pc": 46467,
+            "instruction": "$B583: A6 C6     LDX $C6",
+            "registers": {
+              "a": 0,
+              "x": 6,
+              "y": 2,
+              "sp": 246,
+              "p": 38
+            },
+            "flags": {
+              "c": 0,
+              "z": 1,
+              "n": 0,
+              "v": 0
+            },
+            "level": 0,
+            "index": 6,
+            "move": [
+              52,
+              49
+            ],
+            "score_raw": 32776,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 3840,
+              "best_raw": 32762,
+              "child_raw": 32762,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 32778,
+              "previous_bound_raw": 32767,
+              "best_raw": 32760,
+              "child_raw": 0,
+              "selector": 0
+            },
+            "ce": 0,
+            "cf": 0
+          },
+          {
+            "event": "black_node",
+            "pc": 37551,
+            "instruction": "$92AF: E6 CC     INC $CC",
+            "registers": {
+              "a": 0,
+              "x": 0,
+              "y": 52,
+              "sp": 243,
+              "p": 103
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 1
+            },
+            "level": 1,
+            "index": 0,
+            "move": [
+              52,
+              49
+            ],
+            "score_raw": 32742,
+            "level_state": {
+              "bound_raw": 3840,
+              "previous_bound_raw": 32762,
+              "best_raw": 32762,
+              "child_raw": 32680,
+              "selector": 1
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 3840,
+              "best_raw": 32762,
+              "child_raw": 32762,
+              "selector": 255
+            },
+            "ce": 0,
+            "cf": 0
+          },
+          {
+            "event": "black_static_iteration_gate",
+            "pc": 37637,
+            "instruction": "$9305: C6 CF     DEC $CF",
+            "registers": {
+              "a": 29,
+              "x": 1,
+              "y": 255,
+              "sp": 243,
+              "p": 37
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 0,
+              "v": 0
+            },
+            "level": 1,
+            "index": 1,
+            "move": [
+              49,
+              48
+            ],
+            "score_raw": 32742,
+            "level_state": {
+              "bound_raw": 3840,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32680,
+              "selector": 1
+            },
+            "index_state": {
+              "bound_raw": 3840,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32680,
+              "selector": 1
+            },
+            "ce": 0,
+            "cf": 0
+          },
+          {
+            "event": "black_bound_vs_static_begin",
+            "pc": 37641,
+            "instruction": "$9309: 38        SEC",
+            "registers": {
+              "a": 29,
+              "x": 1,
+              "y": 255,
+              "sp": 243,
+              "p": 165
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 1,
+              "v": 0
+            },
+            "level": 1,
+            "index": 1,
+            "move": [
+              49,
+              48
+            ],
+            "score_raw": 32742,
+            "level_state": {
+              "bound_raw": 3840,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32680,
+              "selector": 1
+            },
+            "index_state": {
+              "bound_raw": 3840,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32680,
+              "selector": 1
+            },
+            "ce": 0,
+            "cf": 255
+          },
+          {
+            "event": "black_bound_vs_static_branch",
+            "pc": 37652,
+            "instruction": "$9314: B0 17     BCS $932D",
+            "registers": {
+              "a": 143,
+              "x": 1,
+              "y": 255,
+              "sp": 243,
+              "p": 164
+            },
+            "flags": {
+              "c": 0,
+              "z": 0,
+              "n": 1,
+              "v": 0
+            },
+            "level": 1,
+            "index": 1,
+            "move": [
+              49,
+              48
+            ],
+            "score_raw": 32742,
+            "level_state": {
+              "bound_raw": 3840,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32680,
+              "selector": 1
+            },
+            "index_state": {
+              "bound_raw": 3840,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32680,
+              "selector": 1
+            },
+            "ce": 0,
+            "cf": 255,
+            "branch": {
+              "taken": false,
+              "target": 37677,
+              "fallthrough": 37654
+            }
+          },
+          {
+            "event": "black_static_vs_previous_bound_begin",
+            "pc": 37654,
+            "instruction": "$9316: 38        SEC",
+            "registers": {
+              "a": 143,
+              "x": 1,
+              "y": 255,
+              "sp": 243,
+              "p": 164
+            },
+            "flags": {
+              "c": 0,
+              "z": 0,
+              "n": 1,
+              "v": 0
+            },
+            "level": 1,
+            "index": 1,
+            "move": [
+              49,
+              48
+            ],
+            "score_raw": 32742,
+            "level_state": {
+              "bound_raw": 3840,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32680,
+              "selector": 1
+            },
+            "index_state": {
+              "bound_raw": 3840,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32680,
+              "selector": 1
+            },
+            "ce": 0,
+            "cf": 255
+          },
+          {
+            "event": "black_static_vs_previous_bound_branch",
+            "pc": 37665,
+            "instruction": "$9321: B0 9A     BCS $92BD",
+            "registers": {
+              "a": 255,
+              "x": 1,
+              "y": 255,
+              "sp": 243,
+              "p": 164
+            },
+            "flags": {
+              "c": 0,
+              "z": 0,
+              "n": 1,
+              "v": 0
+            },
+            "level": 1,
+            "index": 1,
+            "move": [
+              49,
+              48
+            ],
+            "score_raw": 32742,
+            "level_state": {
+              "bound_raw": 3840,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32680,
+              "selector": 1
+            },
+            "index_state": {
+              "bound_raw": 3840,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32680,
+              "selector": 1
+            },
+            "ce": 0,
+            "cf": 255,
+            "branch": {
+              "taken": false,
+              "target": 37565,
+              "fallthrough": 37667
+            }
+          },
+          {
+            "event": "black_store_best",
+            "pc": 37677,
+            "instruction": "$932D: A5 C8     LDA $C8",
+            "registers": {
+              "a": 127,
+              "x": 1,
+              "y": 255,
+              "sp": 243,
+              "p": 36
+            },
+            "flags": {
+              "c": 0,
+              "z": 0,
+              "n": 0,
+              "v": 0
+            },
+            "level": 1,
+            "index": 1,
+            "move": [
+              49,
+              48
+            ],
+            "score_raw": 32742,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32680,
+              "selector": 1
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32680,
+              "selector": 1
+            },
+            "ce": 0,
+            "cf": 255
+          },
+          {
+            "event": "red_node",
+            "pc": 41489,
+            "instruction": "$A211: E6 CC     INC $CC",
+            "registers": {
+              "a": 255,
+              "x": 1,
+              "y": 48,
+              "sp": 237,
+              "p": 165
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 1,
+              "v": 0
+            },
+            "level": 2,
+            "index": 1,
+            "move": [
+              48,
+              49
+            ],
+            "score_raw": 32846,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 32680,
+              "child_raw": 32762,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 32742,
+              "child_raw": 32680,
+              "selector": 255
+            },
+            "ce": 0,
+            "cf": 255
+          },
+          {
+            "event": "red_static_iteration_gate",
+            "pc": 41576,
+            "instruction": "$A268: C6 CF     DEC $CF",
+            "registers": {
+              "a": 37,
+              "x": 2,
+              "y": 8,
+              "sp": 237,
+              "p": 37
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 0,
+              "v": 0
+            },
+            "level": 2,
+            "index": 2,
+            "move": [
+              49,
+              57
+            ],
+            "score_raw": 32846,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32762,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32762,
+              "selector": 2
+            },
+            "ce": 0,
+            "cf": 255
+          },
+          {
+            "event": "red_static_vs_bound_begin",
+            "pc": 41580,
+            "instruction": "$A26C: 38        SEC",
+            "registers": {
+              "a": 37,
+              "x": 2,
+              "y": 8,
+              "sp": 237,
+              "p": 165
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 1,
+              "v": 0
+            },
+            "level": 2,
+            "index": 2,
+            "move": [
+              49,
+              57
+            ],
+            "score_raw": 32846,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32762,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32762,
+              "selector": 2
+            },
+            "ce": 0,
+            "cf": 254
+          },
+          {
+            "event": "red_static_vs_bound_branch",
+            "pc": 41591,
+            "instruction": "$A277: B0 17     BCS $A290",
+            "registers": {
+              "a": 0,
+              "x": 2,
+              "y": 8,
+              "sp": 237,
+              "p": 103
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 1
+            },
+            "level": 2,
+            "index": 2,
+            "move": [
+              49,
+              57
+            ],
+            "score_raw": 32846,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32762,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32762,
+              "selector": 2
+            },
+            "ce": 0,
+            "cf": 254,
+            "branch": {
+              "taken": true,
+              "target": 41616,
+              "fallthrough": 41593
+            }
+          },
+          {
+            "event": "red_store_best",
+            "pc": 41616,
+            "instruction": "$A290: A5 C8     LDA $C8",
+            "registers": {
+              "a": 0,
+              "x": 2,
+              "y": 8,
+              "sp": 237,
+              "p": 103
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 1
+            },
+            "level": 2,
+            "index": 2,
+            "move": [
+              49,
+              57
+            ],
+            "score_raw": 32846,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32762,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32762,
+              "selector": 2
+            },
+            "ce": 0,
+            "cf": 254
+          },
+          {
+            "event": "black_try",
+            "pc": 46467,
+            "instruction": "$B583: A6 C6     LDX $C6",
+            "registers": {
+              "a": 34,
+              "x": 9,
+              "y": 254,
+              "sp": 235,
+              "p": 39
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 0
+            },
+            "level": 2,
+            "index": 9,
+            "move": [
+              9,
+              7
+            ],
+            "score_raw": 32846,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 32846,
+              "child_raw": 32762,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 0,
+              "previous_bound_raw": 0,
+              "best_raw": 0,
+              "child_raw": 0,
+              "selector": 0
+            },
+            "ce": 0,
+            "cf": 254
+          },
+          {
+            "event": "black_node",
+            "pc": 37551,
+            "instruction": "$92AF: E6 CC     INC $CC",
+            "registers": {
+              "a": 254,
+              "x": 2,
+              "y": 9,
+              "sp": 232,
+              "p": 165
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 1,
+              "v": 0
+            },
+            "level": 3,
+            "index": 2,
+            "move": [
+              9,
+              7
+            ],
+            "score_raw": 32730,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 32762,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 32846,
+              "child_raw": 32762,
+              "selector": 255
+            },
+            "ce": 0,
+            "cf": 254
+          },
+          {
+            "event": "black_static_iteration_gate",
+            "pc": 37637,
+            "instruction": "$9305: C6 CF     DEC $CF",
+            "registers": {
+              "a": 2,
+              "x": 3,
+              "y": 42,
+              "sp": 232,
+              "p": 37
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 0,
+              "v": 0
+            },
+            "level": 3,
+            "index": 3,
+            "move": [
+              7,
+              49
+            ],
+            "score_raw": 32730,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "ce": 0,
+            "cf": 254
+          },
+          {
+            "event": "black_bound_vs_static_begin",
+            "pc": 37641,
+            "instruction": "$9309: 38        SEC",
+            "registers": {
+              "a": 2,
+              "x": 3,
+              "y": 42,
+              "sp": 232,
+              "p": 165
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 1,
+              "v": 0
+            },
+            "level": 3,
+            "index": 3,
+            "move": [
+              7,
+              49
+            ],
+            "score_raw": 32730,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "ce": 0,
+            "cf": 253
+          },
+          {
+            "event": "black_bound_vs_static_branch",
+            "pc": 37652,
+            "instruction": "$9314: B0 17     BCS $932D",
+            "registers": {
+              "a": 0,
+              "x": 3,
+              "y": 42,
+              "sp": 232,
+              "p": 39
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 0
+            },
+            "level": 3,
+            "index": 3,
+            "move": [
+              7,
+              49
+            ],
+            "score_raw": 32730,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "ce": 0,
+            "cf": 253,
+            "branch": {
+              "taken": true,
+              "target": 37677,
+              "fallthrough": 37654
+            }
+          },
+          {
+            "event": "black_store_best",
+            "pc": 37677,
+            "instruction": "$932D: A5 C8     LDA $C8",
+            "registers": {
+              "a": 0,
+              "x": 3,
+              "y": 42,
+              "sp": 232,
+              "p": 39
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 0
+            },
+            "level": 3,
+            "index": 3,
+            "move": [
+              7,
+              49
+            ],
+            "score_raw": 32730,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "ce": 0,
+            "cf": 253
+          },
+          {
+            "event": "red_node",
+            "pc": 41489,
+            "instruction": "$A211: E6 CC     INC $CC",
+            "registers": {
+              "a": 255,
+              "x": 1,
+              "y": 36,
+              "sp": 237,
+              "p": 165
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 1,
+              "v": 0
+            },
+            "level": 2,
+            "index": 1,
+            "move": [
+              36,
+              49
+            ],
+            "score_raw": 32849,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 32730,
+              "child_raw": 32730,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 32742,
+              "child_raw": 32730,
+              "selector": 255
+            },
+            "ce": 0,
+            "cf": 255
+          },
+          {
+            "event": "red_static_iteration_gate",
+            "pc": 41576,
+            "instruction": "$A268: C6 CF     DEC $CF",
+            "registers": {
+              "a": 16,
+              "x": 2,
+              "y": 8,
+              "sp": 237,
+              "p": 37
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 0,
+              "v": 0
+            },
+            "level": 2,
+            "index": 2,
+            "move": [
+              49,
+              57
+            ],
+            "score_raw": 32849,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32730,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32730,
+              "selector": 255
+            },
+            "ce": 0,
+            "cf": 255
+          },
+          {
+            "event": "red_static_vs_bound_begin",
+            "pc": 41580,
+            "instruction": "$A26C: 38        SEC",
+            "registers": {
+              "a": 16,
+              "x": 2,
+              "y": 8,
+              "sp": 237,
+              "p": 165
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 1,
+              "v": 0
+            },
+            "level": 2,
+            "index": 2,
+            "move": [
+              49,
+              57
+            ],
+            "score_raw": 32849,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32730,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32730,
+              "selector": 255
+            },
+            "ce": 0,
+            "cf": 254
+          },
+          {
+            "event": "red_static_vs_bound_branch",
+            "pc": 41591,
+            "instruction": "$A277: B0 17     BCS $A290",
+            "registers": {
+              "a": 0,
+              "x": 2,
+              "y": 8,
+              "sp": 237,
+              "p": 103
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 1
+            },
+            "level": 2,
+            "index": 2,
+            "move": [
+              49,
+              57
+            ],
+            "score_raw": 32849,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32730,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32730,
+              "selector": 255
+            },
+            "ce": 0,
+            "cf": 254,
+            "branch": {
+              "taken": true,
+              "target": 41616,
+              "fallthrough": 41593
+            }
+          },
+          {
+            "event": "red_store_best",
+            "pc": 41616,
+            "instruction": "$A290: A5 C8     LDA $C8",
+            "registers": {
+              "a": 0,
+              "x": 2,
+              "y": 8,
+              "sp": 237,
+              "p": 103
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 1
+            },
+            "level": 2,
+            "index": 2,
+            "move": [
+              49,
+              57
+            ],
+            "score_raw": 32849,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32730,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32730,
+              "selector": 255
+            },
+            "ce": 0,
+            "cf": 254
+          },
+          {
+            "event": "black_try",
+            "pc": 46467,
+            "instruction": "$B583: A6 C6     LDX $C6",
+            "registers": {
+              "a": 34,
+              "x": 9,
+              "y": 254,
+              "sp": 235,
+              "p": 39
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 0
+            },
+            "level": 2,
+            "index": 9,
+            "move": [
+              9,
+              7
+            ],
+            "score_raw": 32849,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 32849,
+              "child_raw": 32730,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 0,
+              "previous_bound_raw": 0,
+              "best_raw": 0,
+              "child_raw": 0,
+              "selector": 0
+            },
+            "ce": 0,
+            "cf": 254
+          },
+          {
+            "event": "black_node",
+            "pc": 37551,
+            "instruction": "$92AF: E6 CC     INC $CC",
+            "registers": {
+              "a": 254,
+              "x": 2,
+              "y": 9,
+              "sp": 232,
+              "p": 165
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 1,
+              "v": 0
+            },
+            "level": 3,
+            "index": 2,
+            "move": [
+              9,
+              7
+            ],
+            "score_raw": 32733,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 32730,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 32849,
+              "child_raw": 32730,
+              "selector": 255
+            },
+            "ce": 0,
+            "cf": 254
+          },
+          {
+            "event": "black_static_iteration_gate",
+            "pc": 37637,
+            "instruction": "$9305: C6 CF     DEC $CF",
+            "registers": {
+              "a": 2,
+              "x": 3,
+              "y": 41,
+              "sp": 232,
+              "p": 37
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 0,
+              "v": 0
+            },
+            "level": 3,
+            "index": 3,
+            "move": [
+              7,
+              48
+            ],
+            "score_raw": 32733,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "ce": 0,
+            "cf": 254
+          },
+          {
+            "event": "black_bound_vs_static_begin",
+            "pc": 37641,
+            "instruction": "$9309: 38        SEC",
+            "registers": {
+              "a": 2,
+              "x": 3,
+              "y": 41,
+              "sp": 232,
+              "p": 165
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 1,
+              "v": 0
+            },
+            "level": 3,
+            "index": 3,
+            "move": [
+              7,
+              48
+            ],
+            "score_raw": 32733,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "ce": 0,
+            "cf": 253
+          },
+          {
+            "event": "black_bound_vs_static_branch",
+            "pc": 37652,
+            "instruction": "$9314: B0 17     BCS $932D",
+            "registers": {
+              "a": 0,
+              "x": 3,
+              "y": 41,
+              "sp": 232,
+              "p": 39
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 0
+            },
+            "level": 3,
+            "index": 3,
+            "move": [
+              7,
+              48
+            ],
+            "score_raw": 32733,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "ce": 0,
+            "cf": 253,
+            "branch": {
+              "taken": true,
+              "target": 37677,
+              "fallthrough": 37654
+            }
+          },
+          {
+            "event": "black_store_best",
+            "pc": 37677,
+            "instruction": "$932D: A5 C8     LDA $C8",
+            "registers": {
+              "a": 0,
+              "x": 3,
+              "y": 41,
+              "sp": 232,
+              "p": 39
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 0
+            },
+            "level": 3,
+            "index": 3,
+            "move": [
+              7,
+              48
+            ],
+            "score_raw": 32733,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "ce": 0,
+            "cf": 253
+          },
+          {
+            "event": "red_node",
+            "pc": 41489,
+            "instruction": "$A211: E6 CC     INC $CC",
+            "registers": {
+              "a": 255,
+              "x": 1,
+              "y": 36,
+              "sp": 236,
+              "p": 164
+            },
+            "flags": {
+              "c": 0,
+              "z": 0,
+              "n": 1,
+              "v": 0
+            },
+            "level": 2,
+            "index": 1,
+            "move": [
+              36,
+              49
+            ],
+            "score_raw": 32849,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 32733,
+              "child_raw": 32733,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 32742,
+              "child_raw": 32733,
+              "selector": 1
+            },
+            "ce": 0,
+            "cf": 255
+          },
+          {
+            "event": "red_static_iteration_gate",
+            "pc": 41576,
+            "instruction": "$A268: C6 CF     DEC $CF",
+            "registers": {
+              "a": 16,
+              "x": 2,
+              "y": 8,
+              "sp": 236,
+              "p": 37
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 0,
+              "v": 0
+            },
+            "level": 2,
+            "index": 2,
+            "move": [
+              49,
+              57
+            ],
+            "score_raw": 32849,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32733,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32733,
+              "selector": 255
+            },
+            "ce": 0,
+            "cf": 255
+          },
+          {
+            "event": "red_static_vs_bound_begin",
+            "pc": 41580,
+            "instruction": "$A26C: 38        SEC",
+            "registers": {
+              "a": 16,
+              "x": 2,
+              "y": 8,
+              "sp": 236,
+              "p": 165
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 1,
+              "v": 0
+            },
+            "level": 2,
+            "index": 2,
+            "move": [
+              49,
+              57
+            ],
+            "score_raw": 32849,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32733,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32733,
+              "selector": 255
+            },
+            "ce": 0,
+            "cf": 254
+          },
+          {
+            "event": "red_static_vs_bound_branch",
+            "pc": 41591,
+            "instruction": "$A277: B0 17     BCS $A290",
+            "registers": {
+              "a": 0,
+              "x": 2,
+              "y": 8,
+              "sp": 236,
+              "p": 103
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 1
+            },
+            "level": 2,
+            "index": 2,
+            "move": [
+              49,
+              57
+            ],
+            "score_raw": 32849,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32733,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32733,
+              "selector": 255
+            },
+            "ce": 0,
+            "cf": 254,
+            "branch": {
+              "taken": true,
+              "target": 41616,
+              "fallthrough": 41593
+            }
+          },
+          {
+            "event": "red_store_best",
+            "pc": 41616,
+            "instruction": "$A290: A5 C8     LDA $C8",
+            "registers": {
+              "a": 0,
+              "x": 2,
+              "y": 8,
+              "sp": 236,
+              "p": 103
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 1
+            },
+            "level": 2,
+            "index": 2,
+            "move": [
+              49,
+              57
+            ],
+            "score_raw": 32849,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32733,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32733,
+              "selector": 255
+            },
+            "ce": 0,
+            "cf": 254
+          },
+          {
+            "event": "black_try",
+            "pc": 46467,
+            "instruction": "$B583: A6 C6     LDX $C6",
+            "registers": {
+              "a": 34,
+              "x": 9,
+              "y": 254,
+              "sp": 234,
+              "p": 39
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 0
+            },
+            "level": 2,
+            "index": 9,
+            "move": [
+              9,
+              7
+            ],
+            "score_raw": 32849,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 32849,
+              "child_raw": 32733,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 0,
+              "previous_bound_raw": 0,
+              "best_raw": 0,
+              "child_raw": 0,
+              "selector": 0
+            },
+            "ce": 0,
+            "cf": 254
+          },
+          {
+            "event": "black_node",
+            "pc": 37551,
+            "instruction": "$92AF: E6 CC     INC $CC",
+            "registers": {
+              "a": 254,
+              "x": 2,
+              "y": 9,
+              "sp": 231,
+              "p": 165
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 1,
+              "v": 0
+            },
+            "level": 3,
+            "index": 2,
+            "move": [
+              9,
+              7
+            ],
+            "score_raw": 32733,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 32733,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 32849,
+              "child_raw": 32733,
+              "selector": 255
+            },
+            "ce": 0,
+            "cf": 254
+          },
+          {
+            "event": "black_static_iteration_gate",
+            "pc": 37637,
+            "instruction": "$9305: C6 CF     DEC $CF",
+            "registers": {
+              "a": 2,
+              "x": 3,
+              "y": 41,
+              "sp": 231,
+              "p": 37
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 0,
+              "v": 0
+            },
+            "level": 3,
+            "index": 3,
+            "move": [
+              7,
+              48
+            ],
+            "score_raw": 32733,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "ce": 0,
+            "cf": 254
+          },
+          {
+            "event": "black_bound_vs_static_begin",
+            "pc": 37641,
+            "instruction": "$9309: 38        SEC",
+            "registers": {
+              "a": 2,
+              "x": 3,
+              "y": 41,
+              "sp": 231,
+              "p": 165
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 1,
+              "v": 0
+            },
+            "level": 3,
+            "index": 3,
+            "move": [
+              7,
+              48
+            ],
+            "score_raw": 32733,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "ce": 0,
+            "cf": 253
+          },
+          {
+            "event": "black_bound_vs_static_branch",
+            "pc": 37652,
+            "instruction": "$9314: B0 17     BCS $932D",
+            "registers": {
+              "a": 0,
+              "x": 3,
+              "y": 41,
+              "sp": 231,
+              "p": 39
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 0
+            },
+            "level": 3,
+            "index": 3,
+            "move": [
+              7,
+              48
+            ],
+            "score_raw": 32733,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "ce": 0,
+            "cf": 253,
+            "branch": {
+              "taken": true,
+              "target": 37677,
+              "fallthrough": 37654
+            }
+          },
+          {
+            "event": "black_store_best",
+            "pc": 37677,
+            "instruction": "$932D: A5 C8     LDA $C8",
+            "registers": {
+              "a": 0,
+              "x": 3,
+              "y": 41,
+              "sp": 231,
+              "p": 39
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 0
+            },
+            "level": 3,
+            "index": 3,
+            "move": [
+              7,
+              48
+            ],
+            "score_raw": 32733,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "ce": 0,
+            "cf": 253
+          },
+          {
+            "event": "red_node",
+            "pc": 41489,
+            "instruction": "$A211: E6 CC     INC $CC",
+            "registers": {
+              "a": 255,
+              "x": 1,
+              "y": 48,
+              "sp": 236,
+              "p": 164
+            },
+            "flags": {
+              "c": 0,
+              "z": 0,
+              "n": 1,
+              "v": 0
+            },
+            "level": 2,
+            "index": 1,
+            "move": [
+              48,
+              49
+            ],
+            "score_raw": 32846,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 32733,
+              "child_raw": 32733,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 32742,
+              "child_raw": 32733,
+              "selector": 1
+            },
+            "ce": 0,
+            "cf": 255
+          },
+          {
+            "event": "red_static_iteration_gate",
+            "pc": 41576,
+            "instruction": "$A268: C6 CF     DEC $CF",
+            "registers": {
+              "a": 37,
+              "x": 2,
+              "y": 8,
+              "sp": 236,
+              "p": 37
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 0,
+              "v": 0
+            },
+            "level": 2,
+            "index": 2,
+            "move": [
+              49,
+              57
+            ],
+            "score_raw": 32846,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32733,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32733,
+              "selector": 255
+            },
+            "ce": 0,
+            "cf": 255
+          },
+          {
+            "event": "red_static_vs_bound_begin",
+            "pc": 41580,
+            "instruction": "$A26C: 38        SEC",
+            "registers": {
+              "a": 37,
+              "x": 2,
+              "y": 8,
+              "sp": 236,
+              "p": 165
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 1,
+              "v": 0
+            },
+            "level": 2,
+            "index": 2,
+            "move": [
+              49,
+              57
+            ],
+            "score_raw": 32846,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32733,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32733,
+              "selector": 255
+            },
+            "ce": 0,
+            "cf": 254
+          },
+          {
+            "event": "red_static_vs_bound_branch",
+            "pc": 41591,
+            "instruction": "$A277: B0 17     BCS $A290",
+            "registers": {
+              "a": 0,
+              "x": 2,
+              "y": 8,
+              "sp": 236,
+              "p": 103
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 1
+            },
+            "level": 2,
+            "index": 2,
+            "move": [
+              49,
+              57
+            ],
+            "score_raw": 32846,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32733,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32733,
+              "selector": 255
+            },
+            "ce": 0,
+            "cf": 254,
+            "branch": {
+              "taken": true,
+              "target": 41616,
+              "fallthrough": 41593
+            }
+          },
+          {
+            "event": "red_store_best",
+            "pc": 41616,
+            "instruction": "$A290: A5 C8     LDA $C8",
+            "registers": {
+              "a": 0,
+              "x": 2,
+              "y": 8,
+              "sp": 236,
+              "p": 103
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 1
+            },
+            "level": 2,
+            "index": 2,
+            "move": [
+              49,
+              57
+            ],
+            "score_raw": 32846,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32733,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32733,
+              "selector": 255
+            },
+            "ce": 0,
+            "cf": 254
+          },
+          {
+            "event": "black_try",
+            "pc": 46467,
+            "instruction": "$B583: A6 C6     LDX $C6",
+            "registers": {
+              "a": 34,
+              "x": 9,
+              "y": 254,
+              "sp": 234,
+              "p": 39
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 0
+            },
+            "level": 2,
+            "index": 9,
+            "move": [
+              9,
+              7
+            ],
+            "score_raw": 32846,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 32846,
+              "child_raw": 32733,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 0,
+              "previous_bound_raw": 0,
+              "best_raw": 0,
+              "child_raw": 0,
+              "selector": 0
+            },
+            "ce": 0,
+            "cf": 254
+          },
+          {
+            "event": "black_node",
+            "pc": 37551,
+            "instruction": "$92AF: E6 CC     INC $CC",
+            "registers": {
+              "a": 254,
+              "x": 2,
+              "y": 9,
+              "sp": 231,
+              "p": 165
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 1,
+              "v": 0
+            },
+            "level": 3,
+            "index": 2,
+            "move": [
+              9,
+              7
+            ],
+            "score_raw": 32730,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 32733,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 32846,
+              "child_raw": 32733,
+              "selector": 255
+            },
+            "ce": 0,
+            "cf": 254
+          },
+          {
+            "event": "black_static_iteration_gate",
+            "pc": 37637,
+            "instruction": "$9305: C6 CF     DEC $CF",
+            "registers": {
+              "a": 2,
+              "x": 3,
+              "y": 42,
+              "sp": 231,
+              "p": 37
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 0,
+              "v": 0
+            },
+            "level": 3,
+            "index": 3,
+            "move": [
+              7,
+              49
+            ],
+            "score_raw": 32730,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "ce": 0,
+            "cf": 254
+          },
+          {
+            "event": "black_bound_vs_static_begin",
+            "pc": 37641,
+            "instruction": "$9309: 38        SEC",
+            "registers": {
+              "a": 2,
+              "x": 3,
+              "y": 42,
+              "sp": 231,
+              "p": 165
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 1,
+              "v": 0
+            },
+            "level": 3,
+            "index": 3,
+            "move": [
+              7,
+              49
+            ],
+            "score_raw": 32730,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "ce": 0,
+            "cf": 253
+          },
+          {
+            "event": "black_bound_vs_static_branch",
+            "pc": 37652,
+            "instruction": "$9314: B0 17     BCS $932D",
+            "registers": {
+              "a": 0,
+              "x": 3,
+              "y": 42,
+              "sp": 231,
+              "p": 39
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 0
+            },
+            "level": 3,
+            "index": 3,
+            "move": [
+              7,
+              49
+            ],
+            "score_raw": 32730,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "ce": 0,
+            "cf": 253,
+            "branch": {
+              "taken": true,
+              "target": 37677,
+              "fallthrough": 37654
+            }
+          },
+          {
+            "event": "black_store_best",
+            "pc": 37677,
+            "instruction": "$932D: A5 C8     LDA $C8",
+            "registers": {
+              "a": 0,
+              "x": 3,
+              "y": 42,
+              "sp": 231,
+              "p": 39
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 0
+            },
+            "level": 3,
+            "index": 3,
+            "move": [
+              7,
+              49
+            ],
+            "score_raw": 32730,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "ce": 0,
+            "cf": 253
+          },
+          {
+            "event": "red_node",
+            "pc": 41489,
+            "instruction": "$A211: E6 CC     INC $CC",
+            "registers": {
+              "a": 255,
+              "x": 1,
+              "y": 77,
+              "sp": 236,
+              "p": 164
+            },
+            "flags": {
+              "c": 0,
+              "z": 0,
+              "n": 1,
+              "v": 0
+            },
+            "level": 2,
+            "index": 1,
+            "move": [
+              77,
+              89
+            ],
+            "score_raw": 32848,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 32730,
+              "child_raw": 32730,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 32742,
+              "child_raw": 32730,
+              "selector": 1
+            },
+            "ce": 0,
+            "cf": 255
+          },
+          {
+            "event": "red_static_iteration_gate",
+            "pc": 41576,
+            "instruction": "$A268: C6 CF     DEC $CF",
+            "registers": {
+              "a": 64,
+              "x": 2,
+              "y": 224,
+              "sp": 236,
+              "p": 36
+            },
+            "flags": {
+              "c": 0,
+              "z": 0,
+              "n": 0,
+              "v": 0
+            },
+            "level": 2,
+            "index": 2,
+            "move": [
+              89,
+              57
+            ],
+            "score_raw": 32848,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32730,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32730,
+              "selector": 255
+            },
+            "ce": 0,
+            "cf": 255
+          },
+          {
+            "event": "red_static_vs_bound_begin",
+            "pc": 41580,
+            "instruction": "$A26C: 38        SEC",
+            "registers": {
+              "a": 64,
+              "x": 2,
+              "y": 224,
+              "sp": 236,
+              "p": 164
+            },
+            "flags": {
+              "c": 0,
+              "z": 0,
+              "n": 1,
+              "v": 0
+            },
+            "level": 2,
+            "index": 2,
+            "move": [
+              89,
+              57
+            ],
+            "score_raw": 32848,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32730,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32730,
+              "selector": 255
+            },
+            "ce": 0,
+            "cf": 254
+          },
+          {
+            "event": "red_static_vs_bound_branch",
+            "pc": 41591,
+            "instruction": "$A277: B0 17     BCS $A290",
+            "registers": {
+              "a": 0,
+              "x": 2,
+              "y": 224,
+              "sp": 236,
+              "p": 103
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 1
+            },
+            "level": 2,
+            "index": 2,
+            "move": [
+              89,
+              57
+            ],
+            "score_raw": 32848,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32730,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32730,
+              "selector": 255
+            },
+            "ce": 0,
+            "cf": 254,
+            "branch": {
+              "taken": true,
+              "target": 41616,
+              "fallthrough": 41593
+            }
+          },
+          {
+            "event": "red_store_best",
+            "pc": 41616,
+            "instruction": "$A290: A5 C8     LDA $C8",
+            "registers": {
+              "a": 0,
+              "x": 2,
+              "y": 224,
+              "sp": 236,
+              "p": 103
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 1
+            },
+            "level": 2,
+            "index": 2,
+            "move": [
+              89,
+              57
+            ],
+            "score_raw": 32848,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32730,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32730,
+              "selector": 255
+            },
+            "ce": 0,
+            "cf": 254
+          },
+          {
+            "event": "black_try",
+            "pc": 46467,
+            "instruction": "$B583: A6 C6     LDX $C6",
+            "registers": {
+              "a": 34,
+              "x": 9,
+              "y": 254,
+              "sp": 234,
+              "p": 39
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 0
+            },
+            "level": 2,
+            "index": 9,
+            "move": [
+              9,
+              7
+            ],
+            "score_raw": 32848,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 32848,
+              "child_raw": 32730,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 0,
+              "previous_bound_raw": 0,
+              "best_raw": 0,
+              "child_raw": 0,
+              "selector": 0
+            },
+            "ce": 0,
+            "cf": 254
+          },
+          {
+            "event": "black_node",
+            "pc": 37551,
+            "instruction": "$92AF: E6 CC     INC $CC",
+            "registers": {
+              "a": 254,
+              "x": 2,
+              "y": 9,
+              "sp": 231,
+              "p": 165
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 1,
+              "v": 0
+            },
+            "level": 3,
+            "index": 2,
+            "move": [
+              9,
+              7
+            ],
+            "score_raw": 32732,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 32730,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 32848,
+              "child_raw": 32730,
+              "selector": 255
+            },
+            "ce": 0,
+            "cf": 254
+          },
+          {
+            "event": "black_static_iteration_gate",
+            "pc": 37637,
+            "instruction": "$9305: C6 CF     DEC $CF",
+            "registers": {
+              "a": 2,
+              "x": 3,
+              "y": 41,
+              "sp": 231,
+              "p": 37
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 0,
+              "v": 0
+            },
+            "level": 3,
+            "index": 3,
+            "move": [
+              7,
+              48
+            ],
+            "score_raw": 32732,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "ce": 0,
+            "cf": 254
+          },
+          {
+            "event": "black_bound_vs_static_begin",
+            "pc": 37641,
+            "instruction": "$9309: 38        SEC",
+            "registers": {
+              "a": 2,
+              "x": 3,
+              "y": 41,
+              "sp": 231,
+              "p": 165
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 1,
+              "v": 0
+            },
+            "level": 3,
+            "index": 3,
+            "move": [
+              7,
+              48
+            ],
+            "score_raw": 32732,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "ce": 0,
+            "cf": 253
+          },
+          {
+            "event": "black_bound_vs_static_branch",
+            "pc": 37652,
+            "instruction": "$9314: B0 17     BCS $932D",
+            "registers": {
+              "a": 0,
+              "x": 3,
+              "y": 41,
+              "sp": 231,
+              "p": 39
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 0
+            },
+            "level": 3,
+            "index": 3,
+            "move": [
+              7,
+              48
+            ],
+            "score_raw": 32732,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "ce": 0,
+            "cf": 253,
+            "branch": {
+              "taken": true,
+              "target": 37677,
+              "fallthrough": 37654
+            }
+          },
+          {
+            "event": "black_store_best",
+            "pc": 37677,
+            "instruction": "$932D: A5 C8     LDA $C8",
+            "registers": {
+              "a": 0,
+              "x": 3,
+              "y": 41,
+              "sp": 231,
+              "p": 39
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 0
+            },
+            "level": 3,
+            "index": 3,
+            "move": [
+              7,
+              48
+            ],
+            "score_raw": 32732,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "ce": 0,
+            "cf": 253
+          },
+          {
+            "event": "red_node",
+            "pc": 41489,
+            "instruction": "$A211: E6 CC     INC $CC",
+            "registers": {
+              "a": 255,
+              "x": 1,
+              "y": 3,
+              "sp": 236,
+              "p": 164
+            },
+            "flags": {
+              "c": 0,
+              "z": 0,
+              "n": 1,
+              "v": 0
+            },
+            "level": 2,
+            "index": 1,
+            "move": [
+              3,
+              4
+            ],
+            "score_raw": 32763,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 32732,
+              "child_raw": 32732,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 32742,
+              "child_raw": 32732,
+              "selector": 1
+            },
+            "ce": 0,
+            "cf": 255
+          },
+          {
+            "event": "red_static_iteration_gate",
+            "pc": 41576,
+            "instruction": "$A268: C6 CF     DEC $CF",
+            "registers": {
+              "a": 64,
+              "x": 2,
+              "y": 53,
+              "sp": 236,
+              "p": 37
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 0,
+              "v": 0
+            },
+            "level": 2,
+            "index": 2,
+            "move": [
+              4,
+              57
+            ],
+            "score_raw": 32763,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32732,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32732,
+              "selector": 255
+            },
+            "ce": 0,
+            "cf": 255
+          },
+          {
+            "event": "red_static_vs_bound_begin",
+            "pc": 41580,
+            "instruction": "$A26C: 38        SEC",
+            "registers": {
+              "a": 64,
+              "x": 2,
+              "y": 53,
+              "sp": 236,
+              "p": 165
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 1,
+              "v": 0
+            },
+            "level": 2,
+            "index": 2,
+            "move": [
+              4,
+              57
+            ],
+            "score_raw": 32763,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32732,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32732,
+              "selector": 255
+            },
+            "ce": 0,
+            "cf": 254
+          },
+          {
+            "event": "red_static_vs_bound_branch",
+            "pc": 41591,
+            "instruction": "$A277: B0 17     BCS $A290",
+            "registers": {
+              "a": 0,
+              "x": 2,
+              "y": 53,
+              "sp": 236,
+              "p": 39
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 0
+            },
+            "level": 2,
+            "index": 2,
+            "move": [
+              4,
+              57
+            ],
+            "score_raw": 32763,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32732,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32732,
+              "selector": 255
+            },
+            "ce": 0,
+            "cf": 254,
+            "branch": {
+              "taken": true,
+              "target": 41616,
+              "fallthrough": 41593
+            }
+          },
+          {
+            "event": "red_store_best",
+            "pc": 41616,
+            "instruction": "$A290: A5 C8     LDA $C8",
+            "registers": {
+              "a": 0,
+              "x": 2,
+              "y": 53,
+              "sp": 236,
+              "p": 39
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 0
+            },
+            "level": 2,
+            "index": 2,
+            "move": [
+              4,
+              57
+            ],
+            "score_raw": 32763,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32732,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 61440,
+              "child_raw": 32732,
+              "selector": 255
+            },
+            "ce": 0,
+            "cf": 254
+          },
+          {
+            "event": "black_try",
+            "pc": 46467,
+            "instruction": "$B583: A6 C6     LDX $C6",
+            "registers": {
+              "a": 34,
+              "x": 9,
+              "y": 254,
+              "sp": 234,
+              "p": 39
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 0
+            },
+            "level": 2,
+            "index": 9,
+            "move": [
+              9,
+              7
+            ],
+            "score_raw": 32763,
+            "level_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 32763,
+              "child_raw": 32732,
+              "selector": 255
+            },
+            "index_state": {
+              "bound_raw": 0,
+              "previous_bound_raw": 0,
+              "best_raw": 0,
+              "child_raw": 0,
+              "selector": 0
+            },
+            "ce": 0,
+            "cf": 254
+          },
+          {
+            "event": "black_node",
+            "pc": 37551,
+            "instruction": "$92AF: E6 CC     INC $CC",
+            "registers": {
+              "a": 254,
+              "x": 2,
+              "y": 9,
+              "sp": 231,
+              "p": 165
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 1,
+              "v": 0
+            },
+            "level": 3,
+            "index": 2,
+            "move": [
+              9,
+              7
+            ],
+            "score_raw": 32647,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 32732,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32762,
+              "previous_bound_raw": 32742,
+              "best_raw": 32763,
+              "child_raw": 32732,
+              "selector": 255
+            },
+            "ce": 0,
+            "cf": 254
+          },
+          {
+            "event": "black_static_iteration_gate",
+            "pc": 37637,
+            "instruction": "$9305: C6 CF     DEC $CF",
+            "registers": {
+              "a": 2,
+              "x": 3,
+              "y": 41,
+              "sp": 231,
+              "p": 37
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 0,
+              "v": 0
+            },
+            "level": 3,
+            "index": 3,
+            "move": [
+              7,
+              48
+            ],
+            "score_raw": 32647,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "ce": 0,
+            "cf": 254
+          },
+          {
+            "event": "black_bound_vs_static_begin",
+            "pc": 37641,
+            "instruction": "$9309: 38        SEC",
+            "registers": {
+              "a": 2,
+              "x": 3,
+              "y": 41,
+              "sp": 231,
+              "p": 165
+            },
+            "flags": {
+              "c": 1,
+              "z": 0,
+              "n": 1,
+              "v": 0
+            },
+            "level": 3,
+            "index": 3,
+            "move": [
+              7,
+              48
+            ],
+            "score_raw": 32647,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "ce": 0,
+            "cf": 253
+          },
+          {
+            "event": "black_bound_vs_static_branch",
+            "pc": 37652,
+            "instruction": "$9314: B0 17     BCS $932D",
+            "registers": {
+              "a": 0,
+              "x": 3,
+              "y": 41,
+              "sp": 231,
+              "p": 39
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 0
+            },
+            "level": 3,
+            "index": 3,
+            "move": [
+              7,
+              48
+            ],
+            "score_raw": 32647,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "ce": 0,
+            "cf": 253,
+            "branch": {
+              "taken": true,
+              "target": 37677,
+              "fallthrough": 37654
+            }
+          },
+          {
+            "event": "black_store_best",
+            "pc": 37677,
+            "instruction": "$932D: A5 C8     LDA $C8",
+            "registers": {
+              "a": 0,
+              "x": 3,
+              "y": 41,
+              "sp": 231,
+              "p": 39
+            },
+            "flags": {
+              "c": 1,
+              "z": 1,
+              "n": 0,
+              "v": 0
+            },
+            "level": 3,
+            "index": 3,
+            "move": [
+              7,
+              48
+            ],
+            "score_raw": 32647,
+            "level_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "index_state": {
+              "bound_raw": 32742,
+              "previous_bound_raw": 32762,
+              "best_raw": 4096,
+              "child_raw": 32836,
+              "selector": 2
+            },
+            "ce": 0,
+            "cf": 253
+          }
+        ]
+      },
+      {
+        "move": [
+          52,
+          40
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32777,
+        "best_before_raw": 32742,
+        "side": 1,
+        "best_after_raw": 32742,
+        "best_move_after": [
+          52,
+          49
+        ],
+        "max_internal_level": 1,
+        "level_counts": {
+          "1": 1
+        }
+      },
+      {
+        "move": [
+          52,
+          28
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32779,
+        "best_before_raw": 32742,
+        "side": 1,
+        "best_after_raw": 32742,
+        "best_move_after": [
+          52,
+          49
+        ],
+        "max_internal_level": 1,
+        "level_counts": {
+          "1": 1
+        }
+      },
+      {
+        "move": [
+          52,
+          16
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32779,
+        "best_before_raw": 32742,
+        "side": 1,
+        "best_after_raw": 32742,
+        "best_move_after": [
+          52,
+          49
+        ],
+        "max_internal_level": 1,
+        "level_counts": {
+          "1": 1
+        }
+      },
+      {
+        "move": [
+          52,
+          64
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32777,
+        "best_before_raw": 32742,
+        "side": 1,
+        "best_after_raw": 32742,
+        "best_move_after": [
+          52,
+          49
+        ],
+        "max_internal_level": 1,
+        "level_counts": {
+          "1": 1
+        }
+      },
+      {
+        "move": [
+          52,
+          76
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32779,
+        "best_before_raw": 32742,
+        "side": 1,
+        "best_after_raw": 32742,
+        "best_move_after": [
+          52,
+          49
+        ],
+        "max_internal_level": 1,
+        "level_counts": {
+          "1": 1
+        }
+      },
+      {
+        "move": [
+          89,
+          90
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32776,
+        "best_before_raw": 32742,
+        "side": 1,
+        "best_after_raw": 32742,
+        "best_move_after": [
+          52,
+          49
+        ],
+        "max_internal_level": 1,
+        "level_counts": {
+          "1": 1
+        }
+      },
+      {
+        "move": [
+          89,
+          91
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32775,
+        "best_before_raw": 32742,
+        "side": 1,
+        "best_after_raw": 32742,
+        "best_move_after": [
+          52,
+          49
+        ],
+        "max_internal_level": 1,
+        "level_counts": {
+          "1": 1
+        }
+      },
+      {
+        "move": [
+          89,
+          92
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32775,
+        "best_before_raw": 32742,
+        "side": 1,
+        "best_after_raw": 32742,
+        "best_move_after": [
+          52,
+          49
+        ],
+        "max_internal_level": 1,
+        "level_counts": {
+          "1": 1
+        }
+      },
+      {
+        "move": [
+          89,
+          93
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32776,
+        "best_before_raw": 32742,
+        "side": 1,
+        "best_after_raw": 32742,
+        "best_move_after": [
+          52,
+          49
+        ],
+        "max_internal_level": 1,
+        "level_counts": {
+          "1": 1
+        }
+      },
+      {
+        "move": [
+          89,
+          101
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32776,
+        "best_before_raw": 32742,
+        "side": 1,
+        "best_after_raw": 32742,
+        "best_move_after": [
+          52,
+          49
+        ],
+        "max_internal_level": 1,
+        "level_counts": {
+          "1": 1
+        }
+      },
+      {
+        "move": [
+          54,
+          44
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32783,
+        "best_before_raw": 32742,
+        "side": 1,
+        "best_after_raw": 32742,
+        "best_move_after": [
+          52,
+          49
+        ],
+        "max_internal_level": 1,
+        "level_counts": {
+          "1": 1
+        }
+      },
+      {
+        "move": [
+          54,
+          68
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32783,
+        "best_before_raw": 32742,
+        "side": 1,
+        "best_after_raw": 32742,
+        "best_move_after": [
+          52,
+          49
+        ],
+        "max_internal_level": 1,
+        "level_counts": {
+          "1": 1
+        }
+      },
+      {
+        "move": [
+          54,
+          29
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32776,
+        "best_before_raw": 32742,
+        "side": 1,
+        "best_after_raw": 32742,
+        "best_move_after": [
+          52,
+          49
+        ],
+        "max_internal_level": 1,
+        "level_counts": {
+          "1": 1
+        }
+      },
+      {
+        "move": [
+          54,
+          31
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32782,
+        "best_before_raw": 32742,
+        "side": 1,
+        "best_after_raw": 32742,
+        "best_move_after": [
+          52,
+          49
+        ],
+        "max_internal_level": 1,
+        "level_counts": {
+          "1": 1
+        }
+      },
+      {
+        "move": [
+          54,
+          77
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32752,
+        "best_before_raw": 32742,
+        "side": 1,
+        "best_after_raw": 32742,
+        "best_move_after": [
+          52,
+          49
+        ],
+        "max_internal_level": 1,
+        "level_counts": {
+          "1": 1
+        }
+      },
+      {
+        "move": [
+          54,
+          79
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32782,
+        "best_before_raw": 32742,
+        "side": 1,
+        "best_after_raw": 32742,
+        "best_move_after": [
+          52,
+          49
+        ],
+        "max_internal_level": 1,
+        "level_counts": {
+          "1": 1
+        }
+      },
+      {
+        "move": [
+          21,
+          7
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32746,
+        "best_before_raw": 32742,
+        "side": 1,
+        "best_after_raw": 32742,
+        "best_move_after": [
+          52,
+          49
+        ],
+        "max_internal_level": 3,
+        "level_counts": {
+          "1": 1,
+          "2": 1,
+          "3": 4
+        }
+      },
+      {
+        "move": [
+          21,
+          31
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32766,
+        "best_before_raw": 32742,
+        "side": 1,
+        "best_after_raw": 32742,
+        "best_move_after": [
+          52,
+          49
+        ],
+        "max_internal_level": 1,
+        "level_counts": {
+          "1": 1
+        }
+      },
+      {
+        "move": [
+          69,
+          56
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32775,
+        "best_before_raw": 32742,
+        "side": 1,
+        "best_after_raw": 32742,
+        "best_move_after": [
+          52,
+          49
+        ],
+        "max_internal_level": 1,
+        "level_counts": {
+          "1": 1
+        }
+      },
+      {
+        "move": [
+          45,
+          56
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32775,
+        "best_before_raw": 32742,
+        "side": 1,
+        "best_after_raw": 32742,
+        "best_move_after": [
+          52,
+          49
+        ],
+        "max_internal_level": 1,
+        "level_counts": {
+          "1": 1
+        }
+      },
+      {
+        "move": [
+          81,
+          55
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32775,
+        "best_before_raw": 32742,
+        "side": 1,
+        "best_after_raw": 32742,
+        "best_move_after": [
+          52,
+          49
+        ],
+        "max_internal_level": 1,
+        "level_counts": {
+          "1": 1
+        }
+      },
+      {
+        "move": [
+          81,
+          103
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32777,
+        "best_before_raw": 32742,
+        "side": 1,
+        "best_after_raw": 32742,
+        "best_move_after": [
+          52,
+          49
+        ],
+        "max_internal_level": 1,
+        "level_counts": {
+          "1": 1
+        }
+      },
+      {
+        "move": [
+          33,
+          7
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32755,
+        "best_before_raw": 32742,
+        "side": 1,
+        "best_after_raw": 32742,
+        "best_move_after": [
+          52,
+          49
+        ],
+        "max_internal_level": 3,
+        "level_counts": {
+          "1": 1,
+          "2": 1,
+          "3": 4
+        }
+      },
+      {
+        "move": [
+          33,
+          55
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32775,
+        "best_before_raw": 32742,
+        "side": 1,
+        "best_after_raw": 32742,
+        "best_move_after": [
+          52,
+          49
+        ],
+        "max_internal_level": 1,
+        "level_counts": {
+          "1": 1
+        }
+      },
+      {
+        "move": [
+          102,
+          101
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32775,
+        "best_before_raw": 32742,
+        "side": 1,
+        "best_after_raw": 32742,
+        "best_move_after": [
+          52,
+          49
+        ],
+        "max_internal_level": 1,
+        "level_counts": {
+          "1": 1
+        }
+      },
+      {
+        "move": [
+          30,
+          29
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32775,
+        "best_before_raw": 32742,
+        "side": 1,
+        "best_after_raw": 32742,
+        "best_move_after": [
+          52,
+          49
+        ],
+        "max_internal_level": 1,
+        "level_counts": {
+          "1": 1
+        }
+      },
+      {
+        "move": [
+          4,
+          3
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32772,
+        "best_before_raw": 32742,
+        "side": 1,
+        "best_after_raw": 32742,
+        "best_move_after": [
+          52,
+          49
+        ],
+        "max_internal_level": 1,
+        "level_counts": {
+          "1": 1
+        }
+      },
+      {
+        "move": [
+          4,
+          16
+        ],
+        "iteration": 0,
+        "static_before_raw": 32776,
+        "score_raw": 32774,
+        "best_before_raw": 32742,
+        "side": 1,
+        "best_after_raw": 32742,
+        "best_move_after": [
+          52,
+          49
+        ],
+        "max_internal_level": 1,
+        "level_counts": {
+          "1": 1
+        }
+      }
+    ]
+  }
+}
