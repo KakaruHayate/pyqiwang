@@ -1,0 +1,628 @@
+{
+  "case": "random-004",
+  "expected": [
+    100,
+    101
+  ],
+  "trace": {
+    "result": [
+      84,
+      74
+    ],
+    "result_notation": "h0g2",
+    "score": -115,
+    "score_raw": 32653,
+    "candidate_count": 32,
+    "nodes": 1177,
+    "attempts": [
+      {
+        "move": [
+          48,
+          49
+        ],
+        "move_notation": "e0e1",
+        "score": -127,
+        "score_raw": 32641,
+        "exact_score": -127,
+        "exact_score_raw": 32641,
+        "static_raw_after": 32651,
+        "captured": false,
+        "nodes": 102,
+        "best_after": [
+          48,
+          49
+        ],
+        "best_score_after": -127
+      },
+      {
+        "move": [
+          96,
+          97
+        ],
+        "move_notation": "i0i1",
+        "score": -29998,
+        "score_raw": 2770,
+        "exact_score": -29998,
+        "exact_score_raw": 2770,
+        "static_raw_after": 32662,
+        "captured": false,
+        "nodes": 59,
+        "best_after": [
+          48,
+          49
+        ],
+        "best_score_after": -127
+      },
+      {
+        "move": [
+          96,
+          98
+        ],
+        "move_notation": "i0i2",
+        "score": -29998,
+        "score_raw": 2770,
+        "exact_score": -29998,
+        "exact_score_raw": 2770,
+        "static_raw_after": 32661,
+        "captured": false,
+        "nodes": 98,
+        "best_after": [
+          48,
+          49
+        ],
+        "best_score_after": -127
+      },
+      {
+        "move": [
+          96,
+          99
+        ],
+        "move_notation": "i0i3",
+        "score": -29998,
+        "score_raw": 2770,
+        "exact_score": -29998,
+        "exact_score_raw": 2770,
+        "static_raw_after": 32660,
+        "captured": false,
+        "nodes": 59,
+        "best_after": [
+          48,
+          49
+        ],
+        "best_score_after": -127
+      },
+      {
+        "move": [
+          1,
+          0
+        ],
+        "move_notation": "a1a0",
+        "score": -127,
+        "score_raw": 32641,
+        "exact_score": -29998,
+        "exact_score_raw": 2770,
+        "static_raw_after": 32644,
+        "captured": false,
+        "nodes": 5,
+        "best_after": [
+          48,
+          49
+        ],
+        "best_score_after": -127
+      },
+      {
+        "move": [
+          1,
+          2
+        ],
+        "move_notation": "a1a2",
+        "score": -29998,
+        "score_raw": 2770,
+        "exact_score": -29998,
+        "exact_score_raw": 2770,
+        "static_raw_after": 32652,
+        "captured": false,
+        "nodes": 87,
+        "best_after": [
+          48,
+          49
+        ],
+        "best_score_after": -127
+      },
+      {
+        "move": [
+          1,
+          3
+        ],
+        "move_notation": "a1a3",
+        "score": -127,
+        "score_raw": 32641,
+        "exact_score": -29998,
+        "exact_score_raw": 2770,
+        "static_raw_after": 32651,
+        "captured": false,
+        "nodes": 7,
+        "best_after": [
+          48,
+          49
+        ],
+        "best_score_after": -127
+      },
+      {
+        "move": [
+          1,
+          13
+        ],
+        "move_notation": "a1b1",
+        "score": -29998,
+        "score_raw": 2770,
+        "exact_score": -29998,
+        "exact_score_raw": 2770,
+        "static_raw_after": 32655,
+        "captured": false,
+        "nodes": 115,
+        "best_after": [
+          48,
+          49
+        ],
+        "best_score_after": -127
+      },
+      {
+        "move": [
+          1,
+          25
+        ],
+        "move_notation": "a1c1",
+        "score": -29998,
+        "score_raw": 2770,
+        "exact_score": -29998,
+        "exact_score_raw": 2770,
+        "static_raw_after": 32653,
+        "captured": false,
+        "nodes": 59,
+        "best_after": [
+          48,
+          49
+        ],
+        "best_score_after": -127
+      },
+      {
+        "move": [
+          37,
+          38
+        ],
+        "move_notation": "d1d2",
+        "score": -29998,
+        "score_raw": 2770,
+        "exact_score": -29998,
+        "exact_score_raw": 2770,
+        "static_raw_after": 32655,
+        "captured": false,
+        "nodes": 59,
+        "best_after": [
+          48,
+          49
+        ],
+        "best_score_after": -127
+      },
+      {
+        "move": [
+          37,
+          39
+        ],
+        "move_notation": "d1d3",
+        "score": -124,
+        "score_raw": 32644,
+        "exact_score": -124,
+        "exact_score_raw": 32644,
+        "static_raw_after": 32654,
+        "captured": false,
+        "nodes": 104,
+        "best_after": [
+          37,
+          39
+        ],
+        "best_score_after": -124
+      },
+      {
+        "move": [
+          37,
+          40
+        ],
+        "move_notation": "d1d4",
+        "score": -124,
+        "score_raw": 32644,
+        "exact_score": -29998,
+        "exact_score_raw": 2770,
+        "static_raw_after": 32654,
+        "captured": false,
+        "nodes": 7,
+        "best_after": [
+          37,
+          39
+        ],
+        "best_score_after": -124
+      },
+      {
+        "move": [
+          37,
+          41
+        ],
+        "move_notation": "d1d5",
+        "score": -124,
+        "score_raw": 32644,
+        "exact_score": -29998,
+        "exact_score_raw": 2770,
+        "static_raw_after": 32653,
+        "captured": false,
+        "nodes": 5,
+        "best_after": [
+          37,
+          39
+        ],
+        "best_score_after": -124
+      },
+      {
+        "move": [
+          37,
+          42
+        ],
+        "move_notation": "d1d6",
+        "score": -124,
+        "score_raw": 32644,
+        "exact_score": -29998,
+        "exact_score_raw": 2770,
+        "static_raw_after": 32652,
+        "captured": false,
+        "nodes": 13,
+        "best_after": [
+          37,
+          39
+        ],
+        "best_score_after": -124
+      },
+      {
+        "move": [
+          37,
+          43
+        ],
+        "move_notation": "d1d7",
+        "score": -124,
+        "score_raw": 32644,
+        "exact_score": -29998,
+        "exact_score_raw": 2770,
+        "static_raw_after": 32651,
+        "captured": false,
+        "nodes": 9,
+        "best_after": [
+          37,
+          39
+        ],
+        "best_score_after": -124
+      },
+      {
+        "move": [
+          37,
+          44
+        ],
+        "move_notation": "d1d8",
+        "score": -124,
+        "score_raw": 32644,
+        "exact_score": -29998,
+        "exact_score_raw": 2770,
+        "static_raw_after": 32650,
+        "captured": false,
+        "nodes": 5,
+        "best_after": [
+          37,
+          39
+        ],
+        "best_score_after": -124
+      },
+      {
+        "move": [
+          37,
+          25
+        ],
+        "move_notation": "d1c1",
+        "score": -29998,
+        "score_raw": 2770,
+        "exact_score": -29998,
+        "exact_score_raw": 2770,
+        "static_raw_after": 32653,
+        "captured": false,
+        "nodes": 64,
+        "best_after": [
+          37,
+          39
+        ],
+        "best_score_after": -124
+      },
+      {
+        "move": [
+          37,
+          13
+        ],
+        "move_notation": "d1b1",
+        "score": -124,
+        "score_raw": 32644,
+        "exact_score": -29998,
+        "exact_score_raw": 2770,
+        "static_raw_after": 32653,
+        "captured": false,
+        "nodes": 5,
+        "best_after": [
+          37,
+          39
+        ],
+        "best_score_after": -124
+      },
+      {
+        "move": [
+          37,
+          61
+        ],
+        "move_notation": "d1f1",
+        "score": -124,
+        "score_raw": 32644,
+        "exact_score": -29998,
+        "exact_score_raw": 2770,
+        "static_raw_after": 32653,
+        "captured": false,
+        "nodes": 9,
+        "best_after": [
+          37,
+          39
+        ],
+        "best_score_after": -124
+      },
+      {
+        "move": [
+          37,
+          73
+        ],
+        "move_notation": "d1g1",
+        "score": -124,
+        "score_raw": 32644,
+        "exact_score": -29998,
+        "exact_score_raw": 2770,
+        "static_raw_after": 32653,
+        "captured": false,
+        "nodes": 9,
+        "best_after": [
+          37,
+          39
+        ],
+        "best_score_after": -124
+      },
+      {
+        "move": [
+          37,
+          85
+        ],
+        "move_notation": "d1h1",
+        "score": -124,
+        "score_raw": 32644,
+        "exact_score": -29998,
+        "exact_score_raw": 2770,
+        "static_raw_after": 32653,
+        "captured": false,
+        "nodes": 5,
+        "best_after": [
+          37,
+          39
+        ],
+        "best_score_after": -124
+      },
+      {
+        "move": [
+          37,
+          97
+        ],
+        "move_notation": "d1i1",
+        "score": -124,
+        "score_raw": 32644,
+        "exact_score": -29998,
+        "exact_score_raw": 2770,
+        "static_raw_after": 32652,
+        "captured": false,
+        "nodes": 9,
+        "best_after": [
+          37,
+          39
+        ],
+        "best_score_after": -124
+      },
+      {
+        "move": [
+          84,
+          74
+        ],
+        "move_notation": "h0g2",
+        "score": -115,
+        "score_raw": 32653,
+        "exact_score": -115,
+        "exact_score_raw": 32653,
+        "static_raw_after": 32663,
+        "captured": false,
+        "nodes": 98,
+        "best_after": [
+          84,
+          74
+        ],
+        "best_score_after": -115
+      },
+      {
+        "move": [
+          84,
+          98
+        ],
+        "move_notation": "h0i2",
+        "score": -115,
+        "score_raw": 32653,
+        "exact_score": -29998,
+        "exact_score_raw": 2770,
+        "static_raw_after": 32661,
+        "captured": false,
+        "nodes": 5,
+        "best_after": [
+          84,
+          74
+        ],
+        "best_score_after": -115
+      },
+      {
+        "move": [
+          12,
+          2
+        ],
+        "move_notation": "b0a2",
+        "score": -115,
+        "score_raw": 32653,
+        "exact_score": -29998,
+        "exact_score_raw": 2770,
+        "static_raw_after": 32661,
+        "captured": false,
+        "nodes": 5,
+        "best_after": [
+          84,
+          74
+        ],
+        "best_score_after": -115
+      },
+      {
+        "move": [
+          12,
+          26
+        ],
+        "move_notation": "b0c2",
+        "score": -115,
+        "score_raw": 32653,
+        "exact_score": -115,
+        "exact_score_raw": 32653,
+        "static_raw_after": 32663,
+        "captured": false,
+        "nodes": 7,
+        "best_after": [
+          84,
+          74
+        ],
+        "best_score_after": -115
+      },
+      {
+        "move": [
+          72,
+          98
+        ],
+        "move_notation": "g0i2",
+        "score": -115,
+        "score_raw": 32653,
+        "exact_score": -29998,
+        "exact_score_raw": 2770,
+        "static_raw_after": 32652,
+        "captured": false,
+        "nodes": 5,
+        "best_after": [
+          84,
+          74
+        ],
+        "best_score_after": -115
+      },
+      {
+        "move": [
+          24,
+          2
+        ],
+        "move_notation": "c0a2",
+        "score": -115,
+        "score_raw": 32653,
+        "exact_score": -29998,
+        "exact_score_raw": 2770,
+        "static_raw_after": 32652,
+        "captured": false,
+        "nodes": 5,
+        "best_after": [
+          84,
+          74
+        ],
+        "best_score_after": -115
+      },
+      {
+        "move": [
+          100,
+          101
+        ],
+        "move_notation": "i4i5",
+        "score": -29998,
+        "score_raw": 2770,
+        "exact_score": -29998,
+        "exact_score_raw": 2770,
+        "static_raw_after": 32668,
+        "captured": false,
+        "nodes": 74,
+        "best_after": [
+          84,
+          74
+        ],
+        "best_score_after": -115
+      },
+      {
+        "move": [
+          75,
+          76
+        ],
+        "move_notation": "g3g4",
+        "score": -115,
+        "score_raw": 32653,
+        "exact_score": -29998,
+        "exact_score_raw": 2770,
+        "static_raw_after": 32654,
+        "captured": false,
+        "nodes": 5,
+        "best_after": [
+          84,
+          74
+        ],
+        "best_score_after": -115
+      },
+      {
+        "move": [
+          27,
+          28
+        ],
+        "move_notation": "c3c4",
+        "score": -115,
+        "score_raw": 32653,
+        "exact_score": -29998,
+        "exact_score_raw": 2770,
+        "static_raw_after": 32654,
+        "captured": false,
+        "nodes": 5,
+        "best_after": [
+          84,
+          74
+        ],
+        "best_score_after": -115
+      },
+      {
+        "move": [
+          4,
+          5
+        ],
+        "move_notation": "a4a5",
+        "score": -29998,
+        "score_raw": 2770,
+        "exact_score": -29998,
+        "exact_score_raw": 2770,
+        "static_raw_after": 32668,
+        "captured": false,
+        "nodes": 74,
+        "best_after": [
+          84,
+          74
+        ],
+        "best_score_after": -115
+      }
+    ]
+  }
+}

@@ -1,14 +1,29 @@
-# pyqiwang — Chinese Chess AI Engine (100% ROM-faithful)
+# pyqiwang — FC 棋王 Dual-Path Chinese Chess AI
 
-Reverse-engineered AI from the FC game **棋王** (Chess King). Uses a 6502 CPU emulator
-to run the ROM's native search subroutine, achieving **100% move fidelity** with the original.
+Reverse-engineering and native reimplementation of the AI from the FC game
+**棋王** (Chess King). The project now keeps two implementation paths side by
+side: the proven ROM-backed implementation and a new ROM-free pure-Python path.
+
+## Implementation paths
+
+| Path | Class / CLI | ROM required | Status |
+|---|---|---:|---|
+| ROM faithful | `QiWangEngine` / `--engine rom` | Yes | Preserved; executes ROM `$8597`, 100% move-faithful |
+| Native Python | `NativeQiWangEngine` / `--engine native` | No | 33-ply book + iterative alpha-beta/quiescence; depth ceiling 8 |
+
+The native path currently uses the existing Python rules, ROM-extracted PST
+values, and an extracted 33-ply sequential opening line. Its search will be
+translated and verified incrementally against the preserved ROM path. Keeping
+both paths allows exact differential testing during the migration instead of
+replacing the known-good implementation prematurely.
 
 ## Features
 
-- **100% faithful AI** — runs the ROM's `$8597` search through a Python 6502 emulator
+- **Preserved faithful AI** — runs ROM `$8597` through the Python 6502 emulator
+- **ROM-free implementation path** — iterative alpha-beta, quiescence, TT, PV and bounded depth-8 search
 - **PST evaluation tables** — extracted directly from ROM `$8886` via dynamic trace
-- **Clean Python API** — ready for training, baselines, and knowledge distillation
-- **Zero external dependencies** — pure Python (3.14+)
+- **Clean Python API** — ready for training, baselines, and differential verification
+- **Zero external Python dependencies**
 
 ## Install
 
@@ -17,14 +32,16 @@ git clone https://github.com/KakaruHayate/pyqiwang.git
 cd pyqiwang
 ```
 
-Place the ROM file `棋王(繁)[小天才](CN)[TAB](0.75Mb).nes` in the project root.
+The native path needs no ROM. To use the preserved faithful path, place the ROM
+file `棋王(繁)[小天才](CN)[TAB](0.75Mb).nes` in the project root.
 
 ## Quick Start
+
+### Preserved ROM-faithful path
 
 ```python
 from pyqiwang import QiWangEngine, Board, RED, BLACK
 
-# Initialize engine (loads ROM automatically)
 engine = QiWangEngine(depth=2)
 
 # Create a board and get the best move
@@ -43,17 +60,43 @@ info = engine.analyze(board)
 score = engine.evaluate(board)  # positive = advantage for side to move
 ```
 
+### ROM-free native path
+
+```python
+from pyqiwang import NativeQiWangEngine, Board
+
+engine = NativeQiWangEngine(depth=8, time_limit=5.0)
+board = Board()
+move = engine.get_best_move(board)
+info = engine.analyze(board)
+# Includes completed_depth, stopped, pv, nodes, score and elapsed.
+# A bounded search returns the last fully completed iteration.
+```
+
+The native API mirrors the ROM engine's main methods, but its search is currently
+a migration scaffold and must not yet be described as FC move-faithful. Passing
+`book=True` enables the ROM-free extracted 33-ply sequential line; exact board
+matching prevents the line from being applied after either player diverges.
+
 ## CLI
 
 ```bash
-# Interactive game (play against the AI)
-python -m pyqiwang --depth 2
+# Preserved ROM-faithful engine (default)
+python -m pyqiwang --engine rom --depth 2
+
+# ROM-free pure-Python implementation path
+python -m pyqiwang --engine native --depth 2
+
+# Request depth 8 with a practical per-move bound
+python -m pyqiwang --engine native --depth 8 --time-limit 5
+# Or use a deterministic node budget
+python -m pyqiwang --engine native --depth 8 --node-limit 100000
 
 # Play as Black
-python -m pyqiwang --depth 3 --side black
+python -m pyqiwang --engine native --depth 3 --side black
 
 # Auto-play demo (AI vs AI)
-python -m pyqiwang --demo
+python -m pyqiwang --engine native --demo
 ```
 
 ## API Reference
@@ -70,6 +113,60 @@ python -m pyqiwang --demo
 | `get_legal_moves(board=None) → list[(int, int)]` | All legal moves. |
 | `play_auto(max_moves=200, verbose=True) → str` | Auto-play both sides (for training). |
 | `reset()` | Reset to initial position. |
+
+### `NativeQiWangEngine`
+
+The ROM-free implementation supports `get_best_move`, `make_move`, `evaluate`,
+`analyze`, `get_legal_moves`, `play_auto`, `reset`, and the `depth` property.
+`NativeQiWangEngine(depth=2, book=False, time_limit=None, node_limit=None)`
+supports depths 1 through 8. It uses iterative deepening and returns the last
+fully completed iteration when a time/node bound fires. `analyze()` additionally
+reports `completed_depth`, `nodes`, `pv`, `stopped`, `backend='native'`,
+`faithful=False`, and `from_book`. It does not expose raw ROM state.
+
+The depth-8 ceiling is an extension target, not an assertion that today's pure
+Python implementation can finish depth 8 quickly from every position. The
+current architecture makes depth 8 safe and observable; move ordering, exact ROM
+node rules and a compiled hot path are still required for practical completion.
+
+### Generating ROM golden fixtures
+
+`tools/generate_golden.py` is an opt-in development tool that records board
+positions, ROM PST values, and ROM best moves without embedding ROM bytes:
+
+```bash
+python tools/generate_golden.py \
+  --rom "path/to/qiwang.nes" \
+  --output tests/fixtures/rom_depth1_golden.json \
+  --depth 1 --positions 12
+```
+
+The checked-in depth-1 fixture records the source ROM SHA-256 and deterministic
+random seed. Future native-search work can compare against this baseline on a
+machine that does not have the ROM. The native path now agrees with the ROM on
+all 12 initial depth-1 fixtures. This is a bounded milestone, not a claim of
+complete native fidelity at deeper searches or arbitrary positions.
+
+`tools/trace_root.py` captures ROM root candidates, their independent 16-bit
+scores, running best values, and maximum internal level. The checked-in traces
+show that ROM depth 1 reaches internal level 4 or 5 and retains the first
+equal-scoring move. Native capture quiescence closes the initial fixture gap
+from 8/12 to 12/12. Depth-2 traces additionally show that a horizon check is
+scored normally unless a king is actually captured; matching that behavior
+closes the independent depth-2 corpus. The ROM's exact deeper selective
+node rules are still under reconstruction.
+
+Independent random-playout baselines currently measure:
+
+| Corpus | Native/ROM agreement | Notes |
+|---|---:|---|
+| depth 1, 24 independent positions | 23/24 | One remaining selective-search mismatch |
+| depth 2, 8 independent positions | 8/8 | Horizon terminal semantics aligned with ROM trace |
+
+The intended progression is: reproduce the original depth 1-4 behavior first,
+then retain the same evaluation and search character while extending iterative
+search to depths 5-8. Improvements that alter behavior (stronger ordering or
+compiled acceleration) must be verified separately from ROM-fidelity changes.
 
 ### `Board`
 
@@ -313,7 +410,10 @@ for board in test_positions:
 pyqiwang/
 ├── __init__.py          # Public API exports
 ├── __main__.py          # CLI: python -m pyqiwang
-├── _engine.py           # QiWangEngine (high-level API)
+├── _engine.py           # Preserved ROM-backed QiWangEngine
+├── _native.py           # ROM-free NativeQiWangEngine path
+├── _book.py             # Sequential opening-book probe
+├── opening_book.json    # Extracted 33-ply ROM line
 ├── _board.py            # Board, move generation, evaluation
 ├── _harness.py          # ROM loader + subroutine caller
 ├── _mos6502.py          # MOS6502 CPU emulator

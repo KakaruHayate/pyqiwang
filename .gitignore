@@ -223,6 +223,7 @@ __marimo__/
 # =====================
 *.nes
 .claude/
+.workbuddy/
 trace_depth2.txt
 *.swp
 *.swo
