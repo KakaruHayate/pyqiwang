@@ -158,15 +158,26 @@ node rules are still under reconstruction.
 
 Independent random-playout baselines currently measure:
 
-| Corpus | Native/ROM agreement | Notes |
+| Corpus | Independent selector/bound vs. ROM | Notes |
 |---|---:|---|
-| depth 1, 24 independent positions | 23/24 | One remaining selective-search mismatch |
-| depth 2, 8 independent positions | 8/8 | Horizon terminal semantics aligned with ROM trace |
+| depth 1 golden, 12 positions | 12/12 | Original golden baseline |
+| depth 1 independent, 24 positions | 23/24 | One remaining selective-search mismatch |
+| depth 2 independent, 8 positions | 8/8 | Two root iterations reconstructed |
+| depth 3 independent, 8 positions | 8/8 | Selector legality gate aligned |
+| depth 4 independent, 8 positions | 8/8 | Four-iteration state machine aligned |
 
-The intended progression is: reproduce the original depth 1-4 behavior first,
-then retain the same evaluation and search character while extending iterative
-search to depths 5-8. Improvements that alter behavior (stronger ordering or
-compiled acceleration) must be verified separately from ROM-fidelity changes.
+These depth 1-4 results belong to the isolated ROM-free experiment in
+`tools/experiment_selector_bound.py`; they have not yet been integrated into
+`NativeQiWangEngine`, which remains correctly marked `faithful=False`. The
+Chinese document [`FC棋王算法解析.md`](FC棋王算法解析.md) explains the extracted
+PST evaluation, root iterations, selector phases, seeded probes, bound slots,
+history rotation, legality restoration, evidence and remaining unknowns.
+
+The intended progression is: integrate the independently verified depth 1-4
+state machine without removing the preserved ROM path, then retain the same
+evaluation and search character while extending iterative search to depths 5-8.
+Improvements that alter behavior (stronger ordering or compiled acceleration)
+must be verified separately from ROM-fidelity changes.
 
 ### `Board`
 
