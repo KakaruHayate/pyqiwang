@@ -83,8 +83,21 @@ Depth 5 is not an original menu difficulty, so it is an explicitly non-faithful
 optional mode. On the development machine the initial position increased from
 about 0.43 s / 19.7 million instructions at depth 4 to about 1.30 s / 61.3
 million instructions at depth 5. In a ten-position random sample it changed
-3/10 moves. Depth 6 exceeded 200 million instructions in the initial position,
-so depth 5 is the practical default for this minimal enhancement.
+3/10 moves. Depth 6 and beyond are accepted by the API, but are experimental long-running
+jobs rather than interactive settings. Initial-position measurements were:
+
+| ROM depth | Time | Instructions | Move |
+|---:|---:|---:|---|
+| 5 | ~1.30 s | 61.3 million | `h2e2` |
+| 6 | ~26.4 s | 1.21 billion | `h2e2` |
+| 7 | ~164.1 s | 7.60 billion | `h2e2` |
+
+Depth 8 did not finish during an additional multi-minute probe. Extrapolating
+the measured ~6.3x depth-6-to-7 growth gives a rough scale of ~17 minutes for
+depth 8, ~1.8 hours for depth 9 and ~11 hours for depth 10 on the development
+machine; these are estimates, not completed benchmarks. Use
+`tools/benchmark_rom_depths.py` for deliberate runs. Depth 5 remains the
+practical default.
 
 ## CLI
 

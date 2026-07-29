@@ -237,7 +237,18 @@ class QiWangEngine:
         # the default path still uses the configured faithful difficulty.
         self._sync_board_to_rom(board)
         search_depth = self._depth if depth is None else max(1, min(int(depth), 12))
-        max_instructions = 1_000_000_000 if search_depth >= 5 else 200_000_000
+        # The compiled ABI uses a 64-bit budget. ROM search growth beyond
+        # depth 5 is steep, so give experimental depth 6-10 progressively
+        # larger ceilings while preserving the original 200M faithful limit.
+        if search_depth <= 4:
+            max_instructions = 200_000_000
+        elif search_depth == 5:
+            max_instructions = 1_000_000_000
+        else:
+            # Empirical growth from the initial position is roughly 5-7x per
+            # iteration (d6=1.21B, d7=7.60B). These 64-bit ceilings allow a
+            # deliberate depth-10 run without silently truncating at 4.29B.
+            max_instructions = 2_000_000_000 * (8 ** (search_depth - 6))
         move = self.harness.get_ai_move(search_depth, max_instructions=max_instructions)
 
         # Sanity check
