@@ -174,6 +174,22 @@ class RomHarness:
         cpu.pc = addr
         self.run_until(SENTINEL, max_instructions, nmi_every=nmi_every)
 
+    def call_subroutine_count_pc(self, addr, count_pc, a=None, x=None, y=None,
+                                 max_instructions=200_000_000, nmi_every=0):
+        """Call a ROM routine through the compiled core and count one PC."""
+        if self.fast_runner is None:
+            raise RuntimeError("PC counting requires the compiled Rust core")
+        cpu = self.cpu
+        if a is not None: cpu.a = a & 0xFF
+        if x is not None: cpu.x = x & 0xFF
+        if y is not None: cpu.y = y & 0xFF
+        cpu.push16((SENTINEL - 1) & 0xFFFF)
+        cpu.pc = addr
+        executed, hits = self.fast_runner.run_until_count_pc(
+            cpu, self.bus, SENTINEL, count_pc, max_instructions, nmi_every)
+        self.instr_count += executed
+        return executed, hits
+
     # ---------- 内存便捷访问 ----------
     def rd(self, addr):
         return self.bus.read(addr)

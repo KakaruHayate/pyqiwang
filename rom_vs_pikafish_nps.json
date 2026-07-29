@@ -1,0 +1,84 @@
+{
+  "rom": [
+    {
+      "engine": "ROM",
+      "depth": 4,
+      "node_definition": "entries at active-bank recursive search frame $8FB4",
+      "node_pc": "$8FB4",
+      "move": [
+        86,
+        50
+      ],
+      "seconds": 0.40028040000470355,
+      "nodes": 47885,
+      "nps": 119628.64032172777,
+      "instructions": 19224918,
+      "instructions_per_second": 48028626.93195593,
+      "instructions_per_node": 401.4810065782604
+    },
+    {
+      "engine": "ROM",
+      "depth": 5,
+      "node_definition": "entries at active-bank recursive search frame $8FB4",
+      "node_pc": "$8FB4",
+      "move": [
+        86,
+        50
+      ],
+      "seconds": 1.3182568999982323,
+      "nodes": 101291,
+      "nps": 76837.07174234084,
+      "instructions": 60749090,
+      "instructions_per_second": 46082891.733835384,
+      "instructions_per_node": 599.7481513658666
+    },
+    {
+      "engine": "ROM",
+      "depth": 6,
+      "node_definition": "entries at active-bank recursive search frame $8FB4",
+      "node_pc": "$8FB4",
+      "move": [
+        86,
+        50
+      ],
+      "seconds": 25.829229800001485,
+      "nodes": 2829573,
+      "nps": 109549.25957567025,
+      "instructions": 1209462536,
+      "instructions_per_second": 46825342.65887907,
+      "instructions_per_node": 427.4364139041474
+    }
+  ],
+  "pikafish": [
+    {
+      "engine": "Pikafish",
+      "depth": 10,
+      "node_definition": "Pikafish UCI nodes",
+      "move": "c3c4",
+      "seconds": 0.06226530000276398,
+      "reported_time_ms": 62,
+      "nodes": 15810,
+      "nps": 255000
+    },
+    {
+      "engine": "Pikafish",
+      "depth": 12,
+      "node_definition": "Pikafish UCI nodes",
+      "move": "h2e2",
+      "seconds": 0.1863937999951304,
+      "reported_time_ms": 186,
+      "nodes": 45245,
+      "nps": 243252
+    },
+    {
+      "engine": "Pikafish",
+      "depth": 16,
+      "node_definition": "Pikafish UCI nodes",
+      "move": "h2e2",
+      "seconds": 1.0294152999995276,
+      "reported_time_ms": 1029,
+      "nodes": 251577,
+      "nps": 244486
+    }
+  ]
+}

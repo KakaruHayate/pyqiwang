@@ -86,6 +86,12 @@ class Fast6502Runner:
             ctypes.POINTER(ctypes.c_uint64),
         )
         lib.qiwang_machine_run_until.restype = ctypes.c_int
+        lib.qiwang_machine_run_until_count_pc.argtypes = (
+            pointer, ctypes.c_uint16, ctypes.c_uint16,
+            ctypes.c_uint64, ctypes.c_uint64,
+            ctypes.POINTER(ctypes.c_uint64), ctypes.POINTER(ctypes.c_uint64),
+        )
+        lib.qiwang_machine_run_until_count_pc.restype = ctypes.c_int
         lib.qiwang_machine_copy_ram.argtypes = (
             pointer, ctypes.POINTER(ctypes.c_uint8), ctypes.c_size_t,
         )
@@ -176,3 +182,28 @@ class Fast6502Runner:
                 f"PC=${cpu.pc:04X}"
             )
         return int(executed.value)
+
+    def run_until_count_pc(self, cpu, bus, stop_pc: int, count_pc: int,
+                           max_instructions: int, nmi_every: int = 0) -> tuple[int, int]:
+        """Run compiled code and count entries at one selected program counter."""
+        self._set_state(cpu, bus)
+        executed = ctypes.c_uint64()
+        hits = ctypes.c_uint64()
+        status = self._lib.qiwang_machine_run_until_count_pc(
+            self._machine, stop_pc & 0xFFFF, count_pc & 0xFFFF,
+            max_instructions, nmi_every,
+            ctypes.byref(executed), ctypes.byref(hits),
+        )
+        self._get_state(cpu, bus)
+        if status == 257:
+            raise TimeoutError(
+                f"compiled core ran {executed.value} instructions without "
+                f"reaching ${stop_pc:04X} (PC=${cpu.pc:04X})"
+            )
+        if status != 0:
+            opcode = status - 1
+            raise Fast6502ExecutionError(
+                f"compiled core encountered opcode ${opcode:02X} at "
+                f"PC=${cpu.pc:04X}"
+            )
+        return int(executed.value), int(hits.value)

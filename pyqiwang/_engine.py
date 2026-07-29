@@ -244,6 +244,10 @@ class QiWangEngine:
             max_instructions = 200_000_000
         elif search_depth == 5:
             max_instructions = 1_000_000_000
+        elif search_depth == 6:
+            # Material-handicap and complex middlegame positions can exceed
+            # the 2B initial-position budget by a wide margin.
+            max_instructions = 16_000_000_000
         else:
             # Empirical growth from the initial position is roughly 5-7x per
             # iteration (d6=1.21B, d7=7.60B). These 64-bit ceilings allow a

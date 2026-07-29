@@ -824,6 +824,57 @@ pub unsafe extern "C" fn qiwang_machine_run_until(
 }
 
 #[no_mangle]
+pub unsafe extern "C" fn qiwang_machine_run_until_count_pc(
+    machine: *mut Machine,
+    stop_pc: u16,
+    count_pc: u16,
+    max_instructions: u64,
+    nmi_every: u64,
+    executed: *mut u64,
+    pc_hits: *mut u64,
+) -> i32 {
+    let Some(machine) = machine.as_mut() else {
+        return -1;
+    };
+    let mut count = 0;
+    let mut hits = 0;
+    while count < max_instructions {
+        if machine.pc == stop_pc {
+            if !executed.is_null() {
+                *executed = count;
+            }
+            if !pc_hits.is_null() {
+                *pc_hits = hits;
+            }
+            return 0;
+        }
+        if machine.pc == count_pc {
+            hits += 1;
+        }
+        if let Err(op) = machine.step() {
+            if !executed.is_null() {
+                *executed = count;
+            }
+            if !pc_hits.is_null() {
+                *pc_hits = hits;
+            }
+            return op as i32 + 1;
+        }
+        count += 1;
+        if nmi_every != 0 && count % nmi_every == 0 {
+            machine.nmi();
+        }
+    }
+    if !executed.is_null() {
+        *executed = count;
+    }
+    if !pc_hits.is_null() {
+        *pc_hits = hits;
+    }
+    257
+}
+
+#[no_mangle]
 pub unsafe extern "C" fn qiwang_machine_read(machine: *mut Machine, addr: u16) -> u8 {
     machine.as_mut().map_or(0, |m| m.read(addr))
 }
