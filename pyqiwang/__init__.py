@@ -17,7 +17,7 @@ from pyqiwang._board import (              # noqa: F401
     BOARD_STRIDE,
 )
 
-__version__ = "1.1.0"
+__version__ = "1.0.0"
 __all__ = [
     "QiWangEngine",
     "Board",

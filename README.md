@@ -18,22 +18,7 @@ git clone https://github.com/KakaruHayate/pyqiwang.git
 cd pyqiwang
 ```
 
-The ROM program is third-party copyrighted material and is **not distributed by
-this repository or covered by its MIT license**. Use a legally obtained image.
-The engine only accepts the known-good image identified by
-`pyqiwang/rom_manifest.json`; modified or mismatched dumps are rejected.
-
-You can either place the verified `.nes` file in the project root, or extract the
-64KB runtime-only PRG locally:
-
-```bash
-python tools/prepare_rom.py "path/to/your/棋王.nes"
-```
-
-This creates `qiwang.prg`, which is automatically detected and gitignored. You
-can also set `PYQIWANG_ROM_IMAGE` or pass `rom_path=` explicitly. The extractor
-and manifest are redistributable project code/data; the generated PRG is not
-committed and does not imply permission to redistribute ROM bytes.
+Place the ROM file `棋王(繁)[小天才](CN)[TAB](0.75Mb).nes` in the project root.
 
 ## Quick Start
 
@@ -98,24 +83,6 @@ python -m pyqiwang --depth 3 --side black
 # Auto-play demo (AI vs AI)
 python -m pyqiwang --demo
 ```
-
-## UCCI engine protocol
-
-`pyqiwang` can run as a standard-input/standard-output UCCI engine for Chinese
-chess GUIs and engine controllers:
-
-```bash
-python -m pyqiwang.ucci
-python -m pyqiwang.ucci --rom qiwang.prg --core rust
-```
-
-Supported commands include `ucci`, `isready`, `setoption`, `newgame`,
-`position startpos [moves ...]`, `position fen ... [moves ...]`, `banmoves`,
-`go depth N`, `stop`, and `quit`. Moves use ICCS/UCCI coordinates such as
-`h2e2`; arbitrary positions use Xiangqi FEN. The ROM search is synchronous, so
-`stop` is acknowledged between searches rather than interrupting an active
-search. The adapter reports `nobestmove` if the ROM-selected move is listed in
-`banmoves`, because the original search has no root move mask.
 
 ## API Reference
 
@@ -380,10 +347,6 @@ pyqiwang/
 ├── _harness.py          # ROM loader + core-selecting subroutine caller
 ├── _mos6502.py          # Reference/tracing MOS6502 CPU emulator
 ├── _fast6502.py         # Optional compiled-core C ABI adapter
-├── _rom_image.py        # ROM/runtime verification and local extraction
-├── _notation.py         # Xiangqi FEN + ICCS/UCCI notation
-├── ucci.py              # stdin/stdout UCCI engine adapter
-├── rom_manifest.json    # Known-good image sizes and SHA-256 hashes
 └── pst_tables.json      # 14 PST tables extracted from ROM $8886
 
 modern_ai.py             # Modern opponent: pure-Python search + Pikafish UCI
@@ -400,12 +363,10 @@ tests/
 ├── __init__.py
 ├── test_game.py         # Move gen / eval / engine correctness
 ├── test_fast6502.py     # Python/Rust state and move differential checks
-├── test_ucci.py         # FEN/ICCS and protocol checks
 └── verify_fidelity.py   # ROM vs engine move-for-move comparison
 
 rust/fast6502/           # Dependency-free compiled 6502/Mapper 133 core
 tools/benchmark_rom_core.py
-tools/prepare_rom.py     # Verify source ROM and extract local qiwang.prg
 ```
 
 ## Conclusions
@@ -449,6 +410,4 @@ observation first.
 
 ## License
 
-Project source code and original documentation are MIT licensed. The third-party
-棋王 ROM, full images, and locally extracted runtime bytes are not included in
-that grant and are not distributed by this repository.
+MIT

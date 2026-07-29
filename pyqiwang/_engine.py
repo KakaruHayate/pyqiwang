@@ -16,8 +16,8 @@ Usage:
 
 from __future__ import annotations
 
+import os
 import time
-from pathlib import Path
 from typing import Optional
 
 from pyqiwang._board import (
@@ -28,7 +28,7 @@ from pyqiwang._board import (
 
 # Deferred imports to avoid circular refs
 from pyqiwang._mos6502 import MOS6502, CPUError  # noqa: E402
-from pyqiwang._harness import RomHarness  # noqa: E402
+from pyqiwang._harness import RomHarness         # noqa: E402
 
 
 class QiWangEngineError(Exception):
@@ -47,9 +47,8 @@ class QiWangEngine:
     restore the initial position and sync from scratch).
 
     Args:
-        rom_path: Path to a verified 棋王 .nes image or locally extracted
-            qiwang.prg runtime image. If None, checks the environment,
-            package directory, and repository root.
+        rom_path: Path to the 棋王 ROM .nes file. If None, uses the
+            default location next to this module.
         depth: Search depth. Default 2 (beginner). Valid range 1-12.
             In the original ROM: 2=beginner, 3=intermediate, 4=advanced.
         core: ``"auto"`` selects the optional Rust runner when available and
@@ -65,12 +64,17 @@ class QiWangEngine:
 
     def __init__(self, rom_path: Optional[str] = None, depth: int = 2,
                  book: bool = False, core: str = "auto"):
-        if rom_path is not None and not Path(rom_path).is_file():
+        if rom_path is None:
+            rom_path = os.path.join(
+                os.path.dirname(os.path.abspath(__file__)),
+                '..',
+                '棋王(繁)[小天才](CN)[TAB](0.75Mb).nes',
+            )
+        if not os.path.exists(rom_path):
             raise QiWangEngineError(
-                f"ROM runtime image not found: {rom_path}\n"
-                "Provide a legally obtained known-good .nes image, or run "
-                "`python tools/prepare_rom.py <source.nes>` to create a local "
-                "verified qiwang.prg runtime image."
+                f"ROM file not found: {rom_path}\n"
+                "Download 棋王(繁)[小天才](CN)[TAB](0.75Mb).nes and "
+                "place it next to the package."
             )
 
         self._depth = max(1, min(depth, 12))
@@ -85,10 +89,7 @@ class QiWangEngine:
 
     def _init_rom(self) -> None:
         """Bootstrap the 6502 emulator + ROM."""
-        try:
-            self.harness = RomHarness(self._rom_path, core=self._core)
-        except (OSError, ValueError) as exc:
-            raise QiWangEngineError(str(exc)) from exc
+        self.harness = RomHarness(self._rom_path, core=self._core)
         self.harness.boot()
         self.harness.init_board()
         self.harness.new_game(side_to_move=0x10, book=self._use_book)
