@@ -51,6 +51,9 @@ class QiWangEngine:
             default location next to this module.
         depth: Search depth. Default 2 (beginner). Valid range 1-12.
             In the original ROM: 2=beginner, 3=intermediate, 4=advanced.
+        core: ``"auto"`` selects the optional Rust runner when available and
+            otherwise falls back to Python. ``"python"`` and ``"rust"`` force
+            a specific execution core.
 
     Example:
         >>> engine = QiWangEngine(depth=3)
@@ -60,7 +63,7 @@ class QiWangEngine:
     """
 
     def __init__(self, rom_path: Optional[str] = None, depth: int = 2,
-                 book: bool = False):
+                 book: bool = False, core: str = "auto"):
         if rom_path is None:
             rom_path = os.path.join(
                 os.path.dirname(os.path.abspath(__file__)),
@@ -77,6 +80,7 @@ class QiWangEngine:
         self._depth = max(1, min(depth, 12))
         self._rom_path = rom_path
         self._use_book = book
+        self._core = core
         self._board = Board()  # Python-side canonical board
         self._init_rom()
         self._move_count = 0
@@ -85,7 +89,7 @@ class QiWangEngine:
 
     def _init_rom(self) -> None:
         """Bootstrap the 6502 emulator + ROM."""
-        self.harness = RomHarness(self._rom_path)
+        self.harness = RomHarness(self._rom_path, core=self._core)
         self.harness.boot()
         self.harness.init_board()
         self.harness.new_game(side_to_move=0x10, book=self._use_book)
@@ -167,6 +171,11 @@ class QiWangEngine:
         board.side_to_move = RED if (c7 & 0x10) else BLACK
 
     # ── Public API ─────────────────────────────────────────
+
+    @property
+    def execution_core(self) -> str:
+        """Execution core selected by the ROM harness (``python`` or ``rust``)."""
+        return self.harness.core
 
     @property
     def depth(self) -> int:

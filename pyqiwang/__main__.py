@@ -26,6 +26,8 @@ def _main():
     )
     parser.add_argument('--depth', type=int, default=2,
                         help='Search depth (default: 2, range 1-12)')
+    parser.add_argument('--core', choices=['auto', 'python', 'rust'], default='auto',
+                        help='6502 execution core (default: auto)')
     parser.add_argument('--demo', action='store_true',
                         help='Auto-play demo (both sides AI)')
     parser.add_argument('--side', type=str, default='red',
@@ -35,7 +37,7 @@ def _main():
                         help="Use the ROM's opening book for the AI")
     args = parser.parse_args()
 
-    engine = QiWangEngine(depth=args.depth, book=args.book)
+    engine = QiWangEngine(depth=args.depth, book=args.book, core=args.core)
 
     if args.demo:
         _demo(engine)
@@ -49,7 +51,8 @@ def _play_interactive(engine: QiWangEngine, human_side: int) -> None:
     board = Board()
     print("=" * 50)
     print("  Chinese Chess — 棋王 AI Engine")
-    print(f"  Depth: {engine.depth}  |  You: {'RED' if human_side==RED else 'BLACK'}")
+    print(f"  Core: {engine.execution_core}  |  Depth: {engine.depth}  |  "
+          f"You: {'RED' if human_side==RED else 'BLACK'}")
     print("=" * 50)
     print("Move format: e7e5 (from + to squares)")
     print("Commands: quit, undo, reset\n")

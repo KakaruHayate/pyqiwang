@@ -101,7 +101,9 @@ class Mapper133Bus:
 
 
 class RomHarness:
-    def __init__(self, rom_path=ROM_PATH):
+    def __init__(self, rom_path=ROM_PATH, core="auto"):
+        if core not in ("auto", "python", "rust"):
+            raise ValueError("core must be 'auto', 'python', or 'rust'")
         with open(rom_path, 'rb') as f:
             rom = f.read()
         assert rom[:4] == b'NES\x1a', "非法 iNES 文件"
@@ -111,6 +113,17 @@ class RomHarness:
         self.bus = Mapper133Bus(prg)
         self.cpu = MOS6502(self.bus)
         self.instr_count = 0
+        self.requested_core = core
+        self.core = "python"
+        self.fast_runner = None
+        if core != "python":
+            try:
+                from pyqiwang._fast6502 import Fast6502Runner
+                self.fast_runner = Fast6502Runner(prg)
+                self.core = "rust"
+            except (ImportError, OSError, RuntimeError):
+                if core == "rust":
+                    raise
 
     # ---------- 低层执行 ----------
     def run_until(self, stop_pcs, max_instructions=50_000_000,
@@ -123,6 +136,14 @@ class RomHarness:
         """
         if isinstance(stop_pcs, int):
             stop_pcs = {stop_pcs}
+        if (self.fast_runner is not None and len(stop_pcs) == 1
+                and pc_hooks is None
+                and not self.bus.read_hooks and not self.bus.write_hooks):
+            stop_pc = next(iter(stop_pcs))
+            n = self.fast_runner.run_until(
+                self.cpu, self.bus, stop_pc, max_instructions, nmi_every)
+            self.instr_count += n
+            return stop_pc
         cpu = self.cpu
         n = 0
         while n < max_instructions:

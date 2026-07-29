@@ -5,10 +5,11 @@ to run the ROM's native search subroutine, achieving **100% move fidelity** with
 
 ## Features
 
-- **100% faithful AI** — runs the ROM's `$8597` search through a Python 6502 emulator
+- **100% faithful AI** — runs the ROM's `$8597` search through a 6502 emulator
+- **Optional Rust acceleration** — a compiled hook-free execution core with automatic Python fallback
 - **PST evaluation tables** — extracted directly from ROM `$8886` via dynamic trace
 - **Clean Python API** — ready for training, baselines, and knowledge distillation
-- **Zero external dependencies** — pure Python (3.14+)
+- **Zero required dependencies** — the reference Python core remains self-contained
 
 ## Install
 
@@ -25,6 +26,7 @@ Place the ROM file `棋王(繁)[小天才](CN)[TAB](0.75Mb).nes` in the project 
 from pyqiwang import QiWangEngine, Board, RED, BLACK
 
 # Initialize engine (loads ROM automatically)
+# The optional Rust core is selected when built; otherwise Python is used.
 engine = QiWangEngine(depth=2)
 
 # Create a board and get the best move
@@ -43,11 +45,37 @@ info = engine.analyze(board)
 score = engine.evaluate(board)  # positive = advantage for side to move
 ```
 
+## Optional Rust acceleration
+
+The reference Python CPU remains the fallback and tracing implementation. For
+normal hook-free ROM calls, a dependency-free Rust `cdylib` can execute the
+same CPU, 2KB RAM, Mapper 133 and minimal IO state in one compiled loop:
+
+```bash
+cd rust/fast6502
+cargo build --release
+```
+
+`QiWangEngine(core="auto")` is the default and uses the compiled library when
+found. Use `core="python"` for instruction hooks and debugging, or
+`core="rust"` to require the compiled runner. When read/write or PC hooks are
+active, `RomHarness` automatically runs that region through the Python core.
+The two implementations are checked by:
+
+```bash
+python tests/test_fast6502.py --benchmark
+python tools/benchmark_rom_core.py --depth 1 --rounds 3
+```
+
 ## CLI
 
 ```bash
-# Interactive game (play against the AI)
+# Interactive game (auto-select Rust when available)
 python -m pyqiwang --depth 2
+
+# Force a specific execution core
+python -m pyqiwang --depth 2 --core python
+python -m pyqiwang --depth 4 --core rust
 
 # Play as Black
 python -m pyqiwang --depth 3 --side black
@@ -254,8 +282,9 @@ Controls, so these numbers mean something:
   opponent — off: mated in 104; on: drawn in 84. Note this is a single game
   per condition and the book contributed only its first move before the
   opponent left the line, so treat it as suggestive, not measured.
-* 高级 costs about **70 s per move** in this emulator (初级 ≈ 3 s,
-  中级 ≈ 8 s), which is why the samples are small.
+* Those historical matches used the Python core: 高级 cost about **70 s per
+  move** (初级 ≈ 3 s, 中级 ≈ 8 s). The optional Rust core now executes an
+  initial-position depth-4 search in roughly 0.44 s on the development machine.
 
 The split result against `ModernEngine` at 高级 — winning as Black, losing
 as Red — is one game each, so it does not establish a colour preference.
@@ -315,8 +344,9 @@ pyqiwang/
 ├── __main__.py          # CLI: python -m pyqiwang
 ├── _engine.py           # QiWangEngine (high-level API)
 ├── _board.py            # Board, move generation, evaluation
-├── _harness.py          # ROM loader + subroutine caller
-├── _mos6502.py          # MOS6502 CPU emulator
+├── _harness.py          # ROM loader + core-selecting subroutine caller
+├── _mos6502.py          # Reference/tracing MOS6502 CPU emulator
+├── _fast6502.py         # Optional compiled-core C ABI adapter
 └── pst_tables.json      # 14 PST tables extracted from ROM $8886
 
 modern_ai.py             # Modern opponent: pure-Python search + Pikafish UCI
@@ -332,7 +362,11 @@ replay_pf_handicap.html
 tests/
 ├── __init__.py
 ├── test_game.py         # Move gen / eval / engine correctness
+├── test_fast6502.py     # Python/Rust state and move differential checks
 └── verify_fidelity.py   # ROM vs engine move-for-move comparison
+
+rust/fast6502/           # Dependency-free compiled 6502/Mapper 133 core
+tools/benchmark_rom_core.py
 ```
 
 ## Conclusions
@@ -360,9 +394,9 @@ dozens of moves, not by hanging pieces — reasonable for 14 piece-square
 tables and a depth-4 search on a 6502. Its own difficulty ladder is real:
 depth 3 beats depth 2 head to head.
 
-**Caveats worth keeping.** The strength numbers are one game per condition —
-高级 costs ~70 s per move under emulation, which caps the sample. The
-opening-book result (a loss becoming a draw) is suggestive only: the book
+**Caveats worth keeping.** The strength numbers are one game per condition and
+were generated before the Rust execution core; Python-emulated 高级 cost ~70 s
+per move, which capped the sample. The opening-book result (a loss becoming a draw) is suggestive only: the book
 supplied a single move before the opponent left the line. Nothing here is a
 statistically meaningful rating; it is a characterisation.
 
