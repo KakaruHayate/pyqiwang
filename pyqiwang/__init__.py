@@ -7,6 +7,7 @@ The engine runs the ROM's native $8597 search subroutine through a
 """
 
 from pyqiwang._engine import QiWangEngine  # noqa: F401
+from pyqiwang.runtime import ModernRomRuntime  # noqa: F401
 from pyqiwang._board import (              # noqa: F401
     Board,
     RED, BLACK,
@@ -19,7 +20,7 @@ from pyqiwang._board import (              # noqa: F401
 
 __version__ = "1.0.0"
 __all__ = [
-    "QiWangEngine",
+    "QiWangEngine", "ModernRomRuntime",
     "Board",
     "RED", "BLACK",
     "EMPTY", "KING", "ADVISOR", "ELEPHANT",

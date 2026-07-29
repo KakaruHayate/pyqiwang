@@ -99,6 +99,31 @@ machine; these are estimates, not completed benchmarks. Use
 `tools/benchmark_rom_depths.py` for deliberate runs. Depth 5 remains the
 practical default.
 
+## Optional modern ROM runtime
+
+`ModernRomRuntime` adds whole-position caching, conservative adaptive-depth
+selection, statistics, speculative multi-core reply analysis and optional
+opening/endgame lookup callbacks around the original ROM engine:
+
+```python
+from pyqiwang import Board, ModernRomRuntime
+
+runtime = ModernRomRuntime(base_depth=5, max_depth=7, core="rust")
+board = Board()
+move = runtime.search(board)
+
+# While waiting for the opponent, precompute up to eight possible replies.
+runtime.ponder_replies(board, depth=5, max_replies=8, workers=4)
+print(runtime.get_stats())
+```
+
+The cache key contains both piece-index arrays, the side to move and ROM depth;
+only completed whole-position best moves are reused. Optional
+`opening_lookup(board)` and `endgame_lookup(board)` callbacks must return a
+legal move or `None`; without callbacks the runtime always falls back to ROM.
+Internal node TT and PV-order injection remain disabled because the ROM's
+selector/history/bound frame is not yet sufficiently decoded for safe reuse.
+
 ## CLI
 
 ```bash
