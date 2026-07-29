@@ -1,16 +1,12 @@
-"""pyqiwang — FC QiWang Chinese Chess AI research engine.
+"""
+pyqiwang — Chinese Chess AI Engine (100% ROM-faithful)
 
-Two implementation paths are available:
-
-* ``QiWangEngine`` preserves the original ROM-backed, move-faithful path.
-* ``NativeQiWangEngine`` is the ROM-free pure-Python reimplementation path.
+This package provides a clean Python API for the 棋王 FC chess AI.
+The engine runs the ROM's native $8597 search subroutine through a
+6502 CPU emulator, giving 100% move fidelity.
 """
 
 from pyqiwang._engine import QiWangEngine  # noqa: F401
-from pyqiwang._native import (             # noqa: F401
-    NativeQiWangEngine,
-    NativeQiWangEngineError,
-)
 from pyqiwang._board import (              # noqa: F401
     Board,
     RED, BLACK,
@@ -21,9 +17,9 @@ from pyqiwang._board import (              # noqa: F401
     BOARD_STRIDE,
 )
 
-__version__ = "1.1.0"
+__version__ = "1.0.0"
 __all__ = [
-    "QiWangEngine", "NativeQiWangEngine", "NativeQiWangEngineError",
+    "QiWangEngine",
     "Board",
     "RED", "BLACK",
     "EMPTY", "KING", "ADVISOR", "ELEPHANT",

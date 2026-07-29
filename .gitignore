@@ -223,11 +223,7 @@ __marimo__/
 # =====================
 *.nes
 .claude/
-.workbuddy/
 trace_depth2.txt
-# Focused ROM traces are reproducible but can grow to hundreds of MB.
-# Keep the compact corpus and trace generator; do not commit raw event dumps.
-tests/fixtures/root_trace_depth[1-4]_independent_*.json
 *.swp
 *.swo
 *.swn
@@ -252,7 +248,6 @@ solve_*.py
 test_encoding.py
 test_harness_ai.py
 trace_*.py
-!tools/trace_root.py
 verify_fidelity.py
 __pycache__/
 compare_step.py

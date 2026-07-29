@@ -59,9 +59,6 @@ class QiWangEngine:
         >>> engine.make_move(board, *move)
     """
 
-    backend = "rom"
-    faithful = True
-
     def __init__(self, rom_path: Optional[str] = None, depth: int = 2,
                  book: bool = False):
         if rom_path is None:

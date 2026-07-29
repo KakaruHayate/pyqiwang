@@ -13,7 +13,7 @@ import argparse
 import time
 
 from pyqiwang import (
-    QiWangEngine, NativeQiWangEngine, Board, RED, BLACK,
+    QiWangEngine, Board, RED, BLACK,
     pos_to_notation, notation_to_pos,
     generate_legal_moves, is_in_check,
     BOARD_STRIDE, PIECE_TYPES,
@@ -22,16 +22,10 @@ from pyqiwang import (
 
 def _main():
     parser = argparse.ArgumentParser(
-        description="Chinese Chess — FC 棋王 dual-path AI engine"
+        description="Chinese Chess — 棋王 ROM AI engine"
     )
-    parser.add_argument('--engine', choices=['rom', 'native'], default='rom',
-                        help='Implementation path: rom (faithful, default) or native (ROM-free)')
     parser.add_argument('--depth', type=int, default=2,
-                        help='Search depth (ROM: 1-12; native: 1-8)')
-    parser.add_argument('--time-limit', type=float,
-                        help='Native search time limit per move, in seconds')
-    parser.add_argument('--node-limit', type=int,
-                        help='Native search node limit per move')
+                        help='Search depth (default: 2, range 1-12)')
     parser.add_argument('--demo', action='store_true',
                         help='Auto-play demo (both sides AI)')
     parser.add_argument('--side', type=str, default='red',
@@ -41,17 +35,7 @@ def _main():
                         help="Use the ROM's opening book for the AI")
     args = parser.parse_args()
 
-    if args.engine == 'native':
-        engine = NativeQiWangEngine(
-            depth=args.depth,
-            book=args.book,
-            time_limit=args.time_limit,
-            node_limit=args.node_limit,
-        )
-    else:
-        if args.time_limit is not None or args.node_limit is not None:
-            parser.error('--time-limit/--node-limit apply only to --engine native')
-        engine = QiWangEngine(depth=args.depth, book=args.book)
+    engine = QiWangEngine(depth=args.depth, book=args.book)
 
     if args.demo:
         _demo(engine)
@@ -65,8 +49,7 @@ def _play_interactive(engine: QiWangEngine, human_side: int) -> None:
     board = Board()
     print("=" * 50)
     print("  Chinese Chess — 棋王 AI Engine")
-    backend = getattr(engine, 'backend', 'rom')
-    print(f"  Engine: {backend}  |  Depth: {engine.depth}  |  You: {'RED' if human_side==RED else 'BLACK'}")
+    print(f"  Depth: {engine.depth}  |  You: {'RED' if human_side==RED else 'BLACK'}")
     print("=" * 50)
     print("Move format: e7e5 (from + to squares)")
     print("Commands: quit, undo, reset\n")
@@ -91,13 +74,7 @@ def _play_interactive(engine: QiWangEngine, human_side: int) -> None:
             if move_str in ('quit', 'q', 'exit'):
                 break
             if move_str == 'undo':
-                if getattr(engine, 'backend', 'rom') == 'native' and board.move_history:
-                    board.undo_move()
-                    if board.move_history:
-                        board.undo_move()
-                    print("Undid the previous turn")
-                else:
-                    print("Undo is unavailable for this state")
+                print("Undo not available in ROM mode")
                 continue
             if move_str == 'reset':
                 engine.reset()
