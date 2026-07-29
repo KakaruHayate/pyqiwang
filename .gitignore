@@ -227,6 +227,7 @@ __marimo__/
 # pyqiwang project-specific
 # =====================
 *.nes
+BOOK.DAT
 .claude/
 trace_depth2.txt
 *.swp

@@ -124,6 +124,30 @@ legal move or `None`; without callbacks the runtime always falls back to ROM.
 Internal node TT and PV-order injection remain disabled because the ROM's
 selector/history/bound frame is not yet sufficiently decoded for safe reuse.
 
+### ElephantEye BOOK.DAT
+
+A mature multi-branch book can be supplied locally using ElephantEye's
+`BOOK.DAT` (12,081 weighted records in the reference file):
+
+```python
+from pyqiwang import Board, ElephantBook, ModernRomRuntime
+
+book = ElephantBook("BOOK.DAT")
+runtime = ModernRomRuntime(
+    base_depth=6, max_depth=7, core="rust",
+    opening_lookup=book.lookup,
+)
+move = runtime.search(Board())
+```
+
+No `BOOK.DAT` data is bundled. ElephantEye and its book tools are Copyright
+(C) 2004-2011 xqbase.com and licensed under LGPL-2.1-or-later; obtain the file
+from the upstream project and preserve its license. The adapter reproduces its
+RC4-zero Zobrist lock, 16x16 coordinates, mirror lookup and `<IHH>` records.
+`python tools/inspect_elephant_book.py BOOK.DAT` validates a local file. The
+reference book covers 33 consecutive plies when always choosing its highest
+weighted move; a miss falls back to the ROM search.
+
 ## CLI
 
 ```bash

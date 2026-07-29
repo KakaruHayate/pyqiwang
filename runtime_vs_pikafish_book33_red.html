@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta charset="utf-8">
+<title>棋王 ROM AI vs Pikafish (10 ms, 1T)</title>
+<style>
+ body{margin:0;background:#1d1f21;color:#e8e6e3;
+      font-family:"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}
+ .wrap{max-width:980px;margin:0 auto;padding:24px}
+ h1{font-size:20px;font-weight:600;margin:0 0 4px}
+ .sub{color:#9aa0a6;font-size:13px;margin-bottom:20px}
+ .main{display:flex;gap:24px;flex-wrap:wrap}
+ canvas{background:#f0d9a7;border-radius:6px}
+ .side{flex:1;min-width:280px}
+ .ctl{display:flex;gap:8px;align-items:center;margin:14px 0}
+ button{background:#3a3d41;color:#e8e6e3;border:0;border-radius:5px;
+        padding:7px 13px;cursor:pointer;font-size:14px}
+ button:hover{background:#4a4e53}
+ input[type=range]{flex:1}
+ .status{font-size:14px;margin:8px 0 14px;min-height:22px}
+ .badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:12px}
+ .rom{background:#7b2d2d;color:#ffd9d9}.mod{background:#24506b;color:#cfe8ff}
+ table{width:100%;border-collapse:collapse;font-size:13px}
+ th,td{text-align:left;padding:4px 8px;border-bottom:1px solid #33363a}
+ th{color:#9aa0a6;font-weight:500}
+ tr.on{background:#2f3337}tr{cursor:pointer}
+ .r{color:#ff8080}.b{color:#8fc4ff}
+ .scroll{max-height:420px;overflow:auto}
+</style></head><body><div class="wrap">
+<h1>棋王 ROM AI &nbsp;vs&nbsp; Pikafish (10 ms, 1T)</h1>
+<div class="sub">完整ROM棋谱33 ply后 · ModernRomRuntime执红 · 接手后39 ply</div>
+<div class="main">
+ <div>
+  <canvas id="cv" width="450" height="500"></canvas>
+  <div class="ctl">
+   <button onclick="go(0)">⏮</button><button onclick="step(-1)">◀</button>
+   <button id="pp" onclick="play()">▶ 播放</button>
+   <button onclick="step(1)">▶</button><button onclick="go(MOVES.length)">⏭</button>
+  </div>
+  <input type="range" id="sl" min="0" max="39" value="0"
+         oninput="go(+this.value)" style="width:100%">
+ </div>
+ <div class="side">
+  <div class="status" id="st"></div>
+  <div class="scroll"><table><thead><tr><th>#</th><th>方</th><th>引擎</th>
+  <th>走法</th><th>评分</th><th>用时</th></tr></thead>
+  <tbody id="tb"></tbody></table></div>
+ </div>
+</div></div>
+<script>
+const MOVES=[{"frm": 84, "to": 86, "side": "B", "eng": "modern", "engname": "Pikafish (10 ms, 1T)", "text": "車 h0-h2", "score": 47, "t": 0.012, "depth": 0}, {"frm": 67, "to": 31, "side": "R", "eng": "rom", "engname": "ModernRomRuntime depth 5", "text": "炮 f7xc7 (馬)", "score": -54, "t": 1.109, "depth": 5}, {"frm": 79, "to": 56, "side": "B", "eng": "modern", "engname": "Pikafish (10 ms, 1T)", "text": "馬 g7-e8", "score": -9, "t": 0.01, "depth": 10}, {"frm": 31, "to": 19, "side": "R", "eng": "rom", "engname": "ModernRomRuntime depth 5", "text": "炮 c7-b7", "score": 80, "t": 1.142, "depth": 5}, {"frm": 86, "to": 74, "side": "B", "eng": "modern", "engname": "Pikafish (10 ms, 1T)", "text": "車 h2xg2 (马)", "score": 99, "t": 0.011, "depth": 7}, {"frm": 19, "to": 14, "side": "R", "eng": "rom", "engname": "ModernRomRuntime depth 5", "text": "炮 b7-b2", "score": -26, "t": 1.247, "depth": 5}, {"frm": 74, "to": 75, "side": "B", "eng": "modern", "engname": "Pikafish (10 ms, 1T)", "text": "車 g2xg3 (兵)", "score": 201, "t": 0.011, "depth": 9}, {"frm": 14, "to": 15, "side": "R", "eng": "rom", "engname": "ModernRomRuntime depth 5", "text": "炮 b2-b3", "score": -30, "t": 1.727, "depth": 5}, {"frm": 75, "to": 51, "side": "B", "eng": "modern", "engname": "Pikafish (10 ms, 1T)", "text": "車 g3xe3 (兵)", "score": 329, "t": 0.011, "depth": 9}, {"frm": 15, "to": 21, "side": "R", "eng": "rom", "engname": "ModernRomRuntime depth 5", "text": "炮 b3-b9", "score": -38, "t": 1.127, "depth": 5}, {"frm": 30, "to": 29, "side": "B", "eng": "modern", "engname": "Pikafish (10 ms, 1T)", "text": "卒 c6xc5 (兵)", "score": 342, "t": 0.01, "depth": 8}, {"frm": 13, "to": 37, "side": "R", "eng": "rom", "engname": "ModernRomRuntime depth 5", "text": "车 b1-d1", "score": -64, "t": 0.785, "depth": 5}, {"frm": 43, "to": 39, "side": "B", "eng": "modern", "engname": "Pikafish (10 ms, 1T)", "text": "砲 d7-d3", "score": 364, "t": 0.011, "depth": 9}, {"frm": 21, "to": 14, "side": "R", "eng": "rom", "engname": "ModernRomRuntime depth 5", "text": "炮 b9-b2", "score": -59, "t": 1.049, "depth": 5}, {"frm": 39, "to": 99, "side": "B", "eng": "modern", "engname": "Pikafish (10 ms, 1T)", "text": "砲 d3xi3 (兵)", "score": 421, "t": 0.011, "depth": 9}, {"frm": 37, "to": 44, "side": "R", "eng": "rom", "engname": "ModernRomRuntime depth 5", "text": "车 d1-d8", "score": -61, "t": 1.584, "depth": 5}, {"frm": 56, "to": 66, "side": "B", "eng": "modern", "engname": "Pikafish (10 ms, 1T)", "text": "馬 e8-f6", "score": 456, "t": 0.01, "depth": 10}, {"frm": 14, "to": 26, "side": "R", "eng": "rom", "engname": "ModernRomRuntime depth 5", "text": "炮 b2-c2", "score": -89, "t": 0.989, "depth": 5}, {"frm": 51, "to": 27, "side": "B", "eng": "modern", "engname": "Pikafish (10 ms, 1T)", "text": "車 e3-c3", "score": 492, "t": 0.011, "depth": 10}, {"frm": 26, "to": 38, "side": "R", "eng": "rom", "engname": "ModernRomRuntime depth 5", "text": "炮 c2-d2", "score": -88, "t": 0.826, "depth": 5}, {"frm": 54, "to": 53, "side": "B", "eng": "modern", "engname": "Pikafish (10 ms, 1T)", "text": "卒 e6-e5", "score": 474, "t": 0.012, "depth": 10}, {"frm": 38, "to": 45, "side": "R", "eng": "rom", "engname": "ModernRomRuntime depth 5", "text": "炮 d2xd9 (士)", "score": -87, "t": 0.905, "depth": 5}, {"frm": 69, "to": 56, "side": "B", "eng": "modern", "engname": "Pikafish (10 ms, 1T)", "text": "士 f9-e8", "score": 514, "t": 0.01, "depth": 11}, {"frm": 36, "to": 49, "side": "R", "eng": "rom", "engname": "ModernRomRuntime depth 5", "text": "仕 d0-e1", "score": -56, "t": 0.939, "depth": 5}, {"frm": 27, "to": 15, "side": "B", "eng": "modern", "engname": "Pikafish (10 ms, 1T)", "text": "車 c3-b3", "score": 536, "t": 0.01, "depth": 8}, {"frm": 48, "to": 36, "side": "R", "eng": "rom", "engname": "ModernRomRuntime depth 5", "text": "帅 e0-d0", "score": -55, "t": 0.939, "depth": 5}, {"frm": 66, "to": 52, "side": "B", "eng": "modern", "engname": "Pikafish (10 ms, 1T)", "text": "馬 f6-e4", "score": 656, "t": 0.01, "depth": 10}, {"frm": 50, "to": 24, "side": "R", "eng": "rom", "engname": "ModernRomRuntime depth 5", "text": "相 e2-c0", "score": -66, "t": 0.881, "depth": 5}, {"frm": 15, "to": 12, "side": "B", "eng": "modern", "engname": "Pikafish (10 ms, 1T)", "text": "車 b3-b0", "score": 690, "t": 0.011, "depth": 11}, {"frm": 72, "to": 98, "side": "R", "eng": "rom", "engname": "ModernRomRuntime depth 5", "text": "相 g0-i2", "score": -65, "t": 1.595, "depth": 5}, {"frm": 12, "to": 24, "side": "B", "eng": "modern", "engname": "Pikafish (10 ms, 1T)", "text": "車 b0xc0 (相)", "score": 858, "t": 0.012, "depth": 10}, {"frm": 36, "to": 37, "side": "R", "eng": "rom", "engname": "ModernRomRuntime depth 6", "text": "帅 d0-d1", "score": -105, "t": 0.001, "depth": 6}, {"frm": 52, "to": 27, "side": "B", "eng": "modern", "engname": "Pikafish (10 ms, 1T)", "text": "馬 e4-c3", "score": 931, "t": 0.01, "depth": 7}, {"frm": 37, "to": 38, "side": "R", "eng": "rom", "engname": "ModernRomRuntime depth 6", "text": "帅 d1-d2", "score": -102, "t": 0.002, "depth": 6}, {"frm": 24, "to": 26, "side": "B", "eng": "modern", "engname": "Pikafish (10 ms, 1T)", "text": "車 c0-c2", "score": 933, "t": 0.01, "depth": 6}, {"frm": 38, "to": 37, "side": "R", "eng": "rom", "engname": "ModernRomRuntime depth 6", "text": "帅 d2-d1", "score": -104, "t": 0.001, "depth": 6}, {"frm": 26, "to": 2, "side": "B", "eng": "modern", "engname": "Pikafish (10 ms, 1T)", "text": "車 c2-a2", "score": 1018, "t": 0.01, "depth": 5}, {"frm": 37, "to": 36, "side": "R", "eng": "rom", "engname": "ModernRomRuntime depth 6", "text": "帅 d1-d0", "score": -101, "t": 0.002, "depth": 6}, {"frm": 2, "to": 0, "side": "B", "eng": "modern", "engname": "Pikafish (10 ms, 1T)", "text": "車 a2-a0", "score": 1018, "t": 0.009, "depth": 1}], START={"48": [1, 0], "13": [4, 0], "67": [6, 0], "74": [5, 0], "60": [2, 0], "36": [2, 0], "72": [3, 0], "50": [3, 0], "99": [7, 0], "75": [7, 0], "51": [7, 0], "29": [7, 0], "3": [7, 0], "57": [1, 1], "84": [4, 1], "43": [6, 1], "79": [5, 1], "31": [5, 1], "69": [2, 1], "45": [2, 1], "33": [3, 1], "102": [7, 1], "78": [7, 1], "54": [7, 1], "30": [7, 1], "6": [7, 1]}, RESULT="pikafish wins: checkmate";
+const CN={1:'\u5e05',2:'\u4ed5',3:'\u76f8',4:'\u8f66',5:'\u9a6c',6:'\u70ae',7:'\u5175'};
+const CNB={1:'\u5c06',2:'\u58eb',3:'\u8c61',4:'\u8eca',5:'\u99ac',6:'\u7832',7:'\u5352'};
+const M=30, CELL=48, cv=document.getElementById('cv'), cx=cv.getContext('2d');
+let idx=0, timer=null;
+
+function boardAt(n){
+  let b=JSON.parse(JSON.stringify(START));
+  for(let i=0;i<n;i++){const m=MOVES[i]; b[m.to]=b[m.frm]; delete b[m.frm];}
+  return b;
+}
+function xy(pos){return [M+Math.floor(pos/12)*CELL, M+(9-(pos%12))*CELL];}
+
+function draw(){
+  const b=boardAt(idx);
+  cx.fillStyle='#f0d9a7';cx.fillRect(0,0,cv.width,cv.height);
+  cx.strokeStyle='#7a5c33';cx.lineWidth=1;
+  for(let r=0;r<10;r++){cx.beginPath();cx.moveTo(M,M+r*CELL);
+    cx.lineTo(M+8*CELL,M+r*CELL);cx.stroke();}
+  for(let f=0;f<9;f++){
+    if(f===0||f===8){cx.beginPath();cx.moveTo(M+f*CELL,M);
+      cx.lineTo(M+f*CELL,M+9*CELL);cx.stroke();}
+    else{cx.beginPath();cx.moveTo(M+f*CELL,M);cx.lineTo(M+f*CELL,M+4*CELL);cx.stroke();
+      cx.beginPath();cx.moveTo(M+f*CELL,M+5*CELL);cx.lineTo(M+f*CELL,M+9*CELL);cx.stroke();}}
+  cx.beginPath();cx.moveTo(M+3*CELL,M);cx.lineTo(M+5*CELL,M+2*CELL);
+  cx.moveTo(M+5*CELL,M);cx.lineTo(M+3*CELL,M+2*CELL);
+  cx.moveTo(M+3*CELL,M+7*CELL);cx.lineTo(M+5*CELL,M+9*CELL);
+  cx.moveTo(M+5*CELL,M+7*CELL);cx.lineTo(M+3*CELL,M+9*CELL);cx.stroke();
+  cx.fillStyle='#8a6a3d';cx.font='16px serif';cx.textAlign='center';
+  cx.fillText('\u695a\u6cb3          \u6f22\u754c', M+4*CELL, M+4.6*CELL);
+
+  if(idx>0){const m=MOVES[idx-1];
+    for(const p of [m.frm,m.to]){const [x,y]=xy(p);
+      cx.fillStyle='rgba(255,200,0,.45)';cx.beginPath();
+      cx.arc(x,y,CELL*0.44,0,7);cx.fill();}}
+
+  for(const k in b){const [t,s]=b[k], [x,y]=xy(+k);
+    cx.beginPath();cx.arc(x,y,CELL*0.40,0,7);
+    cx.fillStyle=s===0?'#fff4e0':'#3b3b3b';cx.fill();
+    cx.lineWidth=2;cx.strokeStyle=s===0?'#c0392b':'#1a1a1a';cx.stroke();
+    cx.fillStyle=s===0?'#c0392b':'#7fb3ff';
+    cx.font='bold 24px "PingFang SC","Microsoft YaHei",serif';
+    cx.textBaseline='middle';cx.fillText(s===0?CN[t]:CNB[t],x,y+1);}
+
+  document.getElementById('sl').value=idx;
+  const st=document.getElementById('st');
+  if(idx===0) st.textContent='\u521d\u59cb\u5c40\u9762';
+  else{const m=MOVES[idx-1];
+    st.innerHTML=`<span class="badge ${m.eng==='rom'?'rom':'mod'}">${m.engname}</span> `+
+      `<b>${m.text}</b> &nbsp;<span style="color:#9aa0a6">${m.score} · ${m.t}s</span>`;}
+  if(idx===MOVES.length&&RESULT) st.innerHTML+=`<br><b>${RESULT}</b>`;
+  document.querySelectorAll('#tb tr').forEach((r,i)=>
+    r.className=(i===idx-1)?'on':'');
+  const cur=document.querySelector('#tb tr.on'); if(cur) cur.scrollIntoView({block:'nearest'});
+}
+function go(n){idx=Math.max(0,Math.min(MOVES.length,n));draw();}
+function step(d){go(idx+d);}
+function play(){
+  const btn=document.getElementById('pp');
+  if(timer){clearInterval(timer);timer=null;btn.textContent='\u25b6 \u64ad\u653e';return;}
+  btn.textContent='\u23f8 \u6682\u505c';
+  timer=setInterval(()=>{if(idx>=MOVES.length){clearInterval(timer);timer=null;
+    btn.textContent='\u25b6 \u64ad\u653e';}else step(1);},750);
+}
+const tb=document.getElementById('tb');
+MOVES.forEach((m,i)=>{const tr=document.createElement('tr');
+  tr.onclick=()=>go(i+1);
+  tr.innerHTML=`<td>${i+1}</td><td class="${m.side==='R'?'r':'b'}">`+
+    `${m.side==='R'?'\u7ea2':'\u9ed1'}</td><td>${m.engname}</td>`+
+    `<td>${m.text}</td><td>${m.score}</td><td>${m.t}</td>`;
+  tb.appendChild(tr);});
+document.onkeydown=e=>{if(e.key==='ArrowLeft')step(-1);
+  if(e.key==='ArrowRight')step(1);};
+draw();
+</script></body></html>
