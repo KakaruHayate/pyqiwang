@@ -1,0 +1,927 @@
+{
+  "rom_side": "black",
+  "book_plies": 33,
+  "book": [
+    {
+      "ply": 1,
+      "move": "c0e2"
+    },
+    {
+      "ply": 2,
+      "move": "b7e7"
+    },
+    {
+      "ply": 3,
+      "move": "b0c2"
+    },
+    {
+      "ply": 4,
+      "move": "b9c7"
+    },
+    {
+      "ply": 5,
+      "move": "c3c4"
+    },
+    {
+      "ply": 6,
+      "move": "a9b9"
+    },
+    {
+      "ply": 7,
+      "move": "a0b0"
+    },
+    {
+      "ply": 8,
+      "move": "h7f7"
+    },
+    {
+      "ply": 9,
+      "move": "b2b5"
+    },
+    {
+      "ply": 10,
+      "move": "e7d7"
+    },
+    {
+      "ply": 11,
+      "move": "b5b3"
+    },
+    {
+      "ply": 12,
+      "move": "f7h7"
+    },
+    {
+      "ply": 13,
+      "move": "h0i2"
+    },
+    {
+      "ply": 14,
+      "move": "g9e7"
+    },
+    {
+      "ply": 15,
+      "move": "c2e1"
+    },
+    {
+      "ply": 16,
+      "move": "b9b7"
+    },
+    {
+      "ply": 17,
+      "move": "i0h0"
+    },
+    {
+      "ply": 18,
+      "move": "h9g7"
+    },
+    {
+      "ply": 19,
+      "move": "h0h1"
+    },
+    {
+      "ply": 20,
+      "move": "h7h1"
+    },
+    {
+      "ply": 21,
+      "move": "h2f2"
+    },
+    {
+      "ply": 22,
+      "move": "h1h2"
+    },
+    {
+      "ply": 23,
+      "move": "f2f7"
+    },
+    {
+      "ply": 24,
+      "move": "e7c5"
+    },
+    {
+      "ply": 25,
+      "move": "b3b1"
+    },
+    {
+      "ply": 26,
+      "move": "b7b1"
+    },
+    {
+      "ply": 27,
+      "move": "b0b1"
+    },
+    {
+      "ply": 28,
+      "move": "i9h9"
+    },
+    {
+      "ply": 29,
+      "move": "c4c5"
+    },
+    {
+      "ply": 30,
+      "move": "h2h0"
+    },
+    {
+      "ply": 31,
+      "move": "i2h0"
+    },
+    {
+      "ply": 32,
+      "move": "h9h0"
+    },
+    {
+      "ply": 33,
+      "move": "e1g2"
+    }
+  ],
+  "start_side": "black",
+  "result": "pikafish wins",
+  "winner": "pikafish",
+  "reason": "checkmate",
+  "played_plies": 78,
+  "rom_mean_seconds": 2.5970500692303924,
+  "moves": [
+    {
+      "frm": 84,
+      "to": 86,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "車 h0-h2",
+      "score": 53,
+      "t": 2.936
+    },
+    {
+      "frm": 67,
+      "to": 31,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "炮 f7xc7 (馬)",
+      "score": -17,
+      "t": 0.01
+    },
+    {
+      "frm": 79,
+      "to": 56,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "馬 g7-e8",
+      "score": -52,
+      "t": 4.544
+    },
+    {
+      "frm": 74,
+      "to": 49,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "马 g2-e1",
+      "score": 22,
+      "t": 0.011
+    },
+    {
+      "frm": 30,
+      "to": 29,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "卒 c6xc5 (兵)",
+      "score": -52,
+      "t": 5.636
+    },
+    {
+      "frm": 31,
+      "to": 30,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "炮 c7-c6",
+      "score": 41,
+      "t": 0.012
+    },
+    {
+      "frm": 43,
+      "to": 55,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "砲 d7-e7",
+      "score": -27,
+      "t": 11.891
+    },
+    {
+      "frm": 13,
+      "to": 15,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "车 b1-b3",
+      "score": 25,
+      "t": 0.011
+    },
+    {
+      "frm": 86,
+      "to": 87,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "車 h2-h3",
+      "score": -17,
+      "t": 5.916
+    },
+    {
+      "frm": 15,
+      "to": 39,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "车 b3-d3",
+      "score": 25,
+      "t": 0.011
+    },
+    {
+      "frm": 29,
+      "to": 28,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "卒 c5-c4",
+      "score": -19,
+      "t": 5.95
+    },
+    {
+      "frm": 49,
+      "to": 24,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "马 e1-c0",
+      "score": 9,
+      "t": 0.01
+    },
+    {
+      "frm": 87,
+      "to": 75,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "車 h3xg3 (兵)",
+      "score": -21,
+      "t": 9.224
+    },
+    {
+      "frm": 24,
+      "to": 38,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "马 c0-d2",
+      "score": 15,
+      "t": 0.011
+    },
+    {
+      "frm": 56,
+      "to": 79,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "馬 e8-g7",
+      "score": -23,
+      "t": 7.034
+    },
+    {
+      "frm": 39,
+      "to": 43,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "车 d3-d7",
+      "score": 126,
+      "t": 0.01
+    },
+    {
+      "frm": 75,
+      "to": 51,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "車 g3xe3 (兵)",
+      "score": 3,
+      "t": 15.407
+    },
+    {
+      "frm": 43,
+      "to": 31,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "车 d7-c7",
+      "score": 124,
+      "t": 0.012
+    },
+    {
+      "frm": 51,
+      "to": 39,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "車 e3-d3",
+      "score": 11,
+      "t": 3.732
+    },
+    {
+      "frm": 30,
+      "to": 33,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "炮 c6xc9 (象)",
+      "score": 215,
+      "t": 0.012
+    },
+    {
+      "frm": 45,
+      "to": 56,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "士 d9-e8",
+      "score": -27,
+      "t": 2.266
+    },
+    {
+      "frm": 31,
+      "to": 55,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "车 c7xe7 (砲)",
+      "score": 354,
+      "t": 0.01
+    },
+    {
+      "frm": 39,
+      "to": 38,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "車 d3xd2 (马)",
+      "score": -147,
+      "t": 1.41
+    },
+    {
+      "frm": 55,
+      "to": 79,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "车 e7xg7 (馬)",
+      "score": 358,
+      "t": 0.011
+    },
+    {
+      "frm": 28,
+      "to": 27,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "卒 c4-c3",
+      "score": -147,
+      "t": 1.673
+    },
+    {
+      "frm": 79,
+      "to": 31,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "车 g7-c7",
+      "score": 369,
+      "t": 0.011
+    },
+    {
+      "frm": 27,
+      "to": 39,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "卒 c3-d3",
+      "score": -144,
+      "t": 1.337
+    },
+    {
+      "frm": 31,
+      "to": 7,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "车 c7-a7",
+      "score": 374,
+      "t": 0.01
+    },
+    {
+      "frm": 39,
+      "to": 51,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "卒 d3-e3",
+      "score": -142,
+      "t": 1.295
+    },
+    {
+      "frm": 7,
+      "to": 6,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "车 a7xa6 (卒)",
+      "score": 358,
+      "t": 0.012
+    },
+    {
+      "frm": 51,
+      "to": 50,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "卒 e3xe2 (相)",
+      "score": -146,
+      "t": 1.246
+    },
+    {
+      "frm": 72,
+      "to": 50,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "相 g0xe2 (卒)",
+      "score": 372,
+      "t": 0.01
+    },
+    {
+      "frm": 57,
+      "to": 45,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "将 e9-d9",
+      "score": -136,
+      "t": 0.929
+    },
+    {
+      "frm": 60,
+      "to": 49,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "仕 f0-e1",
+      "score": 398,
+      "t": 0.01
+    },
+    {
+      "frm": 38,
+      "to": 50,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "車 d2xe2 (相)",
+      "score": -138,
+      "t": 1.452
+    },
+    {
+      "frm": 3,
+      "to": 4,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "兵 a3-a4",
+      "score": 408,
+      "t": 0.011
+    },
+    {
+      "frm": 50,
+      "to": 53,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "車 e2-e5",
+      "score": -99,
+      "t": 3.37
+    },
+    {
+      "frm": 6,
+      "to": 42,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "车 a6-d6",
+      "score": 421,
+      "t": 0.011
+    },
+    {
+      "frm": 45,
+      "to": 57,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "将 d9-e9",
+      "score": -102,
+      "t": 0.465
+    },
+    {
+      "frm": 33,
+      "to": 31,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "炮 c9-c7",
+      "score": 414,
+      "t": 0.011
+    },
+    {
+      "frm": 53,
+      "to": 89,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "車 e5-h5",
+      "score": -101,
+      "t": 2.213
+    },
+    {
+      "frm": 42,
+      "to": 54,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "车 d6xe6 (卒)",
+      "score": 454,
+      "t": 0.012
+    },
+    {
+      "frm": 78,
+      "to": 77,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "卒 g6-g5",
+      "score": -108,
+      "t": 4.628
+    },
+    {
+      "frm": 31,
+      "to": 79,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "炮 c7-g7",
+      "score": 467,
+      "t": 0.01
+    },
+    {
+      "frm": 89,
+      "to": 84,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "車 h5-h0",
+      "score": -107,
+      "t": 0.552
+    },
+    {
+      "frm": 49,
+      "to": 60,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "仕 e1-f0",
+      "score": 497,
+      "t": 0.012
+    },
+    {
+      "frm": 84,
+      "to": 93,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "車 h0-h9",
+      "score": -108,
+      "t": 0.695
+    },
+    {
+      "frm": 54,
+      "to": 102,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "车 e6xi6 (卒)",
+      "score": 484,
+      "t": 0.011
+    },
+    {
+      "frm": 77,
+      "to": 76,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "卒 g5-g4",
+      "score": -111,
+      "t": 0.602
+    },
+    {
+      "frm": 102,
+      "to": 78,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "车 i6-g6",
+      "score": 527,
+      "t": 0.01
+    },
+    {
+      "frm": 93,
+      "to": 105,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "車 h9-i9",
+      "score": -95,
+      "t": 3.279
+    },
+    {
+      "frm": 79,
+      "to": 81,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "炮 g7-g9",
+      "score": 557,
+      "t": 0.01
+    },
+    {
+      "frm": 105,
+      "to": 81,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "車 i9xg9 (炮)",
+      "score": -105,
+      "t": 0.001
+    },
+    {
+      "frm": 78,
+      "to": 81,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "车 g6xg9 (車)",
+      "score": 594,
+      "t": 0.01
+    },
+    {
+      "frm": 76,
+      "to": 64,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "卒 g4-f4",
+      "score": -217,
+      "t": 0.087
+    },
+    {
+      "frm": 81,
+      "to": 79,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "车 g9-g7",
+      "score": 770,
+      "t": 0.01
+    },
+    {
+      "frm": 64,
+      "to": 63,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "卒 f4-f3",
+      "score": -216,
+      "t": 0.14
+    },
+    {
+      "frm": 79,
+      "to": 19,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "车 g7-b7",
+      "score": 821,
+      "t": 0.011
+    },
+    {
+      "frm": 57,
+      "to": 45,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "将 e9-d9",
+      "score": -213,
+      "t": 0.198
+    },
+    {
+      "frm": 19,
+      "to": 21,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "车 b7-b9",
+      "score": 853,
+      "t": 0.011
+    },
+    {
+      "frm": 45,
+      "to": 44,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "将 d9-d8",
+      "score": -213,
+      "t": 0.0
+    },
+    {
+      "frm": 21,
+      "to": 15,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "车 b9-b3",
+      "score": 842,
+      "t": 0.01
+    },
+    {
+      "frm": 63,
+      "to": 62,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "卒 f3-f2",
+      "score": -211,
+      "t": 0.192
+    },
+    {
+      "frm": 15,
+      "to": 14,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "车 b3-b2",
+      "score": 839,
+      "t": 0.01
+    },
+    {
+      "frm": 62,
+      "to": 61,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "卒 f2-f1",
+      "score": -200,
+      "t": 0.165
+    },
+    {
+      "frm": 14,
+      "to": 13,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "车 b2-b1",
+      "score": 830,
+      "t": 0.011
+    },
+    {
+      "frm": 61,
+      "to": 60,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "卒 f1xf0 (仕)",
+      "score": -192,
+      "t": 0.097
+    },
+    {
+      "frm": 48,
+      "to": 60,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "帅 e0xf0 (卒)",
+      "score": 904,
+      "t": 0.01
+    },
+    {
+      "frm": 44,
+      "to": 43,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "将 d8-d7",
+      "score": -203,
+      "t": 0.234
+    },
+    {
+      "frm": 13,
+      "to": 37,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "车 b1-d1",
+      "score": 1109,
+      "t": 0.01
+    },
+    {
+      "frm": 43,
+      "to": 55,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "将 d7-e7",
+      "score": -207,
+      "t": 0.0
+    },
+    {
+      "frm": 37,
+      "to": 42,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "车 d1-d6",
+      "score": 983,
+      "t": 0.01
+    },
+    {
+      "frm": 56,
+      "to": 67,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "士 e8-f7",
+      "score": -208,
+      "t": 0.33
+    },
+    {
+      "frm": 42,
+      "to": 54,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "车 d6-e6",
+      "score": 1004,
+      "t": 0.01
+    },
+    {
+      "frm": 55,
+      "to": 43,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "将 e7-d7",
+      "score": -209,
+      "t": 0.001
+    },
+    {
+      "frm": 60,
+      "to": 48,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "帅 f0-e0",
+      "score": 1035,
+      "t": 0.01
+    },
+    {
+      "frm": 69,
+      "to": 56,
+      "side": "B",
+      "eng": "rom",
+      "engname": "ROM depth 6",
+      "text": "士 f9-e8",
+      "score": -211,
+      "t": 0.153
+    },
+    {
+      "frm": 54,
+      "to": 42,
+      "side": "R",
+      "eng": "modern",
+      "engname": "Pikafish (10 ms, 1T)",
+      "text": "车 e6-d6",
+      "score": 1035,
+      "t": 0.007
+    }
+  ],
+  "html": "J:/laotou/depth6_vs_pikafish_book33_game2.html"
+}
