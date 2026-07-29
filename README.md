@@ -75,45 +75,6 @@ cargo build --release
 found. Use `core="python"` for instruction hooks and debugging, or
 `core="rust"` to require the compiled runner. When read/write or PC hooks are
 active, `RomHarness` automatically runs that region through the Python core.
-
-## Enhanced PVS search
-
-`QiWangEngine` remains the ROM-faithful reference. The independent
-`EnhancedEngine` searches the same Xiangqi `Board` with iterative deepening,
-principal variation search (PVS), a depth-aware transposition table, killer
-moves, history ordering and quiescence search:
-
-```python
-from pyqiwang import Board, FastEnhancedEngine
-
-engine = FastEnhancedEngine(depth=8, time_limit=30.0)
-move = engine.search(Board())
-print(move, engine.stats())
-```
-
-Build the optional compiled search core with:
-
-```bash
-cd rust/enhanced_search
-cargo build --release
-```
-
-The Python implementation is `EnhancedEngine`; `FastEnhancedEngine` uses Rust
-when the library is built. Depth 8-10 is a conventional ply depth and is not
-comparable numerically with the ROM's depth 2-4. The search reports the last
-fully completed iteration when a time limit interrupts a deeper iteration.
-On the development machine, the initial position completed depth 6 in about
-1.18 s and depth 8 in about 23.3 s (~0.43 million main+quiescence nodes/s); a
-30 s depth-10 request completed through depth 8.
-
-This first prototype demonstrates that depth 8 is technically practical, but
-it did **not** yet demonstrate a strength gain: against Pikafish depth 12 it
-matched 1/6 sampled moves at depth 6 and 0/6 at depth 8, and in two short
-colour-swapped games against ROM depth 4 it lost once as Black in 44 plies and
-reached the 60-ply cap as Red. PVS and TT improve search efficiency, not the
-quality of a weak static evaluation; evaluation and tactical-search work are
-required before calling this engine stronger.
-
 The two implementations are checked by:
 
 ```bash
@@ -419,8 +380,6 @@ pyqiwang/
 ├── _harness.py          # ROM loader + core-selecting subroutine caller
 ├── _mos6502.py          # Reference/tracing MOS6502 CPU emulator
 ├── _fast6502.py         # Optional compiled-core C ABI adapter
-├── _enhanced.py         # Python iterative-deepening PVS + TT search
-├── _enhanced_fast.py    # Optional Rust enhanced-search adapter
 ├── _rom_image.py        # ROM/runtime verification and local extraction
 ├── _notation.py         # Xiangqi FEN + ICCS/UCCI notation
 ├── ucci.py              # stdin/stdout UCCI engine adapter
@@ -441,15 +400,11 @@ tests/
 ├── __init__.py
 ├── test_game.py         # Move gen / eval / engine correctness
 ├── test_fast6502.py     # Python/Rust state and move differential checks
-├── test_enhanced.py     # PVS/TT search correctness and time-limit checks
 ├── test_ucci.py         # FEN/ICCS and protocol checks
 └── verify_fidelity.py   # ROM vs engine move-for-move comparison
 
 rust/fast6502/           # Dependency-free compiled 6502/Mapper 133 core
-rust/enhanced_search/    # Compiled PVS + TT search core
 tools/benchmark_rom_core.py
-tools/benchmark_enhanced.py
-tools/evaluate_enhanced_match.py
 tools/prepare_rom.py     # Verify source ROM and extract local qiwang.prg
 ```
 
