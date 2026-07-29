@@ -10,16 +10,13 @@ rom_harness.py — 《棋王》ROM 仿真 harness
 """
 import os
 from pyqiwang._mos6502 import MOS6502, CPUError
+from pyqiwang._rom_image import configured_image_path, find_default_image, load_verified_prg
 
 ROM_NAME = '棋王(繁)[小天才](CN)[TAB](0.75Mb).nes'
 _HERE = os.path.dirname(os.path.abspath(__file__))
-# ROM may sit next to the package or at the repo root (README places it at root).
-ROM_PATH = next(
-    (p for p in (os.path.join(_HERE, ROM_NAME),
-                 os.path.join(_HERE, os.pardir, ROM_NAME))
-     if os.path.exists(p)),
-    os.path.join(_HERE, os.pardir, ROM_NAME),
-)
+_DEFAULT_IMAGE = find_default_image()
+ROM_PATH = str(_DEFAULT_IMAGE) if _DEFAULT_IMAGE is not None else os.path.join(
+    _HERE, os.pardir, ROM_NAME)
 
 # 哨兵返回地址：call_subroutine 压栈 SENTINEL-1，RTS 回到 SENTINEL 时停止
 SENTINEL = 0x0001
@@ -101,15 +98,16 @@ class Mapper133Bus:
 
 
 class RomHarness:
-    def __init__(self, rom_path=ROM_PATH, core="auto"):
+    def __init__(self, rom_path=None, core="auto"):
         if core not in ("auto", "python", "rust"):
             raise ValueError("core must be 'auto', 'python', or 'rust'")
-        with open(rom_path, 'rb') as f:
-            rom = f.read()
-        assert rom[:4] == b'NES\x1a', "非法 iNES 文件"
-        prg_banks = rom[4]
-        prg = rom[16:16 + prg_banks * 0x4000]
-        assert len(prg) == 0x10000, f"期望 64KB PRG, got {len(prg)}"
+        if rom_path is None:
+            explicit = configured_image_path()
+            if explicit is not None:
+                rom_path = explicit
+            else:
+                rom_path = find_default_image() or ROM_PATH
+        prg = load_verified_prg(rom_path)
         self.bus = Mapper133Bus(prg)
         self.cpu = MOS6502(self.bus)
         self.instr_count = 0
