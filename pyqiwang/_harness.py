@@ -264,9 +264,9 @@ class RomHarness:
             return None
         return frm, to
 
-    def get_ai_move(self, depth):
+    def get_ai_move(self, depth, max_instructions=200_000_000):
         """调用 $8597 搜索，返回 (from_pos, to_pos)；无走法时返回 None。"""
-        self.call_subroutine(0x8597, a=depth)
+        self.call_subroutine(0x8597, a=depth, max_instructions=max_instructions)
         frm = self.rd(0xC0)
         to = self.rd(0xC1)
         if frm >= 0x84:  # $FF = 无走法

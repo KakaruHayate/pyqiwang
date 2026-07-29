@@ -67,6 +67,25 @@ python tests/test_fast6502.py --benchmark
 python tools/benchmark_rom_core.py --depth 1 --rounds 3
 ```
 
+## Minimal ROM-native strength enhancement
+
+The lowest-risk enhancement is simply to let the ROM run one more iteration of
+its **own** search. This does not replace its move generator, selector/bound
+state machine, PST evaluation, tie-breaking, or style:
+
+```python
+engine = QiWangEngine(depth=4, core="rust")
+faithful_move = engine.get_best_move(board)       # original advanced setting
+enhanced_move = engine.get_enhanced_move(board)  # the same ROM search at depth 5
+```
+
+Depth 5 is not an original menu difficulty, so it is an explicitly non-faithful
+optional mode. On the development machine the initial position increased from
+about 0.43 s / 19.7 million instructions at depth 4 to about 1.30 s / 61.3
+million instructions at depth 5. In a ten-position random sample it changed
+3/10 moves. Depth 6 exceeded 200 million instructions in the initial position,
+so depth 5 is the practical default for this minimal enhancement.
+
 ## CLI
 
 ```bash
@@ -91,7 +110,8 @@ python -m pyqiwang --demo
 | Method | Description |
 |--------|-------------|
 | `QiWangEngine(rom_path=None, depth=2, book=False)` | Initialize engine. ROM auto-detected if not specified. `book=True` enables the ROM's opening book. |
-| `get_best_move(board=None) → (int, int) \| None` | Best move for current side. |
+| `get_best_move(board=None) → (int, int) \| None` | Best move at the configured faithful ROM depth. |
+| `get_enhanced_move(board=None, extra_depth=1) → (int, int) \| None` | Run the same ROM algorithm one or more iterations deeper; depth 5 is the practical default. |
 | `make_move(board=None, frm, to) → bool` | Execute move in ROM state. |
 | `evaluate(board=None) → int` | Position evaluation (positive = good for side to move). |
 | `analyze(board=None) → dict` | Full search info: move, score, depth, elapsed. |

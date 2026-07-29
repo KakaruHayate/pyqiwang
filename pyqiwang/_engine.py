@@ -198,7 +198,8 @@ class QiWangEngine:
         """Return the side that should move next (RED=0, BLACK=1)."""
         return self._board.side_to_move
 
-    def get_best_move(self, board: Optional[Board] = None) -> Optional[tuple[int, int]]:
+    def get_best_move(self, board: Optional[Board] = None,
+                      depth: Optional[int] = None) -> Optional[tuple[int, int]]:
         """Find the best move for the current side to move.
 
         Args:
@@ -231,10 +232,13 @@ class QiWangEngine:
                 return move
             # Book exhausted: the ROM board is still in sync, fall through.
 
-        # Sync board to ROM (this also sets $C7), then run search
+        # Sync board to ROM (this also sets $C7), then run search. An explicit
+        # depth override is useful for the optional ROM-native enhanced mode;
+        # the default path still uses the configured faithful difficulty.
         self._sync_board_to_rom(board)
-
-        move = self.harness.get_ai_move(self._depth)
+        search_depth = self._depth if depth is None else max(1, min(int(depth), 12))
+        max_instructions = 1_000_000_000 if search_depth >= 5 else 200_000_000
+        move = self.harness.get_ai_move(search_depth, max_instructions=max_instructions)
 
         # Sanity check
         if move is not None:
@@ -245,6 +249,17 @@ class QiWangEngine:
                     f"Legal moves: {legal}"
                 )
         return move
+
+    def get_enhanced_move(self, board: Optional[Board] = None,
+                          extra_depth: int = 1) -> Optional[tuple[int, int]]:
+        """Search deeper using the ROM's own algorithm and evaluation.
+
+        This is intentionally a minimal enhancement: no external engine, new
+        evaluator, or replacement search is involved. ``extra_depth=1`` maps
+        the original advanced setting (4) to ROM depth 5. The normal
+        ``get_best_move()`` path remains unchanged and ROM-faithful.
+        """
+        return self.get_best_move(board, depth=min(12, self._depth + max(0, int(extra_depth))))
 
     def make_move(self, board: Optional[Board] = None,
                   frm: int = -1, to: int = -1) -> bool:
